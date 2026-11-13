@@ -9,98 +9,98 @@
     {
       "file": "brand-preview.png",
       "width": 1000,
-      "height": 1000,
-      "bytes": 100586,
-      "sha256": "b291156d968f1c428d3cbb3ac8d55677f0133190ba0f6fd3abe7eab6ecd65b49",
+      "height": 1102,
+      "bytes": 94752,
+      "sha256": "a9fc40ebec0fc0567ee2a1b0a85839170c4e93123c3f8f43527a397d207a96e4",
       "capture": "Rendered icon contact sheet"
     },
     {
       "file": "conversation-archive.png",
       "width": 1440,
       "height": 960,
-      "bytes": 228584,
-      "sha256": "17584ceb4697239136f9315223ecd553a7b48a36e6f6efa39784261657ecae67",
+      "bytes": 228804,
+      "sha256": "0ad9a4dbcda892365f4f40eba768e94847485079873357c814e8659cc221e454",
       "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
     },
     {
       "file": "conversation-original.png",
       "width": 1440,
       "height": 960,
-      "bytes": 176884,
-      "sha256": "00140611d6d05e1746ee48e10396a99d6d8f6283c6a53c7cf10a1963bcf87993",
+      "bytes": 177097,
+      "sha256": "3707985c2aea0c8cbcd01c624432e0abb7678b8bbfb58ce611408ba25d0f1070",
       "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
     },
     {
       "file": "data-sync.png",
       "width": 1440,
       "height": 960,
-      "bytes": 178083,
-      "sha256": "ec292d6ea0ef19b482f0abe8f857d208b3b9a0672be881e3c9f2c451c95b7a3c",
+      "bytes": 178332,
+      "sha256": "718542eca5e4a087f4240ed056058a72991c0320953c16b62371fd0c42ef8eaa",
       "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
     },
     {
       "file": "learning-review.png",
       "width": 1440,
       "height": 960,
-      "bytes": 177934,
-      "sha256": "dcf20b0573a761e21d86f15934c537b658a7a89feeffde1765f37395e47e3941",
+      "bytes": 178165,
+      "sha256": "e5414985cdd4f12c4710ea6499fc5165ed612c48edd8d606d686ab611ef5c941",
       "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
     },
     {
       "file": "local-library.png",
       "width": 1440,
       "height": 960,
-      "bytes": 206281,
-      "sha256": "33d5dcbc81a62c4b1f2583c362c192f67d06fe66d0f212c1d79dc1ffb5a48ccd",
+      "bytes": 206519,
+      "sha256": "2134f3fcd7b580eeb6a21391ca46d1177073454778be90e1fd50a4964766e38c",
       "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
     },
     {
       "file": "memory-dark.png",
       "width": 1440,
       "height": 960,
-      "bytes": 247602,
-      "sha256": "37f281cfced1415d82db9bb8968fdd66f47f658255ac08a13557dc161dfc52e6",
+      "bytes": 247850,
+      "sha256": "72a2a083cabd2446e5e183dd73c53684ddc90b508e2634fdc31406503e593fd3",
       "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
     },
     {
       "file": "memory-light.png",
       "width": 1440,
       "height": 960,
-      "bytes": 246777,
-      "sha256": "c604af0c871b222c68a760043dec7214b01d5bcc61a7a36d23b2b29ede51eba9",
+      "bytes": 247015,
+      "sha256": "24e250530029a82ecd17d90695d52006cb208168dc7f2400148cd5a874fb87d1",
       "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
     },
     {
       "file": "model-picker.png",
       "width": 1440,
       "height": 960,
-      "bytes": 189288,
-      "sha256": "1ddb188e5aace4492a2f71e48f0f66e30cb016e2eabe096a40a8ea01228bc8a8",
+      "bytes": 189518,
+      "sha256": "fc763c9550ec80739159bbacbaf617ffef6f28746c0f9b7bf99347611c5da8f4",
       "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
     },
     {
       "file": "quick-capture.png",
       "width": 640,
       "height": 193,
-      "bytes": 26504,
-      "sha256": "641084b562f561968ac45c4af767dd633f4fd3d18bb2cefd2f8a656538b51c19",
+      "bytes": 26358,
+      "sha256": "699c0e6ef2bdafe46cc4f7354c2edf6fbe793a6a88396dd3452d802d3fd27966",
       "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
     },
     {
       "file": "wechat-setup.png",
       "width": 1440,
       "height": 960,
-      "bytes": 201308,
-      "sha256": "163c8794b8662b1bbe947aa5a5f1863b3ecd3d072ef2f1ce326bc4dd5fc1906d",
+      "bytes": 200226,
+      "sha256": "e0183e9ae4f90154ce0c61acf688a6846bbfdbeca868f33e1b86d077208e2dc6",
       "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
     },
     {
       "file": "windows-main.png",
       "width": 1800,
-      "height": 1100,
-      "bytes": 262834,
-      "sha256": "05b60c679546431bcce1a7b46eb844f0232619ffaa468a3ca7df800887336a72",
-      "capture": "Windows Tauri/WebView2 PrintWindow (0.4.1 historical)"
+      "height": 1103,
+      "bytes": 235741,
+      "sha256": "ac5f767e64b33a893847ccd518727ac0d62018b21c39644d30d8f780bf157801",
+      "capture": "0.4.2 Windows Tauri/WebView2 process, isolated synthetic data, scoped Win32 PrintWindow"
     }
   ]
 }

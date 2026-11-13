@@ -1,6 +1,6 @@
 # 贾维斯管家 0.4.2 测试版
 
-新品牌图标：绿色书签芽机器人。应用安装图标来自本项目内置图片生成工具；主界面、助手形象及16–32像素托盘使用同一设计的简化SVG适配。保留鼠标眼神跟随，并分别提供正常、专注、提醒、错误状态。
+新品牌图标：白色小猫。应用安装图标来自本项目内置图片生成工具；主界面、助手形象及16–32像素托盘使用同一设计的简化SVG适配。保留鼠标眼神跟随，并分别提供正常、专注、提醒、错误状态。
 
 - Windows x64：EXE安装包；Mac Apple Silicon：DMG，拖入Applications。
 - 一键拉取模型、搜索点选、默认模型与侧栏切换保留。
@@ -8,7 +8,7 @@
 - [功能截图与使用指南](https://github.com/aiyinsitan520/jarvis-butler-desktop#readme)
 - [新图标来源与生成说明](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/branding.md)
 
-![书签芽机器人](https://raw.githubusercontent.com/aiyinsitan520/jarvis-butler-desktop/main/shared/assets/jarvis-sprout-source.png)
+![白色小猫](https://raw.githubusercontent.com/aiyinsitan520/jarvis-butler-desktop/main/shared/assets/jarvis-kitten-source.png)
 
 基于Dingmi 1.0.8，融合Jarvis Butler的MIT部分，整体AGPL-3.0-only。新图标不包含上游团子猫、Islenote标志或网上下载的第三方角色。原作者未为本版本背书；生成图标不代表已完成商标检索。
 

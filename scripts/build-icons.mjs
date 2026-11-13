@@ -1,7 +1,7 @@
-// 从原创书签芽机器人（shared/mascot.ts）生成图标图片。改了伙伴或者图标后跑一次：node scripts/build-icons.mjs
-// - 托盘：程序图标（奶油色方块）的 4 种状态 × 16、20、24、32 像素 → apps/desktop/src-tauri/icons/tray/
-//   （方块不怕任务栏深浅，浅色、深色两套是一样的图，Rust 那边的挑法不用改）
-// - 程序图标（奶油色方块 + 书签芽机器人）：先出 1024 的图，再用 tauri icon 生成安装包、任务栏用的那几个
+// 从原创白色小猫（shared/mascot.ts）生成图标图片。改了伙伴或者图标后跑一次：node scripts/build-icons.mjs
+// - 托盘：程序图标（浅蓝色方块）的 4 种状态 × 16、20、24、32 像素 → apps/desktop/src-tauri/icons/tray/
+//   深浅两套分别加强轮廓。安装器与应用使用同一张用户确认的白猫原图。
+// - 程序图标（浅蓝色方块 + 白色小猫）：先出 1024 的图，再用 tauri icon 生成安装包、任务栏用的那几个
 import { execFileSync } from "node:child_process";
 import { copyFileSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -27,7 +27,7 @@ for (const state of ["normal", "remind", "focus", "bad"]) {
 const tmp = mkdtempSync(join(tmpdir(), "dingmi-icon-"));
 const big = join(tmp, "app-icon.png");
 // Keep the original generated raster; tauri icon only derives platform formats/sizes.
-copyFileSync(join(root, "shared/assets/jarvis-sprout-source.png"), big);
+copyFileSync(join(root, "shared/assets/jarvis-kitten-source.png"), big);
 writeFileSync(join(icons, "app-icon.svg"), appIcon(64) + "\n");
 writeFileSync(join(root, "apps/desktop/ui/public/logo.svg"), appIcon(64) + "\n");
 writeFileSync(join(root, "apps/desktop/ui/public/jarvis-mark.svg"), appIcon(64) + "\n");
@@ -38,12 +38,8 @@ for (const f of ["32x32.png", "64x64.png", "128x128.png", "128x128@2x.png", "ico
   copyFileSync(join(tmp, "out", f), join(icons, f));
 }
 
-// 安装包图标（tauri.conf.json 的 nsis.installerIcon）：程序图标右下角加一个橙色的「往下」角标，装好以后的图标还是上面那个
-const badge = `<g><circle cx="52" cy="52" r="10" fill="#ff8a3d" stroke="#3b2418" stroke-width="2"/><path d="M52 46.5 V56 M48 52.2 L52 56.2 L56 52.2" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></g>`;
-const setup = join(tmp, "installer.png");
-writeFileSync(setup, png(appIcon(64).replace(/<\/svg>\s*$/, `${badge}</svg>`), 1024));
-execFileSync(process.execPath, [join(root, "node_modules/@tauri-apps/cli/tauri.js"), "icon", setup, "-o", join(tmp, "setup")], { stdio: "inherit" });
-copyFileSync(join(tmp, "setup", "icon.ico"), join(icons, "installer.ico"));
+// 安装器与应用使用同一张用户确认的原图。
+copyFileSync(join(icons, "icon.ico"), join(icons, "installer.ico"));
 copyFileSync(join(icons, "icon.png"), join(root, "apps/server/web/icon.png"));
 if (!tmp.startsWith(join(tmpdir(), "dingmi-icon-"))) throw new Error("Unexpected icon temp directory");
 rmSync(tmp, { recursive: true, force: true });

@@ -14,4 +14,4 @@
 
 0.4.1 模型选择交互参考 farion1231/cc-switch（MIT）的 ModelInputWithFetch／FetchedModelPicker：获取、搜索、点选回填与可选模型勾选。本版独立实现组件及原生接口，没有复制该项目代码或品牌素材。参考 https://github.com/farion1231/cc-switch/tree/main/src/components/providers/forms 。
 
-2026-11-13 图标更新：原纸页轨道图标替换为内置image_gen生成的书签芽机器人，原图与提示词纳入shared/assets；shared/mascot.ts提供独立SVG适配及状态托盘。旧纸页轨道说明为历史版本记录；当前生成方式与范围见docs/branding.md。
+2026-11-13 图标更新：原纸页轨道图标替换为内置image_gen生成的白色小猫，用户确认后应用，原图与设计规格记录纳入shared/assets；shared/mascot.ts提供独立SVG适配及状态托盘。旧纸页轨道说明为历史版本记录；当前生成方式与范围见docs/branding.md。

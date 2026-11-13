@@ -1,4 +1,4 @@
-/* Original bookmark-sprout robot motion; API class kept for compatibility. */
+/* Original white kitten motion; API class kept for compatibility. */
 .mascot svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .mascot.play .jarvis-orbit { animation: jarvis-greet .7s ease-out 1; }
 @keyframes jarvis-greet { 0% { transform: translateY(4px); opacity: .5; } 100% { transform: translateY(0); opacity: 1; } }

@@ -1,8 +1,9 @@
-.xiaoyu-toggle{position:relative;display:flex;align-items:center;justify-content:center;gap:5px;width:34px;height:34px;flex-shrink:0;border:0;border-radius:12px;background:#81c095;box-shadow:0 2px 12px #81c09566;cursor:pointer;transition:transform .2s,box-shadow .2s}
-.xiaoyu-toggle::after{content:"";position:absolute;right:4px;top:-3px;width:8px;height:11px;background:#ed8c42;clip-path:polygon(0 0,100% 0,100% 100%,50% 72%,0 100%);border-radius:2px 2px 0 0;pointer-events:none}
+.xiaoyu-toggle{position:relative;display:flex;align-items:center;justify-content:center;gap:5px;width:34px;height:34px;flex-shrink:0;border:1px solid #a8c6de;border-radius:12px;background:#add3f6;box-shadow:0 2px 12px #9ebfda55;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.xiaoyu-toggle::before{content:"";position:absolute;inset:4px 3px 3px;background:#fffdfc;clip-path:polygon(5% 40%,7% 0,36% 18%,64% 18%,93% 0,95% 40%,100% 65%,90% 90%,70% 100%,30% 100%,10% 90%,0 65%);border-radius:40%;pointer-events:none}
+.xiaoyu-toggle::after{content:"";position:absolute;left:14px;top:21px;width:4px;height:3px;background:#eea4ad;border-radius:50% 50% 60% 60%;pointer-events:none}
 .xiaoyu-toggle:hover{transform:translateY(-1px);box-shadow:0 3px 17px #81c09588}
 .xiaoyu-toggle .jarvis-eyes{display:flex;align-items:center;gap:5px;pointer-events:none;transform:translate(var(--gaze-x,0px),var(--gaze-y,0px));transition:transform 110ms cubic-bezier(.2,.8,.2,1)}
-.xiaoyu-toggle .jarvis-eye{display:block;width:4px;height:5px;border-radius:50%;background:#fff;animation:xiaoyu-blink 7s infinite}
+.xiaoyu-toggle .jarvis-eye{display:block;width:4px;height:5px;border-radius:50%;background:#59473d;animation:xiaoyu-blink 7s infinite}
 .xiaoyu-panel{--xiaoyu-green:#4ba285;display:none;flex-direction:column;flex-shrink:0;width:358px;min-height:0;margin:6px 6px 6px 0;border:1px solid var(--color-border);border-radius:22px;background:var(--color-card);color:var(--color-ink);box-shadow:0 3px 16px #263e3010;overflow:hidden}
 .xiaoyu-panel.is-open{display:flex}
 .xiaoyu-header{display:flex;align-items:center;gap:2px;min-height:49px;padding:6px 10px 0 8px;flex-shrink:0}
@@ -68,7 +69,7 @@ button.xiaoyu-chip{cursor:pointer}
 .xiaoyu-attachment span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
 .xiaoyu-attachment button{border:0;background:transparent;color:inherit;cursor:pointer}
 .xiaoyu-backdrop{display:none}
-.dark .xiaoyu-mark img{filter:invert(1)}
+.dark .xiaoyu-mark img{filter:none}
 .dark .xiaoyu-suggestions,.dark .xiaoyu-configure{background:#81c0950b;border-color:#ffffff0f}
 .dark .xiaoyu-skills button,.dark .xiaoyu-suggestion{border-color:#ffffff0f}
 .dark .xiaoyu-message.user>div{background:#81c09522;color:#c0e4cc}

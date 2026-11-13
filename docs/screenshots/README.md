@@ -1,11 +1,11 @@
 # 实际界面截图与来源
 
-拍摄日期：2026-11-13（Asia/Shanghai）。前端截图已更新为0.4.2书签芽机器人；Windows原生窗口图保留0.4.1（`fd5a9d3`）历史版本，便于对照。全部笔记、会话、模型目录与报告均为专门编写的合成演示资料，不包含真实账号、接口 Key、微信二维码或私人会话。
+拍摄日期：2026-11-13（Asia/Shanghai）。前端截图已更新为0.4.2白色小猫；Windows原生窗口已同步更新为0.4.2白猫版。全部笔记、会话、模型目录与报告均为专门编写的合成演示资料，不包含真实账号、接口 Key、微信二维码或私人会话。
 
 | 文件 | 内容 | 拍摄方式 |
 | --- | --- | --- |
 | [brand-preview.png](brand-preview.png) | 原始生成图、SVG与四种托盘状态的尺寸预览 | 浏览器渲染实际资源，包含16／20／24／32像素原尺寸 |
-| [windows-main.png](windows-main.png) | 记忆看板、AI 侧栏及真实快捷键占用提示 | 0.4.1历史独立 Windows Tauri／WebView2 进程，Win32 PrintWindow 仅捕获该进程的主窗口 |
+| [windows-main.png](windows-main.png) | 今日记录、白猫图标及 AI 侧栏 | 0.4.2独立 Windows Tauri／WebView2 进程，Win32 PrintWindow 仅捕获该进程的主窗口 |
 | [memory-light.png](memory-light.png) | 浅色记忆看板 | 实际构建前端，隔离浏览器演示桥 |
 | [memory-dark.png](memory-dark.png) | 深色主题 | 同上，通过界面现有主题变量切换 |
 | [conversation-archive.png](conversation-archive.png) | 会话列表、搜索与重要标记 | 实际前端，合成归档由 Rust SQLite 读取 |
@@ -19,7 +19,7 @@
 
 浏览器演示桥运行与桌面相同的构建后 HTML／CSS／TypeScript，业务数据通过实际 Rust SQLite 驱动；窗口命令、原生文件对话框和模型／网络响应由测试适配器提供。截图没有用设计软件重画、没有拼装聊天成功状态，也没有用上游宣传图代替本项目。
 
-Windows 截图保留了当时的快捷键冲突提示。独立演示进程与本机其他运行软件可能争用快捷键；这展示的是提示与调整行为，不代表所有安装环境都会出现相同提示。
+全局快捷键可能与其他运行软件冲突。主窗口顶部显示当前快捷键；本次截图不替代所有安装环境的热键验收。
 
 当前没有 Mac 真机截图。Mac 构建通过、界面共享和实际 Mac 系统体验是不同证据；真实微信、真实模型与 Mac 真机验收仍按发布说明处理。
 
@@ -55,7 +55,7 @@ Windows 原生截图另外构建 `fusion-preview`，以 `node scripts/seed-publi
 & scripts/capture-native-preview.ps1 -PreviewId <演示进程PID> -OutFile docs/screenshots/windows-main.png -WindowTitle '贾维斯管家 · 单页本地版'
 ```
 
-不要把用户正在使用的资料库拿来拍公开截图，也不要为截图开启远程调试端口。当前机器人原图为内置imagegen生成，界面／托盘为独立SVG适配，见[品牌来源](../branding.md)。
+不要把用户正在使用的资料库拿来拍公开截图，也不要为截图开启远程调试端口。当前白猫原图为内置imagegen生成，界面／托盘为独立SVG适配，见[品牌来源](../branding.md)。
 
 拍完停止自己启动的演示进程；不退出用户原先的应用。
 
