@@ -100,10 +100,14 @@ impl WorkspaceStore {
             let row=snap.data[table].as_array().unwrap().iter().find(|r|r["id"]==*id).cloned();
             if old["fileHash"]==file_hash{if let Some(e)=entries.get_mut(id){e["path"]=json!(path);}continue;}
             let Some(row)=row else{issues.push(json!({"id":id,"path":path,"error":"数据库记录不存在，保留文件"}));continue;};
+            let request=format!("vault-{}",hash(&format!("{id}:{}:{file_hash}",doc["base"])));
+            if let Ok(data)=mutable(table,doc){
+                let acknowledged=self.operations()?.iter().any(|o|o.id==request&&o.status=="committed"&&o.command["data"]==data);
+                if acknowledged&&data.as_object().unwrap().iter().all(|(k,v)|row[k]==*v){let output=markdown(table,&row);safe(root,&root.join(path))?;atomic(&root.join(path),output.as_bytes())?;entries.insert(id.clone(),json!({"table":table,"path":path,"base":hash(&stable(&row)),"fileHash":hash(&output)}));continue;}
+            }
             if old.is_null()||doc["base"]!=hash(&stable(&row))||old["base"]!=doc["base"]{issues.push(json!({"id":id,"path":path,"error":"双方版本已变化，外部稿已保留","conflict":true}));continue;}
             match mutable(table,doc){Err(e)=>issues.push(json!({"id":id,"path":path,"error":e})),Ok(data)=>{
                 let command=json!({"type":"update","table":table,"id":id,"data":data});
-                let request=format!("vault-{}",hash(&format!("{id}:{}:{file_hash}",doc["base"])));
                 let op=self.submit_once(&request,command,Some(snap.expected())).await?;
                 if op.status=="committed"{snap=self.cached()?.unwrap_or(snap);let row=snap.data[table].as_array().unwrap().iter().find(|r|r["id"]==*id).unwrap();let output=markdown(table,row);
                     safe(root,&root.join(path))?;atomic(&root.join(path),output.as_bytes())?;entries.insert(id.clone(),json!({"table":table,"path":path,"base":hash(&stable(row)),"fileHash":hash(&output)}));

@@ -356,7 +356,8 @@ async fn deliver_reviews(app:&AppHandle)->Res<()>{
  let keys=reports.as_object().into_iter().flatten().filter(|(_,v)|v["body"].is_string()&&v["wechat"]=="pending").map(|(k,_)|k.clone()).collect::<Vec<_>>();
  for key in keys{let Some(ctx)=context.as_ref().filter(|c|c["account"]==a.account_id&&paired.as_deref()==c["to"].as_str())else{reports[&key]["wechat"]=json!("waiting_context");reports[&key]["deliveryError"]=json!("缺少本人会话上下文，请发送“今日回顾”获取");continue;};
   reports[&key]["wechat"]=json!("unknown");r.store.set_value("learning-reports",&reports)?;
-  let body=format!("学习回顾 {key}\n{}\n完整内容与来源请在贾维斯查看。",text(&reports[&key],"body").chars().take(1300).collect::<String>());
+  let summary=if reports[&key]["status"]=="complete"{text(&reports[&key],"body").chars().take(1300).collect::<String>()}else{"本日学习会话已归档，AI整理尚未完成。请在桌面查看原文与复习卡片。".into()};
+  let body=format!("学习回顾 {key}\n{summary}\n完整内容与来源请在贾维斯查看。");
   match wechat::Client::new()?.send(&a,&text(ctx,"to"),&text(ctx,"context"),&body,&format!("review-{}-{key}",app.state::<AppState>().device)).await{Ok(())=>{reports[&key]["wechat"]=json!("sent");},Err(e)=>{reports[&key]["deliveryError"]=json!(format!("发送结果未知或被协议拒绝：{e}。请发送“今日回顾”获取；不会自动重复发送。"));}}
  }r.store.set_value("learning-reports",&reports)
 }
