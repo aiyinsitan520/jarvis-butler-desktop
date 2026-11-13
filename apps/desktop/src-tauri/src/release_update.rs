@@ -42,7 +42,13 @@ async fn bounded(url:&str,max:u64,mut progress:impl FnMut(u64))->Result<Vec<u8>,
  }Err("更新下载失败".into())
 }
 fn candidate(bytes:&[u8])->Result<Candidate,String>{let m=jarvis_updater::parse(bytes)?;let p=m.platforms.get(platform()?).cloned().ok_or("该版本缺少当前平台更新包")?;let raw=serde_json::from_slice(bytes).map_err(|_|"更新清单无效")?;Ok(Candidate{manifest:m,raw,package:p})}
-fn updater(app:&AppHandle)->Result<tauri_plugin_updater::Updater,String>{app.updater_builder().timeout(Duration::from_secs(180)).build().map_err(|_|"签名更新插件初始化失败".into())}
+fn updater(app:&AppHandle)->Result<tauri_plugin_updater::Updater,String>{
+ let builder=app.updater_builder().timeout(Duration::from_secs(180));
+ // NSIS consumes everything after /D= as the destination. The plugin appends our
+ // custom argument last, preserving spaces and the current installation directory.
+ #[cfg(windows)]let builder={let exe=std::env::current_exe().map_err(|_|"无法确认当前安装目录")?;let dir=exe.parent().ok_or("当前安装目录无效")?;builder.installer_arg(format!("/D={}",dir.display()))};
+ builder.build().map_err(|_|"签名更新插件初始化失败".into())
+}
 fn verify(app:&AppHandle,c:&Candidate,bytes:&[u8])->Result<tauri_plugin_updater::Update,String>{jarvis_updater::verify(bytes,&c.package,&c.manifest.version,PUBKEY)?;let u=updater(app)?.restore_update(c.raw.clone()).map_err(|_|"签名更新信息无法恢复")?.ok_or("该版本不高于当前版本，不安装")?;u.verify(bytes).map_err(|_|"官方插件拒绝此更新签名")?;Ok(u)}
 fn directory(app:&AppHandle)->PathBuf{app.state::<AppState>().data_dir.join("updater-cache")}
 fn cache_bytes(app:&AppHandle,c:&Candidate)->Result<Vec<u8>,String>{let path=directory(app).join("package.bin");if std::fs::metadata(&path).map_err(|_|"更新包缓存不存在")?.len()!=c.package.size{return Err("更新缓存大小不符".into());}std::fs::read(path).map_err(|_|"无法读取更新缓存".into())}

@@ -1,62 +1,23 @@
-# 实际界面截图与来源
+# 贾维喵管家新版实机图库
 
-拍摄日期：2026-11-13（Asia/Shanghai）。前端截图已更新为0.4.2白色小猫；Windows原生窗口已同步更新为0.4.2白猫版。全部笔记、会话、模型目录与报告均为专门编写的合成演示资料，不包含真实账号、接口 Key、微信二维码或私人会话。
+拍摄日期：2026-11-13（Asia/Shanghai）。以下11张产品界面图全部来自本机Windows 11／WebView2中运行的0.4.5版Tauri原生窗口，150%显示缩放，多数为2160×1350，个别窗口按实际大小拍摄。原生预览在83ae24a基线构建，之后的8fbf161兼容修正不改变图中页面布局。没有用浏览器演示桥或设计稿替代本批产品照片。
 
-| 文件 | 内容 | 拍摄方式 |
-| --- | --- | --- |
-| [brand-preview.png](brand-preview.png) | 原始生成图、SVG与四种托盘状态的尺寸预览 | 浏览器渲染实际资源，包含16／20／24／32像素原尺寸 |
-| [windows-main.png](windows-main.png) | 今日记录、白猫图标及 AI 侧栏 | 0.4.2独立 Windows Tauri／WebView2 进程，Win32 PrintWindow 仅捕获该进程的主窗口 |
-| [memory-light.png](memory-light.png) | 浅色记忆看板 | 实际构建前端，隔离浏览器演示桥 |
-| [memory-dark.png](memory-dark.png) | 深色主题 | 同上，通过界面现有主题变量切换 |
-| [conversation-archive.png](conversation-archive.png) | 会话列表、搜索与重要标记 | 实际前端，合成归档由 Rust SQLite 读取 |
-| [conversation-original.png](conversation-original.png) | 会话原文与继续讨论／整理入口 | 同上 |
-| [learning-review.png](learning-review.png) | 展开的每日摘录及复习配置 | 实际前端，合成报告；未发生真实模型调用或微信投递 |
-| [model-picker.png](model-picker.png) | 模型目录、默认选择和侧栏勾选 | 实际前端与模拟目录响应，不证明已安装或获准调用截图中的模型 |
-| [local-library.png](local-library.png) | 目录、备份、冲突与采集入口 | 实际前端；`D:/Jarvis-Demo/library` 是适配器提供的示例路径 |
-| [data-sync.png](data-sync.png) | 独立同步页面 | 未连接服务器状态；地址／令牌为空，没有真实生产连接 |
-| [wechat-setup.png](wechat-setup.png) | 微信接入入口 | 未绑定／未配对状态；未扫码、未读取账号 |
-| [quick-capture.png](quick-capture.png) | 快捷框中的示例输入 | 实际快捷框组件的元素截图；输入尚未提交，不是操作系统热键的录像证明 |
+所有笔记、会话与报告是专门准备的合成演示资料，存放在隔离SQLite中。侧栏AI文字是预先编写、保存后由本机归档读取的示例，不是实时模型回答。模型列表通过真实原生HTTP请求连接本机临时目录服务，返回演示模型ID，不代表模型已安装或可真实推理。未扫码、未配对、未发送微信；无私人数据、Key、二维码或真实账号。
 
-浏览器演示桥运行与桌面相同的构建后 HTML／CSS／TypeScript，业务数据通过实际 Rust SQLite 驱动；窗口命令、原生文件对话框和模型／网络响应由测试适配器提供。截图没有用设计软件重画、没有拼装聊天成功状态，也没有用上游宣传图代替本项目。
+| 文件 | 实际拍摄内容 |
+| --- | --- |
+| [windows-main.png](windows-main.png) | 新名称、白猫、完整随手记提示与AI侧栏 |
+| [memory-light.png](memory-light.png) | 浅色记忆看板与已归档示例文字 |
+| [memory-dark.png](memory-dark.png) | 通过原生设置切换的深色主题 |
+| [conversation-archive.png](conversation-archive.png) | 本地会话列表 |
+| [conversation-original.png](conversation-original.png) | 原会话阅读与继续讨论入口 |
+| [learning-review.png](learning-review.png) | 展开的每日摘录与间隔复习 |
+| [model-picker.png](model-picker.png) | 原生设置中拉取的本机演示模型目录 |
+| [local-library.png](local-library.png) | 隔离资料目录、备份与采集设置 |
+| [data-sync.png](data-sync.png) | 独立同步页，未连接正式服务器 |
+| [wechat-setup.png](wechat-setup.png) | 未绑定的微信入口与侧栏 |
+| [software-update.png](software-update.png) | 真实渠道检查、版本与自动检查偏好 |
 
-全局快捷键可能与其他运行软件冲突。主窗口顶部显示当前快捷键；本次截图不替代所有安装环境的热键验收。
+没有Mac真机图；Mac编译通过不能代替Mac系统体验验收。图片未拼接成功状态或覆盖文字，关闭当前窗口的快捷键占用提示后再拍摄；具体生效热键以每台电脑设置为准。旧品牌图和浏览器桥图片已从当前图库移除，Git历史仍保留早期提交。
 
-当前没有 Mac 真机截图。Mac 构建通过、界面共享和实际 Mac 系统体验是不同证据；真实微信、真实模型与 Mac 真机验收仍按发布说明处理。
-
-## 重新拍摄
-
-在项目目录先构建前端和隔离驱动：
-
-```sh
-npm ci
-npm run build
-cargo build -p jarvis-workspace --bin workspace-driver
-```
-
-PowerShell 中开启合成资料演示桥：
-
-```powershell
-$env:JARVIS_PUBLIC_DEMO='1'
-node scripts/fusion-browser-fixture.mjs
-```
-
-另开终端，使用已配置的 Playwright CLI：
-
-```sh
-npx @playwright/cli -s=jarvis-docs open http://127.0.0.1:1421
-npx @playwright/cli -s=jarvis-docs run-code --filename scripts/capture-public-docs.js
-```
-
-脚本会生成 10 张前端截图并检查页面异常。截图应逐张人工检查；程序成功不代表可以跳过隐私与素材核对。
-
-Windows 原生截图另外构建 `fusion-preview`，以 `node scripts/seed-public-demo.mjs` 准备独立合成目录，再用仅对该目录生效的 `JARVIS_DESKTOP_DATA_DIR` 启动。恢复演示主窗口后，对核对过的 PID 执行：
-
-```powershell
-& scripts/capture-native-preview.ps1 -PreviewId <演示进程PID> -OutFile docs/screenshots/windows-main.png -WindowTitle '贾维喵管家 · 单页本地版'
-```
-
-不要把用户正在使用的资料库拿来拍公开截图，也不要为截图开启远程调试端口。当前白猫原图为内置imagegen生成，界面／托盘为独立SVG适配，见[品牌来源](../branding.md)。
-
-拍完停止自己启动的演示进程；不退出用户原先的应用。
-
-各 PNG 的尺寸和 SHA-256 见 [manifest.json](manifest.json)。本目录截图为本项目自制演示资料，随本仓库按 AGPL-3.0-only 提供；图中第三方代码、字体与图标继续适用各自许可，见根目录的第三方清单。
+重拍应使用合成资料启动独立fusion-preview实例，打开所需页面，用系统无障碍接口操作，运行scripts/capture-native-preview.ps1只捕获指定进程／窗口。脚本会恢复最小化窗口并限制安装版捕获为隔离测试实例；不要拍摄用户正在使用的资料。manifest.json记录PNG尺寸及SHA-256，node scripts/check-public-docs.mjs核对链接和图片完整性。

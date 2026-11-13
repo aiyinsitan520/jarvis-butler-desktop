@@ -26,14 +26,24 @@ public static class FusionCapture {
  [StructLayout(LayoutKind.Sequential)] public struct Rect {public int Left,Top,Right,Bottom;}
  [DllImport("user32.dll")] public static extern bool GetWindowRect(IntPtr h,out Rect r);
  [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr h,IntPtr dc,uint flags);
- public static IntPtr Largest(uint pid,string title){IntPtr best=IntPtr.Zero;long area=0;EnumWindows((h,p)=>{uint owner;GetWindowThreadProcessId(h,out owner);Rect r;var text=new StringBuilder(256);GetWindowText(h,text,256);if(owner==pid&&(title.Length==0||text.ToString()==title)&&IsWindowVisible(h)&&GetWindowRect(h,out r)){long a=(long)(r.Right-r.Left)*(r.Bottom-r.Top);if(a>area){area=a;best=h;}}return true;},IntPtr.Zero);return best;}
+ [DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr h,int mode);
+ public static IntPtr Largest(uint pid,string title){IntPtr best=IntPtr.Zero;long area=0;EnumWindows((h,p)=>{uint owner;GetWindowThreadProcessId(h,out owner);Rect r;var text=new StringBuilder(256);GetWindowText(h,text,256);if(owner==pid&&(title.Length==0||text.ToString()==title)&&(title.Length>0||IsWindowVisible(h))&&GetWindowRect(h,out r)){long a=(long)(r.Right-r.Left)*(r.Bottom-r.Top);if(a>area){area=a;best=h;}}return true;},IntPtr.Zero);return best;}
 }
 '@
 [FusionCapture]::SetThreadDpiAwarenessContext([IntPtr](-4)) | Out-Null
 $window=[FusionCapture]::Largest($PreviewId,$WindowTitle)
 if($window -eq [IntPtr]::Zero){throw 'The preview has no visible main window.'}
+if(-not [FusionCapture]::IsWindowVisible($window)){
+ [FusionCapture]::ShowWindowAsync($window,9)|Out-Null
+ Start-Sleep -Milliseconds 100
+}
 $rect=New-Object FusionCapture+Rect
 if(-not [FusionCapture]::GetWindowRect($window,[ref]$rect)){throw 'Cannot read preview window size.'}
+if(($rect.Right-$rect.Left) -lt 600 -or ($rect.Bottom-$rect.Top) -lt 120){
+ [FusionCapture]::ShowWindowAsync($window,9)|Out-Null
+ Start-Sleep -Milliseconds 250
+ if(-not [FusionCapture]::GetWindowRect($window,[ref]$rect)){throw 'Cannot read restored preview window size.'}
+}
 $bitmap=New-Object System.Drawing.Bitmap(($rect.Right-$rect.Left),($rect.Bottom-$rect.Top))
 $graphics=[System.Drawing.Graphics]::FromImage($bitmap)
 $dc=$graphics.GetHdc()

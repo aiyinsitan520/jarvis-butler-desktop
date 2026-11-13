@@ -1,106 +1,101 @@
 {
   "date": "2026-11-13",
   "timezone": "Asia/Shanghai",
-  "runtimeVersion": "0.4.2",
-  "runtimeCommit": "see-git-history",
+  "product": "贾维喵管家",
+  "runtimeVersion": "0.4.5",
+  "runtimeCommit": "83ae24a (native preview build, same product UI as final compatibility revision)",
+  "buildType": "Tauri custom-protocol native Windows preview",
   "syntheticData": true,
+  "allProductScreenshotsNative": true,
   "macNativeCapture": false,
   "images": [
     {
-      "file": "brand-preview.png",
-      "width": 1000,
-      "height": 1102,
-      "bytes": 94752,
-      "sha256": "a9fc40ebec0fc0567ee2a1b0a85839170c4e93123c3f8f43527a397d207a96e4",
-      "capture": "Rendered icon contact sheet"
-    },
-    {
       "file": "conversation-archive.png",
-      "width": 1440,
-      "height": 960,
-      "bytes": 228804,
-      "sha256": "0ad9a4dbcda892365f4f40eba768e94847485079873357c814e8659cc221e454",
-      "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
+      "width": 2160,
+      "height": 1350,
+      "bytes": 316871,
+      "sha256": "0cd54b2155642e5e391eb66c658ddab22cba8f27aa28abfe03884ceb3296f8dc",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     },
     {
       "file": "conversation-original.png",
-      "width": 1440,
-      "height": 960,
-      "bytes": 177097,
-      "sha256": "3707985c2aea0c8cbcd01c624432e0abb7678b8bbfb58ce611408ba25d0f1070",
-      "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
+      "width": 2160,
+      "height": 1350,
+      "bytes": 255386,
+      "sha256": "f6dc68fcfc87ef435507aafc916a96215e97f94cb5b5efff9c81dde585cf47f5",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     },
     {
       "file": "data-sync.png",
-      "width": 1440,
-      "height": 960,
-      "bytes": 178332,
-      "sha256": "718542eca5e4a087f4240ed056058a72991c0320953c16b62371fd0c42ef8eaa",
-      "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
+      "width": 2160,
+      "height": 1350,
+      "bytes": 257462,
+      "sha256": "de4500858322f786398c4dfb43f8aa1e38b6f80d646feb6e8b1780bc2b18a7e0",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     },
     {
       "file": "learning-review.png",
-      "width": 1440,
-      "height": 960,
-      "bytes": 178165,
-      "sha256": "e5414985cdd4f12c4710ea6499fc5165ed612c48edd8d606d686ab611ef5c941",
-      "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
+      "width": 2160,
+      "height": 1350,
+      "bytes": 280491,
+      "sha256": "8c8cb2cd986f93b605558c3ae643e0b27fa875cf4b8e3c61307a53037821bc40",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     },
     {
       "file": "local-library.png",
-      "width": 1440,
-      "height": 960,
-      "bytes": 206519,
-      "sha256": "2134f3fcd7b580eeb6a21391ca46d1177073454778be90e1fd50a4964766e38c",
-      "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
+      "width": 1582,
+      "height": 1033,
+      "bytes": 226486,
+      "sha256": "43cb42f3d2cb3b2a4304bd015a6410eb53bba0add1a8909d75523ede26260339",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     },
     {
       "file": "memory-dark.png",
-      "width": 1440,
-      "height": 960,
-      "bytes": 247850,
-      "sha256": "72a2a083cabd2446e5e183dd73c53684ddc90b508e2634fdc31406503e593fd3",
-      "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
+      "width": 2160,
+      "height": 1350,
+      "bytes": 347893,
+      "sha256": "19fdf9b2f0ac80bc91c6c2a681e1c45c7fffe82298d1bf033cdb6a007fcbeaee",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     },
     {
       "file": "memory-light.png",
-      "width": 1440,
-      "height": 960,
-      "bytes": 247015,
-      "sha256": "24e250530029a82ecd17d90695d52006cb208168dc7f2400148cd5a874fb87d1",
-      "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
+      "width": 2160,
+      "height": 1350,
+      "bytes": 351894,
+      "sha256": "f78292faf66b1bca324cd4d97d5f8c0416b9a7b641219b4d75f70a2be3771cc7",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     },
     {
       "file": "model-picker.png",
-      "width": 1440,
-      "height": 960,
-      "bytes": 189518,
-      "sha256": "fc763c9550ec80739159bbacbaf617ffef6f28746c0f9b7bf99347611c5da8f4",
-      "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
+      "width": 2160,
+      "height": 1350,
+      "bytes": 223052,
+      "sha256": "4c9ffc213730ee61762e3c5db3a8106ae97a20939ce87aff4d8d713fe7458424",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     },
     {
-      "file": "quick-capture.png",
-      "width": 640,
-      "height": 193,
-      "bytes": 26358,
-      "sha256": "699c0e6ef2bdafe46cc4f7354c2edf6fbe793a6a88396dd3452d802d3fd27966",
-      "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
+      "file": "software-update.png",
+      "width": 2160,
+      "height": 1350,
+      "bytes": 192935,
+      "sha256": "8f1cb451c16d11009c7e83356e3f49c8348b32287387080c2fe8418b29bd6b80",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     },
     {
       "file": "wechat-setup.png",
-      "width": 1440,
-      "height": 960,
-      "bytes": 200226,
-      "sha256": "e0183e9ae4f90154ce0c61acf688a6846bbfdbeca868f33e1b86d077208e2dc6",
-      "capture": "Built 0.4.2 frontend with isolated Rust SQLite fixture"
+      "width": 2160,
+      "height": 1350,
+      "bytes": 204512,
+      "sha256": "1ce25f6a5d0b962b68baee9275b46a88a92eec7e2ef65c5344736cc36b4a6ad4",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     },
     {
       "file": "windows-main.png",
-      "width": 1800,
-      "height": 1103,
-      "bytes": 235741,
-      "sha256": "ac5f767e64b33a893847ccd518727ac0d62018b21c39644d30d8f780bf157801",
-      "capture": "0.4.2 Windows Tauri/WebView2 process, isolated synthetic data, scoped Win32 PrintWindow"
+      "width": 2160,
+      "height": 1350,
+      "bytes": 249589,
+      "sha256": "c26a75c43ba6bd78e6a74a8ced8b7fb5a78f178c96f174c3e45430295bf3ec2d",
+      "capture": "Actual Windows Tauri/WebView2 window, scoped Win32 PrintWindow, isolated synthetic profile"
     }
   ]
 }

@@ -84,7 +84,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release create "$GITHUB_REF_NAME" --prerelease --title "贾维斯管家 $GITHUB_REF_NAME（测试版）" --notes-file docs/release-notes.md release-assets/* LICENSE THIRD_PARTY_LICENSES.md
+            gh release create "$GITHUB_REF_NAME" --prerelease --title "贾维喵管家 $GITHUB_REF_NAME（测试版）" --notes-file docs/release-notes.md release-assets/* LICENSE THIRD_PARTY_LICENSES.md
           fi
       - name: Promote verified public update channel
         env:

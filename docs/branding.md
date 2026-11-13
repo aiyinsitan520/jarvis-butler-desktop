@@ -14,4 +14,4 @@
 
 使用内置工具，未调用外部代理；图片生成 token 和费用工具未返回，记为未知。
 
-![应用、SVG和四种托盘状态预览](screenshots/brand-preview.png)
+![用户确认的白猫原图](../shared/assets/jarvis-kitten-source.png)

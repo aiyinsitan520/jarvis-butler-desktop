@@ -2,7 +2,53 @@
 ; 卸载时 Tauri 自带一个「删掉数据」的勾（默认不勾，文字在 windows/SimpChinese.nsh）；
 ; 勾上的话 Tauri 删掉 %APPDATA% 和 %LOCALAPPDATA% 下的 app.dingmi。自动更新时（/UPDATE）没有这个勾，也不删
 
+; 0.4.3/0.4.5 updates predate the explicit /D= argument. Product renaming must
+; not change their installation location. Only migrate a verified old install.
+Var JarvisLegacyInstallDir
+!macro NSIS_HOOK_PREINSTALL
+  StrCpy $JarvisLegacyInstallDir ""
+  ${If} $UpdateMode = 1
+    ReadRegStr $R0 SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\贾维斯管家" "InstallLocation"
+    StrCpy $R1 $R0 1
+    StrCpy $R2 $R0 1 -1
+    ${If} $R1 == '$\"'
+    ${AndIf} $R2 == '$\"'
+      StrCpy $R0 $R0 -1 1
+    ${EndIf}
+    ${If} $R0 != ""
+    ${AndIf} ${FileExists} "$R0\${MAINBINARYNAME}.exe"
+      StrCpy $JarvisLegacyInstallDir $R0
+      ClearErrors
+      ${GetOptions} $CMDLINE "/D=" $R1
+      ${If} ${Errors}
+        StrCpy $INSTDIR $JarvisLegacyInstallDir
+        SetOutPath "$INSTDIR"
+      ${EndIf}
+    ${EndIf}
+  ${EndIf}
+!macroend
+
 !macro NSIS_HOOK_POSTINSTALL
+  ${If} $JarvisLegacyInstallDir != ""
+  ${AndIf} $JarvisLegacyInstallDir == $INSTDIR
+    ; Delete only registration/shortcuts belonging to the same verified install.
+    DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\贾维斯管家"
+    DeleteRegKey SHCTX "${MANUKEY}\贾维斯管家"
+    !insertmacro IsShortcutTarget "$DESKTOP\贾维斯管家.lnk" "$INSTDIR\${MAINBINARYNAME}.exe"
+    Pop $0
+    ${If} $0 = 1
+      CreateShortcut "$DESKTOP\${PRODUCTNAME}.lnk" "$INSTDIR\${MAINBINARYNAME}.exe"
+      !insertmacro SetLnkAppUserModelId "$DESKTOP\${PRODUCTNAME}.lnk"
+      Delete "$DESKTOP\贾维斯管家.lnk"
+    ${EndIf}
+    !insertmacro IsShortcutTarget "$SMPROGRAMS\贾维斯管家.lnk" "$INSTDIR\${MAINBINARYNAME}.exe"
+    Pop $0
+    ${If} $0 = 1
+      CreateShortcut "$SMPROGRAMS\${PRODUCTNAME}.lnk" "$INSTDIR\${MAINBINARYNAME}.exe"
+      !insertmacro SetLnkAppUserModelId "$SMPROGRAMS\${PRODUCTNAME}.lnk"
+      Delete "$SMPROGRAMS\贾维斯管家.lnk"
+    ${EndIf}
+  ${EndIf}
   ; 换了图标：让资源管理器重新读图标，不然快捷方式还显示缓存里的旧图标
   System::Call 'shell32::SHChangeNotify(i 0x08000000, i 0, p 0, p 0)'
 !macroend

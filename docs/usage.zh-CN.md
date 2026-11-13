@@ -1,10 +1,10 @@
 # 贾维喵管家使用指南
 
-适用版本：0.4.2 测试版。目标是把快捷记录、AI 对话、原文归档与每日复习放在一个桌面工作台里。第一次使用不需要配置服务器或微信。
+适用版本：0.4.6 测试版。目标是把快捷记录、AI 对话、原文归档与每日复习放在一个桌面工作台里。第一次使用不需要配置服务器或微信。
 
-[下载 Windows／Mac 安装包](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.2-preview.2) · [返回项目首页](../README.md) · [截图来源](screenshots/README.md)
+[下载 Windows／Mac 安装包](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.6-preview.1) · [返回项目首页](../README.md) · [截图来源](screenshots/README.md)
 
-本文插图来自本项目运行的界面，使用合成演示资料；AI 回答、模型列表和回顾内容是示例，不是对真实账号或服务的验收证明。Windows 原生截图与前端演示桥截图分别标注，未提供 Mac 真机截图。
+本文产品插图均来自0.4.5版真实Windows原生窗口，使用合成演示资料；AI文字、模型目录和回顾内容是示例，微信未绑定。没有Mac真机图片，详见截图来源。
 
 ## 软件更新
 
@@ -18,8 +18,8 @@
 
 | 你的电脑 | 下载文件 | 打开方式 |
 | --- | --- | --- |
-| Windows x64 | `JarvisButler-0.4.2-Windows-x64-setup.exe` | 安装后从开始菜单打开“贾维喵管家” |
-| Mac M1／M2／M3 等 Apple Silicon | `JarvisButler-0.4.2-macOS-AppleSilicon.dmg` | 双击 DMG，把应用拖入 Applications 后打开 |
+| Windows x64 | `JarvisButler-0.4.6-Windows-x64-setup.exe` | 安装后从开始菜单打开“贾维喵管家” |
+| Mac M1／M2／M3 等 Apple Silicon | `JarvisButler-0.4.6-macOS-AppleSilicon.dmg` | 双击 DMG，把应用拖入 Applications 后打开 |
 
 `Source code` 是源码压缩包，普通使用者选择 EXE 或 DMG。Intel Mac 不在本次安装包支持范围。
 
@@ -31,7 +31,7 @@
 
 ## 2. 认识主面板
 
-![记忆看板与右侧助手：实际前端界面，合成演示资料](screenshots/memory-light.png)
+![记忆看板与右侧助手：Windows原生窗口，合成演示资料](screenshots/memory-light.png)
 
 左侧“今天／提醒／笔记本”用于日常记录；“学习与记忆”下面是记忆看板、AI 会话、灵感和学习回顾。右侧在“贾维喵 AI”和“微信 IM”之间切换。绿色双眼按钮可收起／展开助手，眼神会跟随鼠标。
 
@@ -47,7 +47,7 @@
 
 Windows 默认 `Alt+Space` 打开快捷框，`Ctrl+Alt+N` 打开快速笔记；也可点击顶部“快捷框”。Mac 默认对应 `Option+Space`、`Command+Option+N`，仍需真机核验。遇到占用时会提示，实际生效的组合键以页面显示为准，可在“设置 → 快捷键”修改。
 
-![快捷框实际组件截图：输入示例，尚未提交](screenshots/quick-capture.png)
+![新版主面板随手记入口，提示完整显示](screenshots/windows-main.png)
 
 在快捷框输入一句话，检查下方的动作和时间，再确认保存。输入“明天”之类的时间词可能被识别为提醒；如果只想留笔记，选择“只记成笔记”，不要直接按默认动作提交。上下方向键切换候选，界面会显示当前可用的 Enter／Tab 操作提示。
 

@@ -6,11 +6,11 @@
 
 保留 [Dingmi](https://github.com/qingzo/dingmi) 的主面板、快捷记录与主题，融合 Jarvis Butler 的知识管理能力。一个窗口写笔记、看待办，在右侧与 AI 对话；把重要会话归档，第二天继续复习。
 
-[下载 Windows／Mac 测试版](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.2-preview.2) · [完整中文使用指南](docs/usage.zh-CN.md) · [功能与用法](#功能与用法) · [实际界面图库](#实际界面图库) · [来源与许可](#来源与许可)
+[下载 Windows／Mac 测试版](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.6-preview.1) · [完整中文使用指南](docs/usage.zh-CN.md) · [功能与用法](#功能与用法) · [实际界面图库](#实际界面图库) · [来源与许可](#来源与许可)
 
-![记忆看板与 AI 侧栏，运行中的项目实际前端，合成演示资料](docs/screenshots/memory-light.png)
+![贾维喵管家新版 Windows 实机：随手记、白猫与 AI 侧栏](docs/screenshots/windows-main.png)
 
-*实际运行的项目界面，内容为合成演示资料。上图来自构建后的前端与隔离 Rust 数据桥；图库另含 Windows 原生窗口截图。AI 回答、模型目录及回顾为示例，微信保持未绑定，不是实际服务验收证明。详见[截图来源](docs/screenshots/README.md)。*
+*本页产品界面图均来自 0.4.5 版在 Windows／WebView2 中运行的真实原生窗口。笔记、AI 对话和学习报告为专门编写的合成演示资料，模型目录由本机测试服务提供，微信未绑定。详见[拍摄来源](docs/screenshots/README.md)。*
 
 ## 适合用来做什么
 
@@ -24,8 +24,8 @@
 
 | 平台 | 安装包 | 状态 |
 | --- | --- | --- |
-| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.2-preview.2/JarvisButler-0.4.2-Windows-x64-setup.exe) | 构建与自动化测试通过；0.4.1安装／重装保留资料已验证，0.4.2安装流程未重测 |
-| Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.2-preview.2/JarvisButler-0.4.2-macOS-AppleSilicon.dmg) | 构建与自动化测试通过；真机体验待验收，未公证 |
+| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-Windows-x64-setup.exe) | 构建与自动化测试通过；旧名0.4.3升级保留资料正在验收，见更新说明 |
+| Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-macOS-AppleSilicon.dmg) | 构建与自动化测试通过；真机体验待验收，未公证 |
 
 Windows 安装后从开始菜单打开；Mac 把应用从 DMG 拖入 Applications。当前均为测试包，Windows 无商业代码签名，Mac 使用 ad-hoc 签名；按系统正常的安全审批流程决定是否打开，不关闭系统保护。Intel Mac 暂无本版安装包。
 
@@ -56,7 +56,7 @@ Windows 安装后从开始菜单打开；Mac 把应用从 DMG 拖入 Application
 
 ### 快捷记录
 
-![快捷框实际组件，示例输入未提交](docs/screenshots/quick-capture.png)
+![新版主面板的随手记入口，提示完整显示](docs/screenshots/windows-main.png)
 
 Windows 默认 `Alt+Space` 打开快捷框、`Ctrl+Alt+N` 打开快速笔记。Mac 配置默认 `Option+Space`、`Command+Option+N`，仍需真机核验。占用时提示并允许修改，以页面显示的实际快捷键为准。
 
@@ -86,11 +86,11 @@ ChatGPT／Claude 网页版通过官方导出文件导入；本地 CLI 工具在�
 
 ## 实际界面图库
 
-新图标：白色小猫。前端与 Windows 原生截图均已更新为0.4.2白猫版。
+产品现名“贾维喵管家”，保留你确认的白猫图标。以下为 0.4.5 版 Windows 原生窗口的新截图。
 
-![新图标与小尺寸托盘适配](docs/screenshots/brand-preview.png)
+![新版记忆看板与 AI 侧栏](docs/screenshots/memory-light.png)
 
-点击图片可查看原图。以下页面来自构建后的实际前端，以隔离 Rust SQLite 和合成资料驱动；模型／网络与原生对话框使用演示适配。不是 Figma 设计稿，也不是 Mac 真机或真实微信送达截图。
+点击图片可看原尺寸。全部产品截图通过 Win32 PrintWindow 捕获真实 Tauri 窗口，资料由本机 SQLite 读取，未使用浏览器演示桥截图。图内内容为隔离演示数据；没有 Mac 真机图，也没有真实微信送达或真实模型推理的成功截图。
 
 | 模型选择 | 会话原文与来源 |
 | --- | --- |
@@ -103,7 +103,7 @@ ChatGPT／Claude 网页版通过官方导出文件导入；本地 CLI 工具在�
 <details>
 <summary>Windows 原生窗口、会话列表与微信设置</summary>
 
-Windows 原生 Tauri／WebView2 窗口（0.4.1旧图标历史截图）：独立演示实例，1800×1100。截图保留了真实发生的快捷键占用提示，说明占用时会提示调整；没有使用私人笔记或模型账号。
+新版 Windows Tauri／WebView2 原生窗口，2160×1350，150%显示缩放。使用独立资料目录；未读取私人会话、账号或接口凭据。
 
 ![Windows 原生窗口，白猫图标、今日记录与 AI 侧栏，合成演示资料](docs/screenshots/windows-main.png)
 
@@ -111,9 +111,9 @@ Windows 原生 Tauri／WebView2 窗口（0.4.1旧图标历史截图）：独立�
 
 ![本机会话列表](docs/screenshots/conversation-archive.png)
 
-微信配置页保持未绑定／未配对：
+微信入口保持未绑定／未配对：
 
-![微信未绑定设置页](docs/screenshots/wechat-setup.png)
+![微信未绑定入口](docs/screenshots/wechat-setup.png)
 
 </details>
 
