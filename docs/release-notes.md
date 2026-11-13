@@ -1,30 +1,17 @@
-# 贾维斯管家 0.4.1 测试版
+# 贾维斯管家 0.4.2 测试版
 
-基于 Dingmi 1.0.8 的 AGPL-3.0-only 衍生版本，融合 Jarvis Butler 的 MIT 知识管理代码。原作者未为本版本背书。源码、构建说明和第三方声明与版本标签一起提供。
+新品牌图标：绿色书签芽机器人。应用安装图标来自本项目内置图片生成工具；主界面、助手形象及16–32像素托盘使用同一设计的简化SVG适配。保留鼠标眼神跟随，并分别提供正常、专注、提醒、错误状态。
 
-- 模型选择改为当前配置一键拉取、搜索、点击设为默认和勾选侧栏切换，兼容 OpenAI／反代／Ollama。无需先保存或填写默认模型；新接口不会收到旧接口的 Key。
-- Windows x64：下载 EXE 安装包。
-- Mac Apple Silicon：下载 DMG，拖入 Applications。Intel Mac 不在本次支持范围。
-- 新增本地资料页、资料目录迁移、Markdown 双向编辑和冲突处理。
-- 新增授权目录内 Codex／Claude Code／Gemini CLI 会话采集、每日学习报告和微信投递状态。
+- Windows x64：EXE安装包；Mac Apple Silicon：DMG，拖入Applications。
+- 一键拉取模型、搜索点选、默认模型与侧栏切换保留。
+- 本地Markdown资料库、会话采集、学习回顾、微信与服务器独立设置保留。
+- [功能截图与使用指南](https://github.com/aiyinsitan520/jarvis-butler-desktop#readme)
+- [新图标来源与生成说明](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/branding.md)
 
-这是测试版：Windows 安装包没有商业代码签名；Mac 使用 ad-hoc 签名，未完成 Developer ID 签名和苹果公证，首次打开可能被 Gatekeeper 拦截。请通过系统正常的安全审批流程决定是否打开；不要求关闭系统保护。
+![书签芽机器人](https://raw.githubusercontent.com/aiyinsitan520/jarvis-butler-desktop/main/shared/assets/jarvis-sprout-source.png)
 
-Mac 真机的中文输入、睡眠唤醒、快捷键、安装卸载体验仍待用户验收。真实微信扫码、协议主动推送限制和真实模型效果需要本人配置验证。CI 构建和模拟测试不代表这些环节已完成。
+基于Dingmi 1.0.8，融合Jarvis Butler的MIT部分，整体AGPL-3.0-only。新图标不包含上游团子猫、Islenote标志或网上下载的第三方角色。原作者未为本版本背书；生成图标不代表已完成商标检索。
 
-资料在本机以 SQLite／Markdown 明文保存，请使用系统账户与磁盘保护。云端模型会收到用户授权的会话摘录；选择 Ollama 可在本机推理。运行中的数据库不支持网盘跨设备直接同步。当前 VPS 功能继续使用独立的数据同步页面。
+Windows包无商业代码签名；Mac为ad-hoc签名且未公证，使用系统正常安全审批流程，不关闭系统保护。Mac真机、真实微信与模型仍需本人配置验收。资料为本机明文；云端模型会收到授权内容，运行中的SQLite不支持直接用网盘跨设备同步。
 
-构建与验证：本标签对应fd5a9d3。Windows及Apple Silicon的前端、核心、原生库、共享服务兼容、许可证和源码审核均通过。Windows最终安装包已实际安装、启动、卸载、重装，保留测试数据库；下载后的双平台SHA-256核对通过。Mac真机体验与真实微信／模型仍按上文边界验收。
-
-[对应源码](https://github.com/aiyinsitan520/jarvis-butler-desktop/tree/v0.4.1-preview.1) · [构建记录](https://github.com/aiyinsitan520/jarvis-butler-desktop/actions/runs/43421072269)
-
-
-## 功能截图与上手说明
-
-已补充本项目自制的11张运行截图、功能总览与完整中文指南，涵盖快捷记录、模型拉取／选择、会话原文、每日回顾、目录迁移、备份恢复、同步与微信入口。
-
-- [图文项目首页](https://github.com/aiyinsitan520/jarvis-butler-desktop#readme)
-- [完整中文使用指南](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/usage.zh-CN.md)
-- [截图来源与复现方法](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/screenshots/README.md)
-
-截图使用合成演示资料：1张为Windows原生窗口，10张为实际构建前端与隔离Rust数据桥；模型目录、AI问答和回顾为示例，微信保持未绑定，不代表真实服务已验收。未提供Mac真机截图。
+安装后若系统仍显示旧图标，退出应用再重开，并从开始菜单重新固定快捷方式；Windows图标缓存可能延迟刷新。源码及构建记录对应本Release的版本标签，不移动旧版本标签。

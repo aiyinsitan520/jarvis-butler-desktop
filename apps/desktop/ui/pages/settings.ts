@@ -996,7 +996,7 @@ function termsSub(t: { sub?: string }, d: TermsDoc | undefined): string | undefi
 async function aboutHtml() {
   if (true) {
     const version = await getVersion();
-    return `<div class="about-top">${appIcon(56)}<div><h4>贾维斯管家 ${esc(version)}</h4><p>基于 Dingmi 1.0.8，融合 Jarvis Butler 知识管理。</p></div></div><div class="srows"><p>AGPL-3.0-only · 保留上游与第三方版权声明。上游作者未为本版本背书。</p><p>本版使用原创纸页轨道图标与助手形象，不包含 Dingmi 团子猫或 Islenote 标志。</p><p>自动更新及上游收费同步已关闭。共享资料、模型、微信和只读记忆看板在知识工作台中配置。</p><button class="btn" id="jarvis-open-settings">打开知识工作台</button></div>`;
+    return `<div class="about-top">${appIcon(56)}<div><h4>贾维斯管家 ${esc(version)}</h4><p>基于 Dingmi 1.0.8，融合 Jarvis Butler 知识管理。</p></div></div><div class="srows"><p>AGPL-3.0-only · 保留上游与第三方版权声明。上游作者未为本版本背书。</p><p>本版使用原创书签芽机器人图标与助手形象，不包含 Dingmi 团子猫或 Islenote 标志。</p><p>自动更新及上游收费同步已关闭。共享资料、模型、微信和只读记忆看板在知识工作台中配置。</p><button class="btn" id="jarvis-open-settings">打开知识工作台</button></div>`;
   }
 
   const A = ROWS.about;

@@ -1,5 +1,7 @@
 # 贾维斯管家
 
+<img src="shared/assets/jarvis-sprout-source.png" alt="原创书签芽机器人图标" width="112" />
+
 **把随手记录、AI 会话和每天的学习回顾，放进一个本地桌面工作台。**
 
 保留 [Dingmi](https://github.com/qingzo/dingmi) 的主面板、快捷记录与主题，融合 Jarvis Butler 的知识管理能力。一个窗口写笔记、看待办，在右侧与 AI 对话；把重要会话归档，第二天继续复习。
@@ -84,6 +86,10 @@ ChatGPT／Claude 网页版通过官方导出文件导入；本地 CLI 工具在�
 
 ## 实际界面图库
 
+新图标：绿色书签芽机器人。前端截图已更新为0.4.2；旧原生截图在下方折叠区标注版本。
+
+![新图标与小尺寸托盘适配](docs/screenshots/brand-preview.png)
+
 点击图片可查看原图。以下页面来自构建后的实际前端，以隔离 Rust SQLite 和合成资料驱动；模型／网络与原生对话框使用演示适配。不是 Figma 设计稿，也不是 Mac 真机或真实微信送达截图。
 
 | 模型选择 | 会话原文与来源 |
@@ -97,7 +103,7 @@ ChatGPT／Claude 网页版通过官方导出文件导入；本地 CLI 工具在�
 <details>
 <summary>Windows 原生窗口、会话列表与微信设置</summary>
 
-Windows 原生 Tauri／WebView2 窗口：独立演示实例，1800×1100。截图保留了真实发生的快捷键占用提示，说明占用时会提示调整；没有使用私人笔记或模型账号。
+Windows 原生 Tauri／WebView2 窗口（0.4.1旧图标历史截图）：独立演示实例，1800×1100。截图保留了真实发生的快捷键占用提示，说明占用时会提示调整；没有使用私人笔记或模型账号。
 
 ![Windows 原生窗口，合成资料和实际快捷键冲突提示](docs/screenshots/windows-main.png)
 
@@ -159,4 +165,4 @@ Mac：`npx tauri build --ci --target aarch64-apple-darwin --bundles dmg --config
 
 [来源与修改记录](UPSTREAM.md) · [Jarvis MIT 声明](licenses/JARVIS-MIT.txt) · [第三方清单](THIRD_PARTY_LICENSES.md)
 
-应用图标、托盘图标和纸页轨道伙伴为本版原创。未使用 Dingmi 受限团子猫、上游宣传截图或 Islenote 提取素材；本页截图由本项目自行拍摄。模型选择交互参考 CC Switch，组件为独立实现。原作者未为本版背书；“贾维斯管家”名称采用不代表商标核验已完成。
+本版使用自行生成的书签芽机器人图标与独立编写的SVG／托盘适配，来源与生成方式见[品牌说明](docs/branding.md)。未使用 Dingmi 受限团子猫、上游宣传截图或 Islenote 提取素材；本页截图由本项目自行拍摄。模型选择交互参考 CC Switch，组件为独立实现。原作者未为本版背书；“贾维斯管家”名称采用不代表商标核验已完成。

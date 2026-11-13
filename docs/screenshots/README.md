@@ -1,10 +1,11 @@
 # 实际界面截图与来源
 
-拍摄日期：2026-11-13（Asia/Shanghai）。界面版本：0.4.1，对应运行代码 `fd5a9d3`。全部笔记、会话、模型目录与报告均为专门编写的合成演示资料，不包含真实账号、接口 Key、微信二维码或私人会话。
+拍摄日期：2026-11-13（Asia/Shanghai）。前端截图已更新为0.4.2书签芽机器人；Windows原生窗口图保留0.4.1（`fd5a9d3`）历史版本，便于对照。全部笔记、会话、模型目录与报告均为专门编写的合成演示资料，不包含真实账号、接口 Key、微信二维码或私人会话。
 
 | 文件 | 内容 | 拍摄方式 |
 | --- | --- | --- |
-| [windows-main.png](windows-main.png) | 记忆看板、AI 侧栏及真实快捷键占用提示 | 独立 Windows Tauri／WebView2 进程，Win32 PrintWindow 仅捕获该进程的主窗口 |
+| [brand-preview.png](brand-preview.png) | 原始生成图、SVG与四种托盘状态的尺寸预览 | 浏览器渲染实际资源，包含16／20／24／32像素原尺寸 |
+| [windows-main.png](windows-main.png) | 记忆看板、AI 侧栏及真实快捷键占用提示 | 0.4.1历史独立 Windows Tauri／WebView2 进程，Win32 PrintWindow 仅捕获该进程的主窗口 |
 | [memory-light.png](memory-light.png) | 浅色记忆看板 | 实际构建前端，隔离浏览器演示桥 |
 | [memory-dark.png](memory-dark.png) | 深色主题 | 同上，通过界面现有主题变量切换 |
 | [conversation-archive.png](conversation-archive.png) | 会话列表、搜索与重要标记 | 实际前端，合成归档由 Rust SQLite 读取 |
@@ -54,6 +55,8 @@ Windows 原生截图另外构建 `fusion-preview`，以 `node scripts/seed-publi
 & scripts/capture-native-preview.ps1 -PreviewId <演示进程PID> -OutFile docs/screenshots/windows-main.png -WindowTitle '贾维斯管家 · 单页本地版'
 ```
 
-不要把用户正在使用的资料库拿来拍公开截图，也不要为截图开启远程调试端口。拍完停止自己启动的演示进程；不退出用户原先的应用。
+不要把用户正在使用的资料库拿来拍公开截图，也不要为截图开启远程调试端口。当前机器人原图为内置imagegen生成，界面／托盘为独立SVG适配，见[品牌来源](../branding.md)。
+
+拍完停止自己启动的演示进程；不退出用户原先的应用。
 
 各 PNG 的尺寸和 SHA-256 见 [manifest.json](manifest.json)。本目录截图为本项目自制演示资料，随本仓库按 AGPL-3.0-only 提供；图中第三方代码、字体与图标继续适用各自许可，见根目录的第三方清单。

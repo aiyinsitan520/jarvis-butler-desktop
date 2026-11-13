@@ -196,6 +196,6 @@ ChatGPT 等网页账号没有被本程序自动登录或实时抓取，仍通过
 
 本地资料是明文 SQLite／Markdown，系统凭据存储保护 API Key 与微信认证，不代表所有笔记都已加密。自行保管系统账户、磁盘和备份。云端模型与自建服务器的可见范围不同，开启前确认分享范围。
 
-整体按 AGPL-3.0-only 开源，保留 Dingmi、Jarvis MIT、字体和其他依赖声明。本版使用原创图标与纸页轨道伙伴，未使用上游受限团子猫或 Islenote 提取素材；原作者未为本版背书。详见 [来源说明](../UPSTREAM.md) 与 [第三方许可](../THIRD_PARTY_LICENSES.md)。
+整体按 AGPL-3.0-only 开源，保留 Dingmi、Jarvis MIT、字体和其他依赖声明。本版使用自行生成的书签芽机器人与独立SVG适配，未使用上游受限团子猫或 Islenote 提取素材；原作者未为本版背书。详见 [来源说明](../UPSTREAM.md) 与 [第三方许可](../THIRD_PARTY_LICENSES.md)。
 
 自动化与构建证据见 [验证记录](validation-0.4.0.md)。Windows 最终安装／卸载／重装保留测试资料已检查；Mac 构建和测试通过不等于真机交互、真实微信或真实模型服务已经验收。

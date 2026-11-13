@@ -13,3 +13,5 @@
 2026-11-13 0.4.0 修改：可迁移Markdown资料库、会话采集、学习报告、Mac Keychain／菜单／路径／启动器／通知适配与CI。应用及手机网页图标均由原创shared/mascot.ts重新生成；apps/server/web/app.html由本版mobile源码重新构建，替换上游旧内嵌图形。保留字体OFL与第三方许可全文；原更新公钥仅为遗留验证测试的公开材料，默认no-update禁止上游更新。
 
 0.4.1 模型选择交互参考 farion1231/cc-switch（MIT）的 ModelInputWithFetch／FetchedModelPicker：获取、搜索、点选回填与可选模型勾选。本版独立实现组件及原生接口，没有复制该项目代码或品牌素材。参考 https://github.com/farion1231/cc-switch/tree/main/src/components/providers/forms 。
+
+2026-11-13 图标更新：原纸页轨道图标替换为内置image_gen生成的书签芽机器人，原图与提示词纳入shared/assets；shared/mascot.ts提供独立SVG适配及状态托盘。旧纸页轨道说明为历史版本记录；当前生成方式与范围见docs/branding.md。
