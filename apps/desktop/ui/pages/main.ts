@@ -2478,6 +2478,7 @@ $("#modal").addEventListener("mousedown", (e) => {
   api.noteWindows().then(noteWins).catch(() => {});
   listen<UpdateStatus>("update-status", (e) => {
     document.body.dataset.updateInstalling=String(e.payload.state==="installing");
+    document.querySelector(".shell")?.toggleAttribute("inert",e.payload.state==="installing");
     S.update = e.payload;
     renderUpdate();
   });

@@ -1,7 +1,16 @@
 param([Parameter(Mandatory=$true)][int]$PreviewId,[string]$OutFile='output/playwright/fusion-native.png',[string]$WindowTitle='')
 $ErrorActionPreference='Stop'
 $previewProcess=Get-Process -Id $PreviewId
-if ($previewProcess.ProcessName -notlike '*fusion*') { throw 'Only an isolated fusion preview may be captured.' }
+if ($previewProcess.ProcessName -notlike '*fusion*') {
+    $projectRoot=Split-Path -Parent $PSScriptRoot
+    $fixtureFile=Join-Path $projectRoot 'output/updater-installed-test.json'
+    if($previewProcess.ProcessName -ne 'jarvis-desktop' -or -not(Test-Path -LiteralPath $fixtureFile)){throw 'Only an isolated Jarvis preview or installer fixture may be captured.'}
+    $fixture=Get-Content -LiteralPath $fixtureFile -Raw -Encoding UTF8|ConvertFrom-Json
+    $allowedRoot=[IO.Path]::GetFullPath((Join-Path $projectRoot 'output'))+[IO.Path]::DirectorySeparatorChar
+    if($fixture.pid -ne $PreviewId -or $fixture.exe -ne $previewProcess.Path -or -not([IO.Path]::GetFullPath($fixture.exe).StartsWith($allowedRoot,[StringComparison]::OrdinalIgnoreCase))){throw 'Installed capture target is not the isolated fixture.'}
+    $pointer=Get-Content -LiteralPath (Join-Path $env:APPDATA 'org.jarvis.butler.desktop/profile.json') -Raw -Encoding UTF8|ConvertFrom-Json
+    if($pointer.testOwner -ne 'jarvis-updater-e2e-20261113' -or $pointer.dataDir -ne $fixture.root){throw 'Installed screenshot profile is not isolated.'}
+}
 Add-Type -AssemblyName System.Drawing
 Add-Type -TypeDefinition @'
 using System;

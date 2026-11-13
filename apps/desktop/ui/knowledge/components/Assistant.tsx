@@ -45,7 +45,7 @@ export function AssistantPanel() {
   const [messages, setMessages] = useState<ChatMessage[]>([])
   const session=useRef<Session>({id:crypto.randomUUID(),title:'新对话',source:'贾维喵',createdAt:Date.now(),updatedAt:Date.now(),messages:[]})
   const [loaded,setLoaded]=useState(false)
-  useEffect(()=>{let active=true;void readArchive().then(a=>{if(!active)return;const last=a.sessions.filter(s=>s.source==='贾维喵').sort((a,b)=>b.updatedAt-a.updatedAt)[0];if(last){session.current=last;setMessages(last.messages)}setLoaded(true)}).catch(e=>setError(String(e)));return()=>{active=false}},[])
+  useEffect(()=>{let active=true;void readArchive().then(a=>{if(!active)return;const last=a.sessions.filter(s=>['贾维喵','贾维斯'].includes(s.source)).sort((a,b)=>b.updatedAt-a.updatedAt)[0];if(last){session.current=last;setMessages(last.messages)}setLoaded(true)}).catch(e=>setError(String(e)));return()=>{active=false}},[])
   useEffect(()=>{const load=(event:Event)=>{if(controller.current)return;const s=(event as CustomEvent<Session>).detail;session.current={...s,id:s.source==='贾维喵'?s.id:crypto.randomUUID(),source:'贾维喵'};setMessages(s.messages);setInput('');setError('');show()};window.addEventListener('fusion-chat-load',load);return()=>window.removeEventListener('fusion-chat-load',load)},[])
   async function persist(xs:ChatMessage[]){session.current={...session.current,title:xs[0]?.content.split('\n')[0]?.slice(0,80)||'新对话',updatedAt:Date.now(),messages:xs.filter((m):m is Session['messages'][number]=>m.role!=='system'&&!!m.content)};await saveSession(session.current)}
   const [input, setInput] = useState('')
