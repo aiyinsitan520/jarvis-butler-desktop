@@ -15,12 +15,18 @@ if ($Check) {
     Write-Output "ISOLATED_DATA: $previewDir"
     exit 0
 }
+$activeDataDir = $previewDir
+$profileFile = Join-Path $previewDir 'profile.json'
+if (Test-Path -LiteralPath $profileFile -PathType Leaf) {
+    $profile = Get-Content -LiteralPath $profileFile -Raw -Encoding UTF8 | ConvertFrom-Json
+    if ($profile.dataDir -and (Test-Path -LiteralPath $profile.dataDir -PathType Container)) { $activeDataDir = [string]$profile.dataDir }
+}
 $created = $false
 $previewMutex = New-Object System.Threading.Mutex($true, 'Local\JarvisButlerDesktop-LocalWorkbench', [ref]$created)
 if (-not $created) {
     $previewMutex.Dispose()
     . (Join-Path $PSScriptRoot 'show-preview.ps1')
-    if (Show-JarvisPreview -Executables $allowedApps -DataDirectory $previewDir) {
+    if (Show-JarvisPreview -Executables $allowedApps -DataDirectory $activeDataDir) {
         Write-Output 'EXISTING_WINDOW_SHOWN'
         exit 0
     }
