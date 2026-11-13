@@ -9,13 +9,13 @@ const md = (ymd: string) => `${Number(ymd.slice(5, 7))} 月 ${Number(ymd.slice(8
 export const T = {
   /** index.html 里 data-t / data-tt / data-tp 用的 */
   ui: {
-    brand: "贾维斯管家",
+    brand: "贾维喵管家",
     search: "搜索笔记和提醒",
     searchTip: "笔记和提醒一起搜（Ctrl + K）",
     syncTip: "同步的情况，点一下去设置",
     min: "最小化",
     max: "最大化",
-    close: "关到托盘（贾维斯管家还在右下角）",
+    close: "关到托盘（贾维喵管家还在右下角）",
     today: "今天",
     reminders: "提醒",
     notes: "笔记本",
@@ -56,7 +56,7 @@ export const T = {
   deleted: "删掉了",
   deletedToTrash: "删掉了，在回收站里",
   sureDel: "再点一次删掉",
-  version: (v: string) => `贾维斯管家 ${v} · 设置 → 关于 里可以检查更新`,
+  version: (v: string) => `贾维喵管家 ${v} · 设置 → 关于 里可以检查更新`,
   testCopy: "测试",
 
   // 时间
@@ -286,7 +286,7 @@ export const T = {
 
   // 顶上的横幅
   bn: {
-    newVer: (v: string) => `贾维斯管家有新版本 ${v} 了`,
+    newVer: (v: string) => `贾维喵管家有新版本 ${v} 了`,
     downloading: (v: string, p: number) => `正在下载新版本 ${v}…（${p}%）`,
     ready: (v: string) => `新版本 ${v} 下载好了，重启一下就是新版`,
     notes: "看看更新了什么",
@@ -301,29 +301,29 @@ export const T = {
     lost: "我找不到同步文件夹了",
     lostWhy: "可能是网盘没登录、文件夹被移走或者改了名。你的数据都在，找回来我就接着同步。",
     look: "去看看",
-    // 贾维斯管家同步（需求-1.0 第 18.4 节）
-    expiring: (n: number) => (n <= 0 ? "贾维斯管家同步今天到期，续费就接着用" : n === 1 ? "贾维斯管家同步明天到期，续费就接着用" : `贾维斯管家同步还有 ${n} 天到期，续费就接着用`),
-    expired: "贾维斯管家同步已到期，同步停了",
+    // 贾维喵管家同步（需求-1.0 第 18.4 节）
+    expiring: (n: number) => (n <= 0 ? "贾维喵管家同步今天到期，续费就接着用" : n === 1 ? "贾维喵管家同步明天到期，续费就接着用" : `贾维喵管家同步还有 ${n} 天到期，续费就接着用`),
+    expired: "贾维喵管家同步已到期，同步停了",
     expiredWhy: (del: string | null) => `这台电脑上的数据都在。${del ? `${del}（含这一天）之前` : "30 天内"}续费就接着同步。`,
-    deleted: "贾维斯管家同步服务器上的数据已经删了",
+    deleted: "贾维喵管家同步服务器上的数据已经删了",
     deletedWhy: "续费后当新开通，这台电脑上的会重新传上去。",
     renew: "续费",
     toSettings: "去设置",
     close: "知道了",
     // 协议重大修改的通知（需求-1.x 第 36.6 节、U19「协议重大修改的通知」）：只通知一次，点「知道了」就没了
-    termsName: { terms: "《贾维斯管家用户协议》", privacy: "《隐私说明》", sync_terms: "《贾维斯管家同步服务协议》" },
+    termsName: { terms: "《贾维喵管家用户协议》", privacy: "《隐私说明》", sync_terms: "《贾维喵管家同步服务协议》" },
     /** 还没生效 / 已经生效了；ymd 是生效日 YYYY-MM-DD */
     termsSoon: (doc: string, ymd: string) => `${doc}${md(ymd)}起有变化`,
     termsLive: (doc: string, ymd: string) => `${doc}${md(ymd)}起有了变化`,
-    /** 正文：后台写的那段话后面接「不同意怎么办」。贾维斯管家同步能停用、退还剩下的时长；另外两份就是不再用贾维斯管家 */
+    /** 正文：后台写的那段话后面接「不同意怎么办」。贾维喵管家同步能停用、退还剩下的时长；另外两份就是不再用贾维喵管家 */
     termsWhatIf: (sync: boolean, started: boolean) =>
       sync
         ? started
-          ? "已经生效。不同意的话，可以停用贾维斯管家同步、退还剩下的时长。"
-          : "不同意的话，可以在那之前停用贾维斯管家同步、退还剩下的时长。"
+          ? "已经生效。不同意的话，可以停用贾维喵管家同步、退还剩下的时长。"
+          : "不同意的话，可以在那之前停用贾维喵管家同步、退还剩下的时长。"
         : started
-          ? "已经生效。不同意的话，可以停止使用贾维斯管家。"
-          : "不同意的话，可以在那之前停止使用贾维斯管家。",
+          ? "已经生效。不同意的话，可以停止使用贾维喵管家。"
+          : "不同意的话，可以在那之前停止使用贾维喵管家。",
     termsRead: "看看全文",
     termsOk: "知道了",
   },
@@ -341,9 +341,9 @@ export const T = {
     keysRetry: "正在重试读钥匙",
     /** 连上了，但服务器不收上传的（比如空间满了），原因在 error 里 */
     pushFail: "没传上去",
-    /** 贾维斯管家同步（需求-1.0 第 18.4 节） */
+    /** 贾维喵管家同步（需求-1.0 第 18.4 节） */
     expiring: (n: number) => (n <= 0 ? "今天到期" : n === 1 ? "明天到期" : `还有 ${n} 天到期`),
-    expired: "贾维斯管家同步已到期",
+    expired: "贾维喵管家同步已到期",
     deleted: "要重新开通",
   },
 };

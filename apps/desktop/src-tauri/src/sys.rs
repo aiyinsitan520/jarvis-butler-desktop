@@ -78,7 +78,7 @@ pub fn dark_mode() -> bool {
     false
 }
 
-/// 按 Alt、Alt + 空格时不在窗口左上角弹出系统菜单（还原、移动、最小化、关闭那个）。贾维斯管家的窗口都没有标题栏，
+/// 按 Alt、Alt + 空格时不在窗口左上角弹出系统菜单（还原、移动、最小化、关闭那个）。贾维喵管家的窗口都没有标题栏，
 /// 网页里的按键还会交给窗口，Windows 就把系统菜单弹在左上角。Alt + F4 关窗口不走这里，照旧。
 /// Alt + 空格网页里收不到（WebView2 直接交给窗口当成打开系统菜单），这里转给网页：发 alt-space，带上按着的组合键，
 /// 比如 "Alt+Space"、"Ctrl+Alt+Space"（录快捷键时用）
@@ -182,7 +182,7 @@ pub fn file_drops(w: &tauri::WebviewWindow) {
 #[cfg(not(windows))]
 pub fn file_drops(_: &tauri::WebviewWindow) {}
 
-/// 贾维斯管家的窗口不是浏览器：右键不弹 WebView2 自带的菜单（后退、刷新、另存为、打印……），能打字的地方照样有剪切、复制、粘贴；
+/// 贾维喵管家的窗口不是浏览器：右键不弹 WebView2 自带的菜单（后退、刷新、另存为、打印……），能打字的地方照样有剪切、复制、粘贴；
 /// 网页自己做的右键菜单（快捷框）在网页里 preventDefault，不走到这里。
 /// 浏览器的快捷键（F5 / Ctrl+R 刷新、Ctrl+P 打印、Alt+← 后退、Ctrl+F 网页查找、F12……）也关掉，复制粘贴、撤销这些编辑的照旧，
 /// 网页自己的快捷键（主窗口的 Ctrl+F）照样收得到。开发版留着，右键「检查」调试用
@@ -220,7 +220,7 @@ pub fn not_a_browser(w: &tauri::WebviewWindow) {
 #[cfg(not(windows))]
 pub fn not_a_browser(_: &tauri::WebviewWindow) {}
 
-/// 有没有装 WebView2（贾维斯管家的界面靠它画）。Win11 自带；Win10 上安装包会装，装不上（比如没网）时这里是 false
+/// 有没有装 WebView2（贾维喵管家的界面靠它画）。Win11 自带；Win10 上安装包会装，装不上（比如没网）时这里是 false
 pub fn webview2_ready() -> bool {
     webview2_version().split_whitespace().any(|v| v != "0.0.0.0")
 }
@@ -232,10 +232,10 @@ pub fn alert_no_webview2() {
     const URL: &str = "https://go.microsoft.com/fwlink/p/?LinkId=2124703";
     let wide = |s: &str| s.encode_utf16().chain([0]).collect::<Vec<u16>>();
     let text = wide(&format!(
-        "贾维斯管家的界面要用到微软的 WebView2，这台电脑上还没有装（一般是安装时没连上网）。\n\n\
-         点「是」打开微软的下载页，装好后再打开贾维斯管家就行。你的数据不受影响。\n\n下载地址：{URL}"
+        "贾维喵管家的界面要用到微软的 WebView2，这台电脑上还没有装（一般是安装时没连上网）。\n\n\
+         点「是」打开微软的下载页，装好后再打开贾维喵管家就行。你的数据不受影响。\n\n下载地址：{URL}"
     ));
-    let title = wide("贾维斯管家：还差一个组件");
+    let title = wide("贾维喵管家：还差一个组件");
     // SAFETY: 两个字符串都以 0 结尾，在调用期间一直有效
     let r = unsafe { MessageBoxW(std::ptr::null_mut(), text.as_ptr(), title.as_ptr(), MB_YESNO | MB_ICONWARNING) };
     if r == IDYES {
@@ -340,7 +340,7 @@ pub fn set_autostart(enabled: bool) {
 #[cfg(not(any(windows,target_os="macos")))]
 pub fn set_autostart(_: bool) {}
 
-/// Run 里那一行指的程序：`"D:\贾维斯管家\dingmi.exe" --autostart`，以前没加引号：`D:\贾维斯管家\dingmi.exe --autostart`
+/// Run 里那一行指的程序：`"D:\贾维喵管家\dingmi.exe" --autostart`，以前没加引号：`D:\贾维喵管家\dingmi.exe --autostart`
 #[cfg_attr(not(windows), allow(dead_code))]
 fn run_target(v: &str) -> &str {
     match v.strip_prefix('"') {

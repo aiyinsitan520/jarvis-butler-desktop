@@ -3,7 +3,7 @@
 //!
 //! 服务器绑了域名（Welcome.web_url，宝塔 / Nginx 反向代理过去的那个）时先走 wss：只放行 443 的网络也连得上，
 //! 服务器搬家换了 IP 只要改 DNS，电脑不用重新配对。连不上再退回配对码里的 `IP:端口`。
-//! 贾维斯管家同步的地址本身就是域名（`sync.dingmi.app:443`）：只走 wss，不退回（官方服务器不对外开端口，见 mod.rs 的 domain_web）。
+//! 贾维喵管家同步的地址本身就是域名（`sync.dingmi.app:443`）：只走 wss，不退回（官方服务器不对外开端口，见 mod.rs 的 domain_web）。
 
 use dingmi_sync::{ws, NoiseConn};
 use std::sync::{Arc, OnceLock};

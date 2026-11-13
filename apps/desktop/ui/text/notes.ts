@@ -82,16 +82,16 @@ export const T = {
   fileHere: "在这台电脑上",
   fileCloud: "还没下载到这台电脑",
   fileMeta: (size: number | undefined, local: boolean) => [size != null ? fileSize(size) : "", local ? "在这台电脑上" : "还没下载到这台电脑"].filter(Boolean).join(" · "),
-  /** 贾维斯管家同步的套餐不传太大的：原文件只在一台设备上 */
+  /** 贾维喵管家同步的套餐不传太大的：原文件只在一台设备上 */
   fileMetaAway: (size: number, away: string) => `${fileSize(size)} · ${away}`,
-  onlyHere: "超过贾维斯管家同步单个文件的大小，没有传上去，只在这台电脑上",
-  onlyOn: (pc: string) => `超过贾维斯管家同步单个文件的大小，没有传过来，只在「${pc}」上`,
+  onlyHere: "超过贾维喵管家同步单个文件的大小，没有传上去，只在这台电脑上",
+  onlyOn: (pc: string) => `超过贾维喵管家同步单个文件的大小，没有传过来，只在「${pc}」上`,
   someOtherPc: "另一台电脑",
   fileOpen: "打开",
   fileReveal: "打开所在位置",
   fileRunnable: "这种文件不直接打开，在文件夹里选中它",
   /** 打开附件时：不在能直接打开的类型里（程序、脚本、压缩包、带宏的文档……），只在文件夹里选中了 */
-  fileRevealed: "这种文件贾维斯管家不直接打开，已经在文件夹里选中它了。确认来源可靠再自己双击",
+  fileRevealed: "这种文件贾维喵管家不直接打开，已经在文件夹里选中它了。确认来源可靠再自己双击",
   fileDownloading: "正在下载…",
   fileDelete: "从笔记里去掉这个文件",
   tooBig: (name: string) => `「${name}」超过 50 MB 了，放不进笔记`,
@@ -141,7 +141,7 @@ export const T = {
   aiFail: (why: string) => `没整理成：${why}`,
 
   // ---------- 单独的笔记窗口 ----------
-  winTitle: "贾维斯管家笔记",
+  winTitle: "贾维喵管家笔记",
   title: "标题",
   outline: "目录",
   outlineEmpty: "用 # 、## 、### 开头写标题，这里就有目录了",

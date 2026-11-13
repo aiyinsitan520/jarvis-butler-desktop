@@ -52,7 +52,7 @@ npx @playwright/cli -s=jarvis-docs run-code --filename scripts/capture-public-do
 Windows 原生截图另外构建 `fusion-preview`，以 `node scripts/seed-public-demo.mjs` 准备独立合成目录，再用仅对该目录生效的 `JARVIS_DESKTOP_DATA_DIR` 启动。恢复演示主窗口后，对核对过的 PID 执行：
 
 ```powershell
-& scripts/capture-native-preview.ps1 -PreviewId <演示进程PID> -OutFile docs/screenshots/windows-main.png -WindowTitle '贾维斯管家 · 单页本地版'
+& scripts/capture-native-preview.ps1 -PreviewId <演示进程PID> -OutFile docs/screenshots/windows-main.png -WindowTitle '贾维喵管家 · 单页本地版'
 ```
 
 不要把用户正在使用的资料库拿来拍公开截图，也不要为截图开启远程调试端口。当前白猫原图为内置imagegen生成，界面／托盘为独立SVG适配，见[品牌来源](../branding.md)。

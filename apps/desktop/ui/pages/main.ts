@@ -2192,7 +2192,7 @@ const TERMS_URL: Record<keyof TermsView, string> = {
 /** 横幅上现在是哪份协议的通知：点「知道了」时按它记下 */
 let termsShown: { key: keyof TermsView; version: string } | null = null;
 
-/** 协议重大修改的通知（需求-1.x 第 36.6 节）：每份每次只通知一次；贾维斯管家同步服务协议只给开着贾维斯管家同步的电脑 */
+/** 协议重大修改的通知（需求-1.x 第 36.6 节）：每份每次只通知一次；贾维喵管家同步服务协议只给开着贾维喵管家同步的电脑 */
 function termsBanner(): Banner | null {
   termsShown = null;
   const t = S.terms;
@@ -2228,7 +2228,7 @@ function pickBanner(): Banner | null {
   if (u && has && (u.state === "downloading" || u.state === "ready") && !u.dismissed)
     return { kind: "upd", cls: "info", ic: "download", title: u.state === "ready" ? T.bn.ready(u.version!) : T.bn.downloading(u.version!, pct(u)), prog, btns: u.state === "ready" ? btn("update", T.bn.restart, true) : "", x: true };
   if (s && !bannerOff.has("sync")) {
-    // 贾维斯管家同步：数据删了、到期了、快到期了（需求-1.0 第 18.4 节），带「续费」
+    // 贾维喵管家同步：数据删了、到期了、快到期了（需求-1.0 第 18.4 节），带「续费」
     const a = s.official ? s.account : null;
     if (s.official && s.refused === "deleted") return { kind: "sync", cls: "err", ic: "cloud-off", title: T.bn.deleted, text: T.bn.deletedWhy, btns: btn("renew", T.bn.renew, true), x: true };
     if (s.official && s.state === "expired")

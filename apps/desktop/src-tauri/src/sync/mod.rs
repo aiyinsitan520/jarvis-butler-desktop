@@ -58,7 +58,7 @@ const LAST_PULL: Duration = Duration::from_secs(15);
 
 const PAIR_REJECTED: &str = "服务器没有接受这台电脑：配对码可能已经用过或者过期了。在已经配对的电脑上「设置 → 同步」里重新生成一个，或者在服务器上执行 dingmi-server invite";
 const NO_REPLY: &str = "服务器没有回应";
-/// 这台贾维斯管家要的服务器最低协议版本（需求-0.4 第 15.5 节）。电脑改了要服务器也跟着改的消息时把它调高，
+/// 这台贾维喵管家要的服务器最低协议版本（需求-0.4 第 15.5 节）。电脑改了要服务器也跟着改的消息时把它调高，
 /// 自建服务器没跟着升级的用户就会看到「服务器版本太旧」，而不是莫名其妙的出错
 const MIN_SERVER: u32 = 4;
 const SESSION_REJECTED: &str = "服务器不再接受这台电脑，可能已经被作废了，需要重新配对";
@@ -67,7 +67,7 @@ const NEED_RECOVERY: &str = "这个配对码是在服务器上生成的，不带
 /// 网盘文件夹同步的设置，存在 kv 表的 "sync_folder"；主密钥在 Windows 凭据管理器里
 #[derive(Serialize, Deserialize, Clone)]
 struct FolderCfg {
-    /// 「贾维斯管家同步」文件夹的完整路径
+    /// 「贾维喵管家同步」文件夹的完整路径
     dir: String,
     /// 本机的设备名
     name: String,
@@ -92,26 +92,26 @@ struct Config {
 pub struct Status {
     /// off 没开启 / locked 配对过但还差同步密码 / connecting 正在连 / online 已连接 / offline 连不上 /
     /// outdated 这个版本太旧（官网的 min_version），同步先停下，等更新 /
-    /// expired 贾维斯管家同步已到期（停止同步，续费后接着同步；详情在 account）
+    /// expired 贾维喵管家同步已到期（停止同步，续费后接着同步；详情在 account）
     pub state: String,
-    /// 连的是贾维斯管家同步（sync.dingmi.app）
+    /// 连的是贾维喵管家同步（sync.dingmi.app）
     pub official: bool,
     /// 上次连上时服务器说的这个空间的账：套餐、到期、容量、设备数（协议 5 起；旧服务器、没连上过是 None）
     pub account: Option<Account>,
     /// 空间满了没传上去、先只在这台电脑上的图片和文件有几个（需求-1.0 第 17.3 节）；0 是都传上去了
     pub held_files: u32,
-    /// 超过贾维斯管家同步套餐单个文件的大小（图片压不下来也算）、不传、只在这台电脑上的有几个（32.1 第 5 条）
+    /// 超过贾维喵管家同步套餐单个文件的大小（图片压不下来也算）、不传、只在这台电脑上的有几个（32.1 第 5 条）
     pub only_here_files: u32,
     /// locked 时：空间还没设同步密码（刚用兑换码开通），要设一个（输两次），syncUnlock 会回新的恢复码
     pub need_setup: bool,
-    /// 服务器不收这台电脑的原因（dingmi_sync::refuse 里的 code），比如 deleted：贾维斯管家同步到期太久、数据删了，要重新开通
+    /// 服务器不收这台电脑的原因（dingmi_sync::refuse 里的 code），比如 deleted：贾维喵管家同步到期太久、数据删了，要重新开通
     pub refused: Option<String>,
     /// locked 时：这台电脑没有空间密钥，要输恢复码（输同步密码没用）
     pub need_recovery: bool,
     /// server 自建服务器 / folder 网盘文件夹；没开启时是空的
     pub kind: String,
     pub server: Option<String>,
-    /// 网盘文件夹方式：「贾维斯管家同步」文件夹的位置
+    /// 网盘文件夹方式：「贾维喵管家同步」文件夹的位置
     pub folder: Option<String>,
     pub device: Option<String>,
     pub error: Option<String>,
@@ -282,7 +282,7 @@ fn check_refused(welcome: &Welcome) -> Result<(), String> {
     }
 }
 
-/// 贾维斯管家同步到期了（上次连上时服务器说的）
+/// 贾维喵管家同步到期了（上次连上时服务器说的）
 fn expired_now(app: &AppHandle) -> bool {
     app.state::<AppState>().sync.status.lock().unwrap().account.as_ref().is_some_and(|a| a.expired)
 }
@@ -293,15 +293,15 @@ pub fn tray_line(app: &AppHandle) -> Option<String> {
     let text = match s.state.as_str() {
         "off" => return None,
         "locked" => "同步：还差同步密码".to_string(),
-        "outdated" => "同步：请先更新贾维斯管家".to_string(),
-        "expired" => "同步：贾维斯管家同步已到期".to_string(),
+        "outdated" => "同步：请先更新贾维喵管家".to_string(),
+        "expired" => "同步：贾维喵管家同步已到期".to_string(),
         "keys_lost" => "同步：要重新加入".to_string(),
         "keys_retry" => "同步：正在重试读钥匙".to_string(),
         "connecting" => "同步：正在连接…".to_string(),
-        // 贾维斯管家同步快到期（7 天内、明天）：托盘上也提一句（需求-1.0 第 18.4 节）
+        // 贾维喵管家同步快到期（7 天内、明天）：托盘上也提一句（需求-1.0 第 18.4 节）
         "online" => match s.account.as_ref().filter(|a| a.remind == "expire_7d" || a.remind == "expire_1d").and_then(|a| a.days_left) {
-            Some(d) if d <= 1 => "同步：贾维斯管家同步明天到期".to_string(),
-            Some(d) => format!("同步：贾维斯管家同步还有 {d} 天到期"),
+            Some(d) if d <= 1 => "同步：贾维喵管家同步明天到期".to_string(),
+            Some(d) => format!("同步：贾维喵管家同步还有 {d} 天到期"),
             None => "同步：已连接".to_string(),
         },
         _ if s.kind == "folder" => "同步：找不到同步文件夹".to_string(),
@@ -351,7 +351,7 @@ async fn dial_hello(
     hello: &Hello,
     rejected: &str,
 ) -> Result<(transport::Conn, Welcome), String> {
-    // 地址本身是域名（贾维斯管家同步）：只走 wss://域名/sync，不退回直连（官方服务器不对外开端口）
+    // 地址本身是域名（贾维喵管家同步）：只走 wss://域名/sync，不退回直连（官方服务器不对外开端口）
     let tcp = if let Some(only) = domain_web(host, port) {
         transport::wss(&only, CONNECT_TIMEOUT).await?
     } else {
@@ -377,9 +377,9 @@ async fn dial_hello(
     Ok((conn, welcome))
 }
 
-/// 服务器地址是域名时（贾维斯管家同步：配对码、配置里是 `sync.dingmi.app:443`）要走的 `https://域名`，只走 wss、不直连；
+/// 服务器地址是域名时（贾维喵管家同步：配对码、配置里是 `sync.dingmi.app:443`）要走的 `https://域名`，只走 wss、不直连；
 /// 地址是 IP（自建服务器，init 时写的 IP）是 None，照旧直连、绑了域名先试 wss。
-/// 以前存的贾维斯管家同步是 `sync.dingmi.app:7788`（那时直连 7788），也当 443
+/// 以前存的贾维喵管家同步是 `sync.dingmi.app:7788`（那时直连 7788），也当 443
 fn domain_web(host: &str, port: u16) -> Option<String> {
     let h = host.trim().trim_start_matches('[').trim_end_matches(']');
     if h.is_empty() || h.parse::<std::net::IpAddr>().is_ok() {
@@ -413,7 +413,7 @@ fn server_new_enough(version: u32) -> Result<(), String> {
     if version >= MIN_SERVER {
         return Ok(());
     }
-    crate::diag::log("同步", format!("服务器版本太旧：协议第 {version} 版，这台贾维斯管家要第 {MIN_SERVER} 版以上"));
+    crate::diag::log("同步", format!("服务器版本太旧：协议第 {version} 版，这台贾维喵管家要第 {MIN_SERVER} 版以上"));
     Err("服务器版本太旧，请先升级服务器：换成新的 dingmi-server 再重启（自建服务器的升级方法见使用文档《服务器部署》）".into())
 }
 
@@ -429,7 +429,7 @@ struct Unlocked {
 /// - 输了恢复码：打开盒子 2，主密钥和空间密钥都在里面，不用同步密码；
 /// - 否则：用同步密码和空间密钥（来自配对码）打开盒子 1
 ///
-/// `joins`：服务器是贾维斯管家同步（见 [`joins_on`]）。只有贾维斯管家同步才传盒子 3：自建服务器用不了兑换码加入，传上去只会让
+/// `joins`：服务器是贾维喵管家同步（见 [`joins_on`]）。只有贾维喵管家同步才传盒子 3：自建服务器用不了兑换码加入，传上去只会让
 /// 偷到服务器数据库的人能离线猜同步密码
 async fn unlock(
     conn: &mut transport::Conn,
@@ -484,12 +484,12 @@ fn join_lock(password: &str, salt: &str, space_key: &crypto::SpaceKey) -> Result
     Ok(JoinLock { box3, proof })
 }
 
-/// 服务器是贾维斯管家同步（开了兑换码）：才有兑换码加入，才传盒子 3
+/// 服务器是贾维喵管家同步（开了兑换码）：才有兑换码加入，才传盒子 3
 fn joins_on(welcome: &Welcome) -> bool {
     welcome.account.as_ref().is_some_and(|a| a.official)
 }
 
-/// 换同步密码时：新的 salt、盒子 1，贾维斯管家同步、密码够长时再加盒子 3（服务器上用户关掉了的不收，见 Store::set_lock）
+/// 换同步密码时：新的 salt、盒子 1，贾维喵管家同步、密码够长时再加盒子 3（服务器上用户关掉了的不收，见 Store::set_lock）
 fn relock(password: &str, master: &crypto::DataKey, space_key: Option<&crypto::SpaceKey>, joins: bool) -> Result<Msg, String> {
     let (salt, box1) = crypto::lock(password, master, space_key)?;
     let join = match space_key {
@@ -663,9 +663,9 @@ async fn unlock_paired(app: &AppHandle, password: String, recovery: Option<crypt
     Ok(keys.new_recovery)
 }
 
-// ---------- 贾维斯管家同步（需求-1.0 第 18、30、31 节） ----------
+// ---------- 贾维喵管家同步（需求-1.0 第 18、30、31 节） ----------
 
-/// 用兑换码连上贾维斯管家同步：服务器核对兑换码、新建空间、登记这台电脑。返回 (设备私钥, 连接, Welcome)。
+/// 用兑换码连上贾维喵管家同步：服务器核对兑换码、新建空间、登记这台电脑。返回 (设备私钥, 连接, Welcome)。
 /// 地址和公钥由调的地方给（平时是 official.rs 里写死的，测试里是本机的服务器）
 async fn redeem_dial(
     host: &str,
@@ -697,7 +697,7 @@ async fn beta_dial(
     open_dial(host, port, web, server_public, &hello).await
 }
 
-/// 开通贾维斯管家同步（兑换码、公测）时的 Hello：带同意的协议版本，邮箱选填（先在这里核对格式）
+/// 开通贾维喵管家同步（兑换码、公测）时的 Hello：带同意的协议版本，邮箱选填（先在这里核对格式）
 fn open_hello(email: Option<String>) -> Result<Hello, String> {
     let email = email.map(|e| e.trim().to_string()).filter(|e| !e.is_empty());
     if let Some(e) = &email {
@@ -710,7 +710,7 @@ fn open_hello(email: Option<String>) -> Result<Hello, String> {
 async fn open_dial(host: &str, port: u16, web: &str, server_public: &[u8], hello: &Hello) -> Result<(Vec<u8>, transport::Conn, Welcome), String> {
     let (device_private, _) = dingmi_sync::generate_keypair().map_err(err)?;
     let (conn, welcome) =
-        dial_hello(host, port, web, &device_private, server_public, hello, "贾维斯管家同步的服务器没有回应，稍后再试").await?;
+        dial_hello(host, port, web, &device_private, server_public, hello, "贾维喵管家同步的服务器没有回应，稍后再试").await?;
     if let Some(r) = welcome.refused.as_ref().filter(|r| r.code == refuse::REDEEM_JOINABLE) {
         return Err(format!("{JOINABLE_MARK}{}", r.msg));
     }
@@ -720,7 +720,7 @@ async fn open_dial(host: &str, port: u16, web: &str, server_public: &[u8], hello
 
 // ---------- 新电脑方便加入（需求-1.x 第 34 节） ----------
 
-/// 兑换码 + 同步密码加入贾维斯管家同步：先拿兑换码换 salt，用同步密码算出核对值，服务器核对上了登记这台电脑、给盒子 3；
+/// 兑换码 + 同步密码加入贾维喵管家同步：先拿兑换码换 salt，用同步密码算出核对值，服务器核对上了登记这台电脑、给盒子 3；
 /// 盒子 3 打开是空间密钥，再和平时一样打开盒子 1。replace 和配对时一样（本机有数据时用服务器上的替换这台电脑）
 async fn join_dial(
     host: &str,
@@ -736,7 +736,7 @@ async fn join_dial(
         return Err("先填兑换码".into());
     }
     check_password(&password)?;
-    let no_reply = "贾维斯管家同步的服务器没有回应，稍后再试";
+    let no_reply = "贾维喵管家同步的服务器没有回应，稍后再试";
     let (tmp, _) = dingmi_sync::generate_keypair().map_err(err)?;
     let ask = Hello { version: VERSION, join_ask: Some(code.clone()), ..Default::default() };
     let (_, w) = dial_hello(host, port, web, &tmp, server_public, &ask, no_reply).await?;
@@ -786,7 +786,7 @@ async fn joined(app: &AppHandle, device_private: Vec<u8>, welcome: Welcome, keys
     Ok(account)
 }
 
-/// 兑换码 + 同步密码加入贾维斯管家同步（「贾维斯管家同步 → 已经在别的电脑上开通过 → 兑换码」）
+/// 兑换码 + 同步密码加入贾维喵管家同步（「贾维喵管家同步 → 已经在别的电脑上开通过 → 兑换码」）
 #[tauri::command]
 pub async fn official_join(app: AppHandle, code: String, password: String, name: String, replace: bool) -> Result<Account, String> {
     if true { return Err("融合版仅使用知识工作台配置的共享资料服务；上游同步和收费服务已停用".into()); }
@@ -817,7 +817,7 @@ pub async fn official_phone_start(app: AppHandle, name: String) -> Result<PhoneW
     let (tmp, _) = dingmi_sync::generate_keypair().map_err(err)?;
     let ask = PhoneAsk { key: STANDARD.encode(public), name, code: String::new() };
     let hello = Hello { version: VERSION, phone_ask: Some(ask), ..Default::default() };
-    let (_, w) = dial_hello(official::HOST, official::PORT, official::WEB, &tmp, &server_public, &hello, "贾维斯管家同步的服务器没有回应，稍后再试").await?;
+    let (_, w) = dial_hello(official::HOST, official::PORT, official::WEB, &tmp, &server_public, &hello, "贾维喵管家同步的服务器没有回应，稍后再试").await?;
     check_refused(&w)?;
     let pj = w.phone.ok_or("服务器版本太旧，用不了手机加入")?;
     let words = crypto::phone_words(&public);
@@ -843,7 +843,7 @@ pub async fn official_phone_poll(app: AppHandle) -> Result<bool, String> {
     let (tmp, _) = dingmi_sync::generate_keypair().map_err(err)?;
     let ask = PhoneAsk { key: STANDARD.encode(public), name: String::new(), code };
     let hello = Hello { version: VERSION, phone_poll: Some(ask), ..Default::default() };
-    let (_, w) = dial_hello(official::HOST, official::PORT, official::WEB, &tmp, &server_public, &hello, "贾维斯管家同步的服务器没有回应，稍后再试").await?;
+    let (_, w) = dial_hello(official::HOST, official::PORT, official::WEB, &tmp, &server_public, &hello, "贾维喵管家同步的服务器没有回应，稍后再试").await?;
     check_refused(&w)?;
     let Some(PhoneJoin { invite: Some(invite), sealed: Some(sealed), .. }) = w.phone else {
         return Ok(false);
@@ -941,7 +941,7 @@ pub async fn official_delete(app: AppHandle, password: String) -> Result<(), Str
 async fn beta_ask(host: &str, port: u16, web: &str, server_public: &[u8]) -> Result<BetaInfo, String> {
     let (device_private, _) = dingmi_sync::generate_keypair().map_err(err)?;
     let hello = Hello { version: VERSION, ask_beta: true, ..Default::default() };
-    let (_, welcome) = dial_hello(host, port, web, &device_private, server_public, &hello, "贾维斯管家同步的服务器没有回应").await?;
+    let (_, welcome) = dial_hello(host, port, web, &device_private, server_public, &hello, "贾维喵管家同步的服务器没有回应").await?;
     Ok(welcome.beta.unwrap_or_default())
 }
 
@@ -965,7 +965,7 @@ fn check_agree(agree: bool) -> Result<(), String> {
 /// 服务器记的是它那边现在生效的版本，这个只是「同意了」的凭据，像日期就行（SITE.md 4.5）
 pub const TERMS_FALLBACK: &str = "2026-11-08";
 
-/// 公测免费体验现在怎样（「设置 → 同步 → 贾维斯管家同步」开通那一步用）：能不能领、还剩几个名额、到哪天、多大。
+/// 公测免费体验现在怎样（「设置 → 同步 → 贾维喵管家同步」开通那一步用）：能不能领、还剩几个名额、到哪天、多大。
 /// 连不上、旧服务器都当没开
 #[tauri::command]
 pub async fn official_beta_info() -> Result<BetaInfo, String> {
@@ -974,7 +974,7 @@ pub async fn official_beta_info() -> Result<BetaInfo, String> {
     beta_ask(official::HOST, official::PORT, official::WEB, &server_public).await
 }
 
-/// 领公测免费体验开通贾维斯管家同步：之后和兑换码开通一样设同步密码、存恢复码
+/// 领公测免费体验开通贾维喵管家同步：之后和兑换码开通一样设同步密码、存恢复码
 #[tauri::command]
 pub async fn official_beta(app: AppHandle, name: String, email: Option<String>, agree: bool) -> Result<Account, String> {
     if true { return Err("融合版仅使用知识工作台配置的共享资料服务；上游同步和收费服务已停用".into()); }
@@ -986,7 +986,7 @@ pub async fn official_beta(app: AppHandle, name: String, email: Option<String>, 
     opened(&app, device_private, welcome, &server_public, name).await
 }
 
-/// 用兑换码开通贾维斯管家同步（「设置 → 同步 → 贾维斯管家同步」）：核对兑换码（有效 / 已经用过 / 不存在会直接报出来）→
+/// 用兑换码开通贾维喵管家同步（「设置 → 同步 → 贾维喵管家同步」）：核对兑换码（有效 / 已经用过 / 不存在会直接报出来）→
 /// 服务器新建一个空间、登记这台电脑 → 收掉原来的同步方式。回这个空间的账（套餐、到哪天）。
 /// 下一步和第一台电脑一样设同步密码：调 sync_unlock（输两次的那个密码），它回恢复码，要请用户存好。
 /// 设备名在这里就要给（登记时用）；邮箱选填；agree 是勾了「同意协议」（没勾不开通）
@@ -1030,7 +1030,7 @@ async fn opened(app: &AppHandle, device_private: Vec<u8>, welcome: Welcome, serv
     Ok(account)
 }
 
-/// 唯一的电脑没了（30.4）：新电脑用恢复码登记进贾维斯管家同步的空间，打开盒子 2 拿到主密钥和空间密钥。
+/// 唯一的电脑没了（30.4）：新电脑用恢复码登记进贾维喵管家同步的空间，打开盒子 2 拿到主密钥和空间密钥。
 /// password 写了就顺便换成这个同步密码（忘了原来的；别的设备下次提示输新密码），空的就不换。
 /// 之后要请用户「换一个恢复码」（sync_new_recovery）
 #[tauri::command]
@@ -1053,7 +1053,7 @@ pub async fn official_recover(app: AppHandle, recovery: String, name: String, pa
         &name,
         None,
         Some(crypto::recovery_token(&code)),
-        "贾维斯管家同步不认这个恢复码：看看是不是输错了，或者已经换过新的恢复码",
+        "贾维喵管家同步不认这个恢复码：看看是不是输错了，或者已经换过新的恢复码",
     )
     .await?;
     check_refused(&welcome)?;
@@ -1126,7 +1126,7 @@ pub async fn official_support_code(app: AppHandle) -> Result<SupportCode, String
     }
 }
 
-/// 贾维斯管家同步留的邮箱（32.1 第 6 条）：写了是设置 / 改，空的（None 或空字符串）是删掉。回改好以后的账
+/// 贾维喵管家同步留的邮箱（32.1 第 6 条）：写了是设置 / 改，空的（None 或空字符串）是删掉。回改好以后的账
 #[tauri::command]
 pub async fn official_email(app: AppHandle, email: Option<String>) -> Result<Account, String> {
     if true { return Err("融合版仅使用知识工作台配置的共享资料服务；上游同步和收费服务已停用".into()); }
@@ -1261,19 +1261,19 @@ pub struct Candidate {
     pub probe: FolderProbe,
 }
 
-/// 选中的文件夹里有没有贾维斯管家的数据
+/// 选中的文件夹里有没有贾维喵管家的数据
 #[derive(Serialize)]
 pub struct FolderProbe {
-    /// 「贾维斯管家同步」文件夹会放在哪
+    /// 「贾维喵管家同步」文件夹会放在哪
     pub dir: String,
-    /// empty 没有贾维斯管家数据（第一台电脑）/ space 已经在用（加入）/ bad 用不了，原因在 error
+    /// empty 没有贾维喵管家数据（第一台电脑）/ space 已经在用（加入）/ bad 用不了，原因在 error
     pub state: String,
     pub devices: usize,
     pub error: Option<String>,
 }
 
-/// 用户选的文件夹 → 「贾维斯管家数据」文件夹：选的就是它本身时直接用。
-/// 以前叫「贾维斯管家同步」：选的是旧名字的、或者里面已经有旧名字的（别的电脑、以前建的）就接着用它，不另建新的
+/// 用户选的文件夹 → 「贾维喵管家数据」文件夹：选的就是它本身时直接用。
+/// 以前叫「贾维喵管家同步」：选的是旧名字的、或者里面已经有旧名字的（别的电脑、以前建的）就接着用它，不另建新的
 fn sync_dir(path: &str) -> PathBuf {
     let p = PathBuf::from(path.trim());
     if p.file_name().is_some_and(|n| n == folder::DIR_NAME || n == folder::OLD_DIR_NAME) {
@@ -1332,13 +1332,13 @@ pub fn sync_folder_candidates() -> Vec<Candidate> {
         .collect()
 }
 
-/// 看看选的文件夹里有没有贾维斯管家的数据，决定下一步是「第一台电脑」还是「加入」
+/// 看看选的文件夹里有没有贾维喵管家的数据，决定下一步是「第一台电脑」还是「加入」
 #[tauri::command]
 pub fn sync_folder_probe(path: String) -> FolderProbe {
     probe_dir(&path)
 }
 
-/// 开启网盘文件夹同步：文件夹里还没有贾维斯管家的数据就建一个（设同步密码），有就加入（核对同步密码）。
+/// 开启网盘文件夹同步：文件夹里还没有贾维喵管家的数据就建一个（设同步密码），有就加入（核对同步密码）。
 /// replace：加入时用文件夹里的替换本机（先备份）；否则两边合在一起
 #[tauri::command]
 pub async fn sync_folder_start(app: AppHandle, path: String, password: String, name: String, replace: bool) -> Result<(), String> {
@@ -1445,7 +1445,7 @@ async fn push_folder(app: &AppHandle, cfg: &FolderCfg) -> Result<usize, String> 
     tokio::task::spawn_blocking(move || {
         let st = app2.state::<AppState>();
         let dir = PathBuf::from(&cfg.dir);
-        // 以前在贾维斯管家同步里因为太大没传的：网盘文件夹不限大小，清掉记号、照常写进去
+        // 以前在贾维喵管家同步里因为太大没传的：网盘文件夹不限大小，清掉记号、照常写进去
         let none = records::Limits { me: st.device.clone(), ..Default::default() };
         records::unmark_fitting(&st.db.lock().unwrap(), &none).map_err(err)?;
         folder::push(&st.db, &st.data_dir, &folder::Folder { dir: &dir, me: &st.device, key: &key })
@@ -1479,7 +1479,7 @@ pub async fn sync_invite(app: AppHandle) -> Result<Invite, String> {
         return Err("服务器回的内容不对".into());
     };
     let server_public = B64.decode(&cfg.server_public).map_err(err)?;
-    // 贾维斯管家同步以前存的端口是 7788：配对码里一律写 443（新电脑认得出是域名，只走 wss）
+    // 贾维喵管家同步以前存的端口是 7788：配对码里一律写 443（新电脑认得出是域名，只走 wss）
     let port = if official::is_official(&cfg.host) { official::PORT } else { cfg.port };
     let code = PairCode { host: cfg.host, port, server_public, invite: token, space_key: Some(space_key.to_vec()) };
     Ok(Invite { code: code.to_string(), expires_at })
@@ -1547,7 +1547,7 @@ pub struct PhoneLink {
 }
 
 /// 手机网页的网址开头：服务器绑了域名用域名（只认 https://，和电脑走 wss 时的规矩一样，见 web_of）；
-/// 服务器地址本身是域名（贾维斯管家同步）用它；都没有的用 https://IP:端口
+/// 服务器地址本身是域名（贾维喵管家同步）用它；都没有的用 https://IP:端口
 fn phone_base(welcome: &Welcome, cfg: &Config) -> (String, bool) {
     match (web_of(welcome).as_str(), domain_web(&cfg.host, cfg.port)) {
         ("", Some(d)) => (d, true),
@@ -1621,7 +1621,7 @@ async fn session(app: &AppHandle, cfg: &Config, device: &[u8], key: &crypto::Dat
         Ok(c) => c,
         Err(e) => return (false, e),
     };
-    // 服务器说清楚了不收（比如贾维斯管家同步到期太久、数据删了）：照常按连不上处理，原因记在 refused 里
+    // 服务器说清楚了不收（比如贾维喵管家同步到期太久、数据删了）：照常按连不上处理，原因记在 refused 里
     if let Some(r) = &welcome.refused {
         note_account(app, Some(None), None, Some(Some(r.code.clone())));
         return (false, r.msg.clone());
@@ -1630,7 +1630,7 @@ async fn session(app: &AppHandle, cfg: &Config, device: &[u8], key: &crypto::Dat
     if welcome.account.is_some() {
         note_account(app, Some(welcome.account.clone()), None, None);
     }
-    // 贾维斯管家同步到期了：先不同步（服务器也不收），状态是 expired；一分钟左右再连上来看看续上没有
+    // 贾维喵管家同步到期了：先不同步（服务器也不收），状态是 expired；一分钟左右再连上来看看续上没有
     if let Some(a) = welcome.account.as_ref().filter(|a| a.expired) {
         return (false, expired_text(a));
     }
@@ -1691,15 +1691,15 @@ fn server_restored(c: &rusqlite::Connection, epoch: &str) -> bool {
     true
 }
 
-/// 贾维斯管家同步已到期时给人看的一句（和服务器说的一样）
+/// 贾维喵管家同步已到期时给人看的一句（和服务器说的一样）
 fn expired_text(a: &Account) -> String {
     match &a.delete_on {
-        Some(d) => format!("贾维斯管家同步已到期，续费后接着同步。电脑上的数据都在，服务器上的留到 {d}"),
-        None => "贾维斯管家同步已到期，续费后接着同步。电脑上的数据都在".into(),
+        Some(d) => format!("贾维喵管家同步已到期，续费后接着同步。电脑上的数据都在，服务器上的留到 {d}"),
+        None => "贾维喵管家同步已到期，续费后接着同步。电脑上的数据都在".into(),
     }
 }
 
-/// 另开一个连接，把本机改过的传上去。空间满了（贾维斯管家同步）：附件先留在这台电脑上，文字照常传，
+/// 另开一个连接，把本机改过的传上去。空间满了（贾维喵管家同步）：附件先留在这台电脑上，文字照常传，
 /// 状态里的 held_files 是留下了几个
 async fn push_now(app: &AppHandle, cfg: &Config) -> Result<usize, String> {
     let device = secret::get(DEVICE_KEY).ok_or("设备密钥不见了")?;
@@ -1712,7 +1712,7 @@ async fn push_now(app: &AppHandle, cfg: &Config) -> Result<usize, String> {
     // 已经知道满了就不去试附件了（试一次要传一块 256 KB 才知道）
     let files = welcome.account.as_ref().is_none_or(|a| a.storage != "full");
     let st = app.state::<AppState>();
-    // 贾维斯管家同步的套餐限单个图片 / 附件多大（协议 6；旧服务器、自建的没有，不限）
+    // 贾维喵管家同步的套餐限单个图片 / 附件多大（协议 6；旧服务器、自建的没有，不限）
     let limits = records::Limits {
         max_image: welcome.account.as_ref().and_then(|a| a.max_image),
         max_file: welcome.account.as_ref().and_then(|a| a.max_file),
@@ -1737,7 +1737,7 @@ pub async fn download_attachment(app: &AppHandle, uid: &str, file: &str) -> Resu
         .await
         .map_err(err)?;
     }
-    // 太大、贾维斯管家同步不传的：原文件只在那台设备上，服务器上没有，说清楚
+    // 太大、贾维喵管家同步不传的：原文件只在那台设备上，服务器上没有，说清楚
     let only_on = {
         let st = app.state::<AppState>();
         let c = st.db.lock().unwrap();
@@ -1745,9 +1745,9 @@ pub async fn download_attachment(app: &AppHandle, uid: &str, file: &str) -> Resu
     };
     if let Some((name, mine)) = only_on {
         return Err(if mine {
-            "这个文件超过了贾维斯管家同步单个文件的大小，没有传上去，原文件只在这台电脑上".to_string()
+            "这个文件超过了贾维喵管家同步单个文件的大小，没有传上去，原文件只在这台电脑上".to_string()
         } else {
-            format!("这个文件超过了贾维斯管家同步单个文件的大小，没有传上来，原文件只在「{}」上", name.unwrap_or_else(|| "另一台电脑".into()))
+            format!("这个文件超过了贾维喵管家同步单个文件的大小，没有传上来，原文件只在「{}」上", name.unwrap_or_else(|| "另一台电脑".into()))
         });
     }
     let cfg = load_config(app).ok_or("这个文件在别的设备上，这台电脑还没开启同步，下载不了")?;
@@ -1772,7 +1772,7 @@ pub fn start_pusher(app: AppHandle) {
             if folder_cfg.is_none() && server_cfg.is_none() {
                 continue;
             }
-            // 贾维斯管家同步到期了：服务器不收，不去白连（续费后接收那边会重连、叫醒这里）
+            // 贾维喵管家同步到期了：服务器不收，不去白连（续费后接收那边会重连、叫醒这里）
             if crate::update::too_old() || expired_now(&app) || !records::has_dirty(&st.db.lock().unwrap()) {
                 continue;
             }
@@ -1936,7 +1936,7 @@ pub fn start(app: AppHandle) {
 mod tests {
     use super::*;
 
-    /// 地址是域名（贾维斯管家同步）只走 wss://域名/sync；IP（自建服务器）照旧直连
+    /// 地址是域名（贾维喵管家同步）只走 wss://域名/sync；IP（自建服务器）照旧直连
     #[test]
     fn domain_address_only_wss() {
         assert_eq!(domain_web("sync.dingmi.app", 443).as_deref(), Some("https://sync.dingmi.app"));
@@ -1947,13 +1947,13 @@ mod tests {
         for ip in ["203.0.113.7", "127.0.0.1", "::1", "[::1]", ""] {
             assert_eq!(domain_web(ip, 7788), None, "{ip}");
         }
-        // 贾维斯管家同步的配对码（官方服务器生成的、电脑生成的）认得出来
+        // 贾维喵管家同步的配对码（官方服务器生成的、电脑生成的）认得出来
         let code: PairCode = format!("dingmi://sync.dingmi.app:443/{}/inv", B64.encode([7u8; 32])).parse().unwrap();
         assert_eq!(domain_web(&code.host, code.port).as_deref(), Some(official::WEB));
         assert_eq!(official::PORT, 443);
     }
 
-    /// 网盘里的文件夹改名「贾维斯管家数据」以后：新建用新名字，选的或者里面已有旧名字「贾维斯管家同步」的接着用旧的
+    /// 网盘里的文件夹改名「贾维喵管家数据」以后：新建用新名字，选的或者里面已有旧名字「贾维喵管家同步」的接着用旧的
     #[test]
     fn sync_dir_old_and_new_name() {
         let base = std::env::temp_dir().join(format!("dingmi-syncdir-{}", uuid::Uuid::new_v4()));
@@ -2017,7 +2017,7 @@ mod tests {
         assert_eq!(url.split('#').next(), Some("https://sync.example.com/m/"));
     }
 
-    /// 只有贾维斯管家同步（账上 official）才传盒子 3；自建服务器、旧服务器（没有账）不传
+    /// 只有贾维喵管家同步（账上 official）才传盒子 3；自建服务器、旧服务器（没有账）不传
     #[test]
     fn box3_only_for_official() {
         assert!(!joins_on(&Welcome::default()));
@@ -2031,11 +2031,11 @@ mod tests {
         let Msg::SetLock { join, .. } = relock("一个够长的同步密码啊", &[1u8; 32], Some(&k), true).unwrap() else { panic!() };
         assert!(join.is_some());
     }
-    /// 用兑换码开通贾维斯管家同步（本机起的服务器代替 sync.dingmi.app）：开通 → 和第一台电脑一样设同步密码、拿恢复码 →
+    /// 用兑换码开通贾维喵管家同步（本机起的服务器代替 sync.dingmi.app）：开通 → 和第一台电脑一样设同步密码、拿恢复码 →
     /// 续费、要客服核对码；码不对、用过了说得清
     #[tokio::test]
     async fn redeem_with_local_server() {
-        // 开源的 dingmi-server 不带贾维斯管家同步：用测试里像贾维斯管家同步那样回话的扩展点（engine::tests::FakeOfficial）
+        // 开源的 dingmi-server 不带贾维喵管家同步：用测试里像贾维喵管家同步那样回话的扩展点（engine::tests::FakeOfficial）
         let fake = std::sync::Arc::new(engine::tests::FakeOfficial::default());
         let codes = ["DM-AAAA-BBBB-CCCC-DDDD".to_string(), "DM-EEEE-FFFF-GGGG-HHHH".to_string()];
         fake.codes.lock().unwrap().extend(codes.iter().map(|c| (c.clone(), false)));

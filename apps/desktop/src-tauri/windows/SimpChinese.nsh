@@ -31,4 +31,4 @@ LangString webview2InstallError ${LANG_SIMPCHINESE} "错误：安装 WebView2 �
 LangString webview2InstallSuccess ${LANG_SIMPCHINESE} "成功安装 WebView2"
 LangString deleteAppData ${LANG_SIMPCHINESE} "同时删掉这台电脑上的提醒、笔记和设置"
 
-LangString dingmiDeleteConfirm ${LANG_SIMPCHINESE} "要删掉这台电脑上的贾维斯管家数据吗？$\n$\n提醒、笔记、附件和设置都会删掉，不能恢复。$\n· 开了同步的：别的电脑和服务器上还有，重新配对就回来。$\n· 没开同步的：先选「取消」，打开贾维斯管家「设置 → 数据 → 导出全部」存一份，再来卸载。$\n$\n是：删掉$\n否：只卸载程序，数据留着（重装后还在）$\n取消：先不卸载"
+LangString dingmiDeleteConfirm ${LANG_SIMPCHINESE} "要删掉这台电脑上的贾维喵管家数据吗？$\n$\n提醒、笔记、附件和设置都会删掉，不能恢复。$\n· 开了同步的：别的电脑和服务器上还有，重新配对就回来。$\n· 没开同步的：先选「取消」，打开贾维喵管家「设置 → 数据 → 导出全部」存一份，再来卸载。$\n$\n是：删掉$\n否：只卸载程序，数据留着（重装后还在）$\n取消：先不卸载"

@@ -101,9 +101,9 @@ pub async fn push(db: &Mutex<Connection>, data_dir: &Path, conn: &mut Conn, key:
 pub struct Pushed {
     /// 传了几条记录
     pub count: usize,
-    /// 空间满了（贾维斯管家同步，需求-1.0 第 17.3 节）：没传上去、先只在这台电脑上的附件有几个；没满是 0
+    /// 空间满了（贾维喵管家同步，需求-1.0 第 17.3 节）：没传上去、先只在这台电脑上的附件有几个；没满是 0
     pub held: u32,
-    /// 超过套餐单个附件的大小（或者图片压不下来）、贾维斯管家同步不传、只在这台电脑上的附件有几个（32.1 第 5 条）
+    /// 超过套餐单个附件的大小（或者图片压不下来）、贾维喵管家同步不传、只在这台电脑上的附件有几个（32.1 第 5 条）
     pub only_here: u32,
 }
 
@@ -126,7 +126,7 @@ fn prepare(mime: &str, bytes: Vec<u8>, limits: &Limits) -> Send {
 
 /// 上传本机改过的记录（图片先传原图）。`files` 是 false（已经知道空间满了）时不传附件；
 /// 传的时候服务器说满了也一样：附件先留在这台电脑上（还是「没传」），文字照常推，等空间腾出来再传。
-/// `limits` 是贾维斯管家同步套餐的单个图片 / 附件大小（32.1 第 5 条）：图片超了压一份小的传；文件超了（图片压不下来）不传原文件，
+/// `limits` 是贾维喵管家同步套餐的单个图片 / 附件大小（32.1 第 5 条）：图片超了压一份小的传；文件超了（图片压不下来）不传原文件，
 /// 记下「只在这台电脑上」、记录照常推（别的设备看得到它在哪）；后来放得下了再传
 pub async fn push_with(
     db: &Mutex<Connection>,
@@ -220,7 +220,7 @@ pub async fn push_with(
 /// 传附件的结果
 enum Upload {
     Done,
-    /// 空间满了，服务器不收（贾维斯管家同步回 Refused full；旧服务器回「空间满了…」）
+    /// 空间满了，服务器不收（贾维喵管家同步回 Refused full；旧服务器回「空间满了…」）
     Full,
     /// 超过套餐单个附件的大小，服务器不收（Refused too_big；电脑本来就先拦了，这是兜底）
     TooBig,
@@ -322,7 +322,7 @@ pub(crate) mod tests {
         local_server_with(name, std::sync::Arc::new(dingmi_server::ext::SelfHosted)).await
     }
 
-    /// 测试用：像贾维斯管家同步那样回话的服务器。开源的 dingmi-server 不带贾维斯管家同步（需求-1.0 第 32.1 节第 12 条），
+    /// 测试用：像贾维喵管家同步那样回话的服务器。开源的 dingmi-server 不带贾维喵管家同步（需求-1.0 第 32.1 节第 12 条），
     /// 这里用它的扩展点装一个最简单的：几个兑换码、套餐「标准」、单个附件的限额、客服核对码。
     /// 只为看电脑端怎么处理这些回话，规则（换档、到期、公测……）不在这里，那些在官方版自己的测试里
     #[derive(Default)]
@@ -355,7 +355,7 @@ pub(crate) mod tests {
     }
 
     impl dingmi_server::ext::Ext for FakeOfficial {
-        /// 和贾维斯管家同步一样收盒子 3
+        /// 和贾维喵管家同步一样收盒子 3
         fn joins(&self) -> bool {
             true
         }
@@ -363,7 +363,7 @@ pub(crate) mod tests {
         fn open_space(&self, s: &dingmi_server::net::Server, hello: &Hello, _device: &str, _ip: std::net::IpAddr) -> dingmi_server::ext::Opening {
             use dingmi_server::ext::Opening;
             let say = |c: &str, m: &str| Opening::Refused(dingmi_sync::Refusal { code: c.into(), msg: m.into() });
-            // 兑换码加入：码 → 空间；核对值的哈希对上了才回空间（和贾维斯管家同步一样，只是不锁）
+            // 兑换码加入：码 → 空间；核对值的哈希对上了才回空间（和贾维喵管家同步一样，只是不锁）
             let lock_of = |code: &str| self.spaces.lock().unwrap().get(code).cloned().map(|sp| (s.store.join_lock(&sp), sp));
             if let Some(code) = &hello.join_ask {
                 return match lock_of(code) {
@@ -384,7 +384,7 @@ pub(crate) mod tests {
             };
             if let Err(r) = self.take(code) {
                 if r.code == dingmi_sync::refuse::REDEEM_USED && lock_of(code).is_some_and(|(l, _)| l.is_some()) {
-                    return say(dingmi_sync::refuse::REDEEM_JOINABLE, "这个兑换码已经开通过贾维斯管家同步了");
+                    return say(dingmi_sync::refuse::REDEEM_JOINABLE, "这个兑换码已经开通过贾维喵管家同步了");
                 }
                 return Opening::Refused(r);
             }
@@ -431,7 +431,7 @@ pub(crate) mod tests {
 
         fn file_limits(&self, _s: &dingmi_server::net::Server, _space: &str) -> dingmi_server::ext::FileLimits {
             let (max_image, max_file) = *self.limits.lock().unwrap();
-            // 和贾维斯管家同步一样：服务器分不清图片和附件，按两个里大的那个多放 64 KB；有一个不限就不拦
+            // 和贾维喵管家同步一样：服务器分不清图片和附件，按两个里大的那个多放 64 KB；有一个不限就不拦
             let cap = match (max_image, max_file) {
                 (Some(i), Some(f)) => Some(i.max(f) + (64 << 10)),
                 _ => None,

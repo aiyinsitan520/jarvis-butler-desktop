@@ -60,7 +60,7 @@ export function Sidebar({
         {!collapsed && (
           <div className="min-w-0">
             <div className="truncate text-[14px] leading-tight font-semibold text-[var(--color-ink)]">
-              贾维斯管家
+              贾维喵管家
             </div>
             <div className="text-[10.5px] tracking-wide text-[var(--color-ink-faint)]">
               JARVIS BUTLER

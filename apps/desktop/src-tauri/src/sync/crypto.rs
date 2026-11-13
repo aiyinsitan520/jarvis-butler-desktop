@@ -60,7 +60,7 @@ fn derive_raw(password: &str, salt: &[u8]) -> Result<[u8; 32], String> {
 pub fn derive(password: &str, salt: &str) -> Result<[u8; 32], String> {
     let (kdf, s) = salt.rsplit_once('$').ok_or("服务器上的 salt 格式不对")?;
     if kdf != KDF {
-        return Err("这个空间用的加密参数比这个版本的贾维斯管家新，请先更新贾维斯管家".into());
+        return Err("这个空间用的加密参数比这个版本的贾维喵管家新，请先更新贾维喵管家".into());
     }
     derive_raw(password, &B64.decode(s).map_err(|_| "服务器上的 salt 格式不对")?)
 }

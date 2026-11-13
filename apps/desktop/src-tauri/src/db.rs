@@ -232,7 +232,7 @@ pub fn add_new_columns(conn: &Connection) -> rusqlite::Result<()> {
     add_column(conn, "notes", "pinned_at", "TEXT")?;
     // 说得含糊、时间是先定的提醒（0.2）
     add_column(conn, "reminders", "vague", "INTEGER NOT NULL DEFAULT 0")?;
-    // 贾维斯管家同步的套餐不传、原文件只在哪台设备上（1.0，需求-1.0 第 32.1 节第 5 条）
+    // 贾维喵管家同步的套餐不传、原文件只在哪台设备上（1.0，需求-1.0 第 32.1 节第 5 条）
     add_column(conn, "attachments", "only_on", "TEXT")?;
     Ok(())
 }
@@ -778,7 +778,7 @@ pub struct AttachmentInfo {
     pub size: i64,
     /// 原文件在不在本机
     pub local: bool,
-    /// 贾维斯管家同步的套餐不传它（太大）：原文件只在这台设备上（设备编号）；是这台电脑自己的话界面说「只在这台电脑上」
+    /// 贾维喵管家同步的套餐不传它（太大）：原文件只在这台设备上（设备编号）；是这台电脑自己的话界面说「只在这台电脑上」
     pub only_on: Option<String>,
 }
 

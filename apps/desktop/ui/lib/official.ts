@@ -1,4 +1,4 @@
-// 贾维斯管家同步（收费的官方同步）界面上要算的几样：兑换码怎么分组显示、容量写成多少 GB、套餐名、还剩几天。
+// 贾维喵管家同步（收费的官方同步）界面上要算的几样：兑换码怎么分组显示、容量写成多少 GB、套餐名、还剩几天。
 // 只管算，不碰界面；规则见 docs/方案/同步方案.md 第 16 节
 
 import type { FileInfo } from "@shared/md";
@@ -64,9 +64,9 @@ export function usedPct(used: number, quota: number | null): number | null {
 }
 
 /** 套餐名：「标准」写成「标准会员」；本来就带「会员」「套餐」的不加 */
-export const planName = (plan: string) => (!plan ? "贾维斯管家同步" : /(会员|套餐|体验)$/.test(plan) ? plan : `${plan}会员`);
+export const planName = (plan: string) => (!plan ? "贾维喵管家同步" : /(会员|套餐|体验)$/.test(plan) ? plan : `${plan}会员`);
 
-/** 附件给文件卡片、图片看的情况：贾维斯管家同步的套餐不传太大的，原文件只在一台设备上时加一句 away（需求-1.0 第 32.1 节第 5 条） */
+/** 附件给文件卡片、图片看的情况：贾维喵管家同步的套餐不传太大的，原文件只在一台设备上时加一句 away（需求-1.0 第 32.1 节第 5 条） */
 export function attView(a: AttachmentInfo, devices: Device[]): FileInfo {
   const info: FileInfo = { size: a.size, local: a.local };
   if (!a.only_on) return info;

@@ -1,4 +1,4 @@
-# 贾维斯管家
+# 贾维喵管家
 
 <img src="shared/assets/jarvis-kitten-source.png" alt="原创白色小猫图标" width="112" />
 
@@ -45,7 +45,7 @@ Windows 安装后从开始菜单打开；Mac 把应用从 DMG 拖入 Application
 | --- | --- | --- |
 | 快捷记录 | 呼出输入框，确认记录为笔记或提醒；保留 Dingmi 的快捷交互 | 顶部“快捷框”；Windows 默认 `Alt+Space` |
 | 笔记、提醒与灵感 | 编辑长期笔记、管理到期／完成状态、记录零散想法 | 左侧“笔记本／提醒／灵感” |
-| 同页 AI 助手 | 按所选资料范围讨论，保存本机对话，可切换已勾选模型 | 右侧“贾维斯 AI” |
+| 同页 AI 助手 | 按所选资料范围讨论，保存本机对话，可切换已勾选模型 | 右侧“贾维喵 AI” |
 | 模型拉取与选择 | 用当前填写的配置获取模型，搜索、点击设为默认，勾选侧栏可选 | AI 与接入设置 |
 | 多 AI 会话归档 | 手动导入、搜索原文、标记重要、回到原会话、继续讨论 | 左侧“AI 会话” |
 | 本地会话自动采集 | 授权读取 Codex／Claude Code／Gemini CLI 的日志目录，增量归档 | 本地资料 → 自动采集 AI 会话 |
@@ -153,7 +153,7 @@ Windows：`npx tauri build --ci --bundles nsis`。
 
 Mac：`npx tauri build --ci --target aarch64-apple-darwin --bundles dmg --config apps/desktop/src-tauri/tauri.macos.conf.json`。
 
-本机源码预览：`cargo build -p jarvis-desktop --example fusion-preview --features tauri/custom-protocol` 后双击 `启动贾维斯测试版.cmd`。开发预览与安装版默认数据目录独立，旧资料通过“备份 → 从备份恢复”带入，原目录保留。
+本机源码预览：`cargo build -p jarvis-desktop --example fusion-preview --features tauri/custom-protocol` 后双击 `启动贾维喵测试版.cmd`。开发预览与安装版默认数据目录独立，旧资料通过“备份 → 从备份恢复”带入，原目录保留。
 
 0.4.1 记录：前端 605 项、核心 31 项、共享兼容 12 场景、服务器集成 18 场景；Windows 原生库 140 项通过／11 项忽略，Mac 136 项通过／9 项忽略。Windows 安装、卸载与重装保留测试资料已检查；这些结果不代表真实微信、真实模型或 Mac 真机交互已验收。
 
@@ -165,4 +165,4 @@ Mac：`npx tauri build --ci --target aarch64-apple-darwin --bundles dmg --config
 
 [来源与修改记录](UPSTREAM.md) · [Jarvis MIT 声明](licenses/JARVIS-MIT.txt) · [第三方清单](THIRD_PARTY_LICENSES.md)
 
-本版使用自行生成的白色小猫图标与独立编写的SVG／托盘适配，来源与生成方式见[品牌说明](docs/branding.md)。未使用 Dingmi 受限团子猫、上游宣传截图或 Islenote 提取素材；本页截图由本项目自行拍摄。模型选择交互参考 CC Switch，组件为独立实现。原作者未为本版背书；“贾维斯管家”名称采用不代表商标核验已完成。
+本版使用自行生成的白色小猫图标与独立编写的SVG／托盘适配，来源与生成方式见[品牌说明](docs/branding.md)。未使用 Dingmi 受限团子猫、上游宣传截图或 Islenote 提取素材；本页截图由本项目自行拍摄。模型选择交互参考 CC Switch，组件为独立实现。原作者未为本版背书；“贾维喵管家”名称采用不代表商标核验已完成。

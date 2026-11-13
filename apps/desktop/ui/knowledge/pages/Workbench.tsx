@@ -205,7 +205,7 @@ export function Workbench() {
             <div className="flex flex-col gap-1 px-3 pb-3">
               <ListItem
                 icon={<MessageSquareText size={14} />}
-                title="打开贾维斯助手"
+                title="打开贾维喵助手"
                 meta="整理灵感、讨论文字、查询内容"
                 onClick={showAssistant}
               />

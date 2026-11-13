@@ -1,4 +1,4 @@
-//! 网盘文件夹同步：贾维斯管家只读写一个本地文件夹（「贾维斯管家同步」），网盘客户端负责在电脑之间传。
+//! 网盘文件夹同步：贾维喵管家只读写一个本地文件夹（「贾维喵管家同步」），网盘客户端负责在电脑之间传。
 //! 设计见 docs/方案/同步方案.md 第 15 节。只依赖数据库连接和文件，不依赖 Tauri，可以用临时文件夹测试。
 //!
 //! 文件夹里：
@@ -23,15 +23,15 @@ use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 use std::sync::Mutex;
 
-/// 在用户选的网盘文件夹里建的子文件夹，贾维斯管家只用这一个。
-/// 2026-11-07 从「贾维斯管家同步」改名（和收费的贾维斯管家同步撞名了），已经有旧名字的文件夹照旧用，见 sync::sync_dir
+/// 在用户选的网盘文件夹里建的子文件夹，贾维喵管家只用这一个。
+/// 2026-11-07 从「贾维喵管家同步」改名（和收费的贾维喵管家同步撞名了），已经有旧名字的文件夹照旧用，见 sync::sync_dir
 pub const DIR_NAME: &str = "贾维斯管家数据";
 pub const OLD_DIR_NAME: &str = "贾维斯管家同步";
 pub(super) const SPACE_FILE: &str = "space.json";
 const README: &str = "请勿改动.txt";
-const README_TEXT: &str = "这个文件夹是贾维斯管家的同步文件，里面的内容都是加密的。\r\n\
+const README_TEXT: &str = "这个文件夹是贾维喵管家的同步文件，里面的内容都是加密的。\r\n\
     请不要手动改动、移动或删除里面的文件，网盘客户端会负责在几台电脑之间传。\r\n\
-    想停止同步，在贾维斯管家的「设置 → 同步」里点「停止同步」。\r\n";
+    想停止同步，在贾维喵管家的「设置 → 同步」里点「停止同步」。\r\n";
 /// 自己的日志攒到这么多段，就合成一份快照
 const COMPACT_AFTER: usize = 50;
 /// 一段日志最多放这么多条记录
@@ -52,7 +52,7 @@ pub struct SpaceFile {
 /// 选中的文件夹里有什么
 #[derive(Debug, PartialEq)]
 pub enum Probe {
-    /// 没有贾维斯管家的数据：这台是第一台电脑
+    /// 没有贾维喵管家的数据：这台是第一台电脑
     Empty,
     /// 已经有人在用：有几台电脑的数据
     Space { devices: usize },
@@ -218,19 +218,19 @@ fn device_ids(dir: &Path) -> Vec<String> {
 
 // ---------- 开启 ----------
 
-/// 看看选中的文件夹（`…\贾维斯管家同步`）里有没有贾维斯管家的数据
+/// 看看选中的文件夹（`…\贾维喵管家同步`）里有没有贾维喵管家的数据
 pub fn probe(dir: &Path) -> Result<Probe, String> {
     let space = dir.join(SPACE_FILE);
     let devices = device_ids(dir).len();
-    // 选了 OneDrive 里的文件夹：先叫它把贾维斯管家的同步文件都下载到这台电脑
+    // 选了 OneDrive 里的文件夹：先叫它把贾维喵管家的同步文件都下载到这台电脑
     keep_local(dir);
     match std::fs::metadata(&space) {
         Ok(m) if placeholder(&m) => {
             keep_local(&space);
-            Err("网盘还没把贾维斯管家的同步文件下载到这台电脑，等它下载完再试".into())
+            Err("网盘还没把贾维喵管家的同步文件下载到这台电脑，等它下载完再试".into())
         }
         Ok(_) => Ok(Probe::Space { devices }),
-        Err(_) if devices > 0 => Err("文件夹里的贾维斯管家数据还没传完整，等网盘传完再试".into()),
+        Err(_) if devices > 0 => Err("文件夹里的贾维喵管家数据还没传完整，等网盘传完再试".into()),
         Err(_) => Ok(Probe::Empty),
     }
 }
@@ -239,7 +239,7 @@ pub fn read_space(dir: &Path) -> Result<SpaceFile, String> {
     let text = std::fs::read_to_string(dir.join(SPACE_FILE)).map_err(|e| format!("读不了同步文件夹里的 {SPACE_FILE}：{e}"))?;
     let s: SpaceFile = serde_json::from_str(&text).map_err(|_| format!("同步文件夹里的 {SPACE_FILE} 坏了"))?;
     if s.v != 1 {
-        return Err("这个同步文件夹是更新版本的贾维斯管家建的，请先更新贾维斯管家".into());
+        return Err("这个同步文件夹是更新版本的贾维喵管家建的，请先更新贾维喵管家".into());
     }
     Ok(s)
 }
@@ -248,7 +248,7 @@ pub fn read_space(dir: &Path) -> Result<SpaceFile, String> {
 pub fn create(dir: &Path, space: &SpaceFile) -> Result<(), String> {
     std::fs::create_dir_all(dir).map_err(|e| format!("建不了同步文件夹：{e}"))?;
     if dir.join(SPACE_FILE).exists() {
-        return Err("这个文件夹里已经有贾维斯管家的数据了，请选「加入」".into());
+        return Err("这个文件夹里已经有贾维喵管家的数据了，请选「加入」".into());
     }
     write_space(dir, space)?;
     let _ = std::fs::write(dir.join(README), README_TEXT);
@@ -578,7 +578,7 @@ mod tests {
     }
 
     /// 和真人配合测试：冒充「另一台电脑」读写同一个网盘文件夹（数据放在临时目录的 dingmi-peer，下次接着用）。平时跳过：
-    /// DINGMI_TEST_FOLDER=<贾维斯管家同步 文件夹> DINGMI_TEST_PASSWORD=<同步密码> [DINGMI_TEST_ADD=<要加的提醒>]
+    /// DINGMI_TEST_FOLDER=<贾维喵管家同步 文件夹> DINGMI_TEST_PASSWORD=<同步密码> [DINGMI_TEST_ADD=<要加的提醒>]
     /// cargo test --lib -- --ignored folder::tests::peer --nocapture
     #[test]
     #[ignore]

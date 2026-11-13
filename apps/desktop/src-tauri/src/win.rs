@@ -76,20 +76,20 @@ fn builder<'a>(app: &'a AppHandle, label: &'a str, url: &str) -> WebviewWindowBu
         _ => BROWSER_ARGS.to_string(),
     };
     let b = WebviewWindowBuilder::new(app, label, WebviewUrl::App(url.into())).additional_browser_args(&args);
-    // 测试副本（JARVIS_DESKTOP_DATA_DIR）用自己的 WebView2 目录：不和装好的贾维斯管家共用网页存储（比如快速记笔记的草稿），
-    // 装好的贾维斯管家开着时，带调试参数的测试副本也能启动（同一个目录下参数不同会创建失败）
+    // 测试副本（JARVIS_DESKTOP_DATA_DIR）用自己的 WebView2 目录：不和装好的贾维喵管家共用网页存储（比如快速记笔记的草稿），
+    // 装好的贾维喵管家开着时，带调试参数的测试副本也能启动（同一个目录下参数不同会创建失败）
     match crate::dev_data_dir() {
         Some(d) => b.data_directory(d.join("EBWebView")),
         None => b,
     }
 }
 
-// ---------- WebView2 在贾维斯管家开着时自己更新了 ----------
+// ---------- WebView2 在贾维喵管家开着时自己更新了 ----------
 // 之后新建的窗口用的是新版本，和已经在跑的旧版本对不上，建不出来（主窗口、笔记窗口、提醒卡片都出不来，也不报错），
-// 开着的快捷框、桌面组件倒是照常能用。只有重启贾维斯管家才好：发现更新了、又没在用贾维斯管家时悄悄重启；
+// 开着的快捷框、桌面组件倒是照常能用。只有重启贾维喵管家才好：发现更新了、又没在用贾维喵管家时悄悄重启；
 // 万一已经有窗口建不出来了，也马上重启。
 
-/// 重启出来的贾维斯管家带着这个参数：先等旧的退干净，免得被当成第二个贾维斯管家
+/// 重启出来的贾维喵管家带着这个参数：先等旧的退干净，免得被当成第二个贾维喵管家
 const RELAUNCH: &str = "--relaunch";
 static STARTED: LazyLock<Instant> = LazyLock::new(Instant::now);
 static WEBVIEW2_AT_START: LazyLock<String> = LazyLock::new(crate::sys::webview2_version);
@@ -103,7 +103,7 @@ pub fn init() {
     }
 }
 
-/// 后台每次计时都看一眼：WebView2 更新了、除了桌面组件没有窗口开着（没在用贾维斯管家），就悄悄重启，主窗口不打开
+/// 后台每次计时都看一眼：WebView2 更新了、除了桌面组件没有窗口开着（没在用贾维喵管家），就悄悄重启，主窗口不打开
 pub fn restart_if_webview2_updated(app: &AppHandle) {
     if crate::sys::webview2_version() == *WEBVIEW2_AT_START {
         return;
@@ -114,7 +114,7 @@ pub fn restart_if_webview2_updated(app: &AppHandle) {
     }
 }
 
-/// 建窗口的结果：建好了，按 Alt 不弹系统菜单，右键、F5 这些不当浏览器用。建不出来就重启贾维斯管家：open_main 是用户点了要开的窗口，重启后打开主窗口，让他知道发生了什么；
+/// 建窗口的结果：建好了，按 Alt 不弹系统菜单，右键、F5 这些不当浏览器用。建不出来就重启贾维喵管家：open_main 是用户点了要开的窗口，重启后打开主窗口，让他知道发生了什么；
 /// 提醒卡片这类自己弹的，重启后会接着弹
 fn made(app: &AppHandle, open_main: bool, r: tauri::Result<WebviewWindow>) -> Option<WebviewWindow> {
     match r {
@@ -284,7 +284,7 @@ pub fn open_main(app: &AppHandle) {
     let (mw, mh) = main_size(app);
     // 先藏着，网页读完数据、画好第一屏后自己显示出来（main.ts）
     let r = builder(app, "main", "index.html")
-        .title(if crate::dev_data_dir().is_some() { "贾维斯管家 · 单页本地版" } else { "贾维斯管家" })
+        .title(if crate::dev_data_dir().is_some() { "贾维喵管家 · 单页本地版" } else { "贾维喵管家" })
         .inner_size(mw, mh)
         .min_inner_size(MAIN_MIN_W, MAIN_MIN_H)
         // 让网页自己收拖进来的文件（笔记里拖入图片）
@@ -496,7 +496,7 @@ pub fn open_remind(app: &AppHandle) {
         return;
     }
     let r = builder(app, "remind", "remind.html")
-        .title("贾维斯管家提醒")
+        .title("贾维喵管家提醒")
         .inner_size(REMIND_W, 260.0)
         .decorations(false)
         .transparent(true)
@@ -565,7 +565,7 @@ pub fn open_onboard(app: &AppHandle) {
         return;
     }
     let r = builder(app, "onboard", "onboard.html")
-        .title(if crate::dev_data_dir().is_some() { "贾维斯管家 · 单页本地版" } else { "贾维斯管家" })
+        .title(if crate::dev_data_dir().is_some() { "贾维喵管家 · 单页本地版" } else { "贾维喵管家" })
         .inner_size(ONBOARD_W, 520.0)
         .decorations(false)
         .transparent(true)
@@ -702,7 +702,7 @@ pub fn open_note(app: &AppHandle, id: i64) {
     }
     // 先藏着，网页读好笔记、按上次的大小摆好后自己显示（note.ts）
     let r = builder(app, &label, &format!("note.html?id={id}"))
-        .title("贾维斯管家笔记")
+        .title("贾维喵管家笔记")
         .inner_size(980.0, 680.0)
         .min_inner_size(560.0, 400.0)
         .disable_drag_drop_handler()
@@ -743,7 +743,7 @@ pub fn open_widget(app: &AppHandle) {
         return;
     }
     let r = builder(app, "widget", "widget.html")
-        .title("贾维斯管家桌面组件")
+        .title("贾维喵管家桌面组件")
         .inner_size(WIDGET_W + WIDGET_SIDE * 2.0, 400.0)
         .decorations(false)
         .transparent(true)

@@ -94,7 +94,7 @@ pub fn notify_queue(app: &AppHandle) {
 }
 
 /// 调试用：调试版设置了 JARVIS_DESKTOP_DATA_DIR 时用这个目录放数据（密钥也分开放），
-/// 并且不限制只能开一个，可以和正在用的贾维斯管家同时运行
+/// 并且不限制只能开一个，可以和正在用的贾维喵管家同时运行
 pub fn dev_data_dir() -> Option<PathBuf> {
     if !cfg!(debug_assertions) {
         return None;
@@ -140,9 +140,9 @@ pub fn update_tray(app: &AppHandle) {
             if title.chars().count() > 24 {
                 t.push('…');
             }
-            format!("贾维斯管家 {} · 下一条：{} {t}", app.package_info().version, when_label(&at))
+            format!("贾维喵管家 {} · 下一条：{} {t}", app.package_info().version, when_label(&at))
         }
-        None => format!("贾维斯管家 {} · 接下来没有提醒", app.package_info().version),
+        None => format!("贾维喵管家 {} · 接下来没有提醒", app.package_info().version),
     };
     if dev_data_dir().is_some() {
         tip.insert_str(0, "【测试】");
@@ -897,7 +897,7 @@ fn list_devices(st: tauri::State<AppState>) -> Res<Vec<db::Device>> {
 
 // ---------- 命令：导出全部、从导出包恢复（需求-0.1 第 4 节） ----------
 
-/// 默认导出到哪：文档\贾维斯管家导出\贾维斯管家导出_<日期>_<时分>.zip
+/// 默认导出到哪：文档\贾维喵管家导出\贾维喵管家导出_<日期>_<时分>.zip
 #[tauri::command]
 fn export_default(app: AppHandle) -> Res<String> {
     let docs = app.path().document_dir().map_err(err)?;
@@ -920,7 +920,7 @@ fn dialog_parent(app: &AppHandle) -> Option<WebviewWindow> {
 /// 弹出选文件的框（在主窗口或引导上面）：`save` 为 true 是「另存为」，`path` 是默认的位置。取消时为 None
 fn zip_dialog(app: &AppHandle, title: &str, path: &std::path::Path, save: bool) -> Option<PathBuf> {
     use tauri_plugin_dialog::DialogExt;
-    let mut d = app.dialog().file().set_title(title).add_filter("贾维斯管家导出包（zip）", &["zip"]);
+    let mut d = app.dialog().file().set_title(title).add_filter("贾维喵管家导出包（zip）", &["zip"]);
     // 从 `path` 所在的文件夹开始选；这个文件夹还没建的话，从再上一层开始
     if let Some(dir) = path.ancestors().skip(1).find(|p| p.is_dir()) {
         d = d.set_directory(dir);
@@ -1068,7 +1068,7 @@ async fn save_png(app: AppHandle, name: String, data: String) -> Res<Option<Stri
 /// 选一个导出包，取消时为 null
 #[tauri::command]
 async fn restore_pick(app: AppHandle) -> Option<String> {
-    let start = app.path().document_dir().map(|d| d.join("贾维斯管家导出").join("x.zip")).unwrap_or_default();
+    let start = app.path().document_dir().map(|d| d.join("贾维喵管家导出").join("x.zip")).unwrap_or_default();
     tauri::async_runtime::spawn_blocking(move || zip_dialog(&app, "选择导出包", &start, false))
         .await
         .ok()
@@ -1199,7 +1199,7 @@ fn wrap_done(app: AppHandle, st: tauri::State<AppState>) -> Res<()> {
     Ok(())
 }
 
-/// 调试用的测试副本（设了 JARVIS_DESKTOP_DATA_DIR）：界面上标出来，免得和正在用的贾维斯管家弄混
+/// 调试用的测试副本（设了 JARVIS_DESKTOP_DATA_DIR）：界面上标出来，免得和正在用的贾维喵管家弄混
 #[tauri::command]
 fn is_test_copy() -> bool {
     dev_data_dir().is_some()
@@ -1452,7 +1452,7 @@ fn launcher_save(app: AppHandle, st: tauri::State<AppState>, config: launcher::C
 }
 
 /// 界面拿来的路径能不能用（见 allow.rs）。`how`：
-/// - Open：打开（相当于双击）：用户选过、拖进来的，启动器里自己加的（和它下面一层），贾维斯管家的备份文件夹、诊断包、
+/// - Open：打开（相当于双击）：用户选过、拖进来的，启动器里自己加的（和它下面一层），贾维喵管家的备份文件夹、诊断包、
 ///   同步和备份文件夹，附件文件夹里白名单里的类型
 /// - Reveal：在资源管理器里选中：上面这些，加上数据文件夹里的
 /// - Peek：看文件夹里有什么：用户选过的、启动器里的文件夹
@@ -1489,7 +1489,7 @@ fn path_allowed(app: &AppHandle, p: &str, how: PathUse) -> bool {
     if allow::under(p, &att) {
         return allow::child_of(p, &att.display().to_string()) && (how == PathUse::Reveal || links::safe_to_open(p));
     }
-    // 贾维斯管家自己写的：本机备份、诊断包（里面的文件也能打开看看）
+    // 贾维喵管家自己写的：本机备份、诊断包（里面的文件也能打开看看）
     if [st.data_dir.join("backups"), diag::temp_dir()].iter().any(|d| allow::under(p, d)) {
         return true;
     }
@@ -1507,7 +1507,7 @@ fn check_path(app: &AppHandle, p: &str, how: PathUse) -> Res<()> {
         Ok(())
     } else {
         diag::log("出错", format!("界面要用一个没选过的路径，没有理它：{p}"));
-        Err("这个位置贾维斯管家不能打开，请重新选一次".into())
+        Err("这个位置贾维喵管家不能打开，请重新选一次".into())
     }
 }
 
@@ -1625,11 +1625,11 @@ async fn widget_off(app: AppHandle, st: tauri::State<'_, AppState>) -> Res<()> {
 
 // ---------- 托盘 ----------
 
-/// 点托盘、再打开一次贾维斯管家：引导还没走完（比如装好后开机自动启动的，引导没弹）就打开引导，否则打开主窗口
+/// 点托盘、再打开一次贾维喵管家：引导还没走完（比如装好后开机自动启动的，引导没弹）就打开引导，否则打开主窗口
 fn open_home(app: &AppHandle) { win::open_main(app); }
 
 fn build_tray(app: &AppHandle) -> tauri::Result<()> {
-    let open = MenuItem::with_id(app, "open", "打开贾维斯管家", true, None::<&str>)?;
+    let open = MenuItem::with_id(app, "open", "打开贾维喵管家", true, None::<&str>)?;
     let knowledge = MenuItem::with_id(app, "workspace", "知识工作台 / AI / 微信", true, None::<&str>)?;
     let flash = MenuItem::with_id(app, "flash", "快捷框", true, None::<&str>)?;
     let qnote = MenuItem::with_id(app, "qnote", "快速记笔记", true, None::<&str>)?;
@@ -1662,7 +1662,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
     *st.tray_sync.lock().unwrap() = Some((sync_status, sync_now));
     *st.tray_update.lock().unwrap() = Some(upd);
     let mut tb = TrayIconBuilder::with_id("dingmi")
-        .tooltip("贾维斯管家")
+        .tooltip("贾维喵管家")
         .menu(&menu)
         .show_menu_on_left_click(false)
         .on_menu_event(|app, e| match e.id.as_ref() {
@@ -1743,14 +1743,14 @@ pub fn run() {
                 .or_else(|| app.path().app_data_dir().ok())
                 .ok_or("无法确定应用数据目录")?)?;
             diag::init(&data_dir);
-            diag::log("启动", format!("贾维斯管家 {} 启动了", app.package_info().version));
+            diag::log("启动", format!("贾维喵管家 {} 启动了", app.package_info().version));
             let conn = db::open(&data_dir).inspect_err(|e| diag::log("出错", format!("打不开数据库：{e}")))?;
             // 笔记里的图片：配置里只放行了 $APPDATA 下的，调试时数据目录可能在别处
             let _ = app.asset_protocol_scope().allow_directory(db::attachment_dir(&data_dir), true);
             let device = db::device_id(&conn)?;
             let saved = settings::load(&conn);
             let first_run = saved.is_none();
-            // 第一次用贾维斯管家（要在下面存设置之前看）：打开首次引导，不打开主窗口
+            // 第一次用贾维喵管家（要在下面存设置之前看）：打开首次引导，不打开主窗口
             onboard::init(&conn, onboard::fresh(&conn))?;
             let show_onboard = false; // Fusion onboarding is in the native workspace settings.
             let mut settings: Settings = saved.unwrap_or_default();
@@ -1986,7 +1986,7 @@ pub fn run() {
             onboard::checklist_hide,
         ])
         .build(tauri::generate_context!())
-        .expect("贾维斯管家启动失败")
+        .expect("贾维喵管家启动失败")
         .run(|_app, event| {
             // 关掉所有窗口后继续在托盘里运行，只有菜单里的"退出"才真正退出
             match event {

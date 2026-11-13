@@ -7,7 +7,7 @@ body.mainwin { background: var(--bg); overflow: hidden; }
 .tag .lucide { width: 11px; height: 11px; }
 button.tag { border: 0; cursor: pointer; }
 
-/* ---------- 标题栏：小脑袋 + 贾维斯管家、搜索、同步状态、窗口按钮 ---------- */
+/* ---------- 标题栏：小脑袋 + 贾维喵管家、搜索、同步状态、窗口按钮 ---------- */
 .tb { display: flex; align-items: center; gap: 10px; padding-left: 14px; background: var(--bg); -webkit-user-select: none; user-select: none; min-width: 0; }
 .tb-brand { display: flex; align-items: center; gap: 7px; width: calc(186px * var(--fs)); flex: none; font-size: calc(13px * var(--fs)); font-weight: 700; }
 .tb-brand .logo { width: 22px; height: 22px; display: inline-grid; flex: none; }
@@ -31,7 +31,7 @@ button.tag { border: 0; cursor: pointer; }
 .tb-sync.busy .d { background: var(--accent); animation: tbPulse 1.2s ease-in-out infinite; }
 .tb-sync.bad { color: var(--danger); }
 .tb-sync.bad .d { background: var(--danger); }
-/* 贾维斯管家同步快到期了：黄点 */
+/* 贾维喵管家同步快到期了：黄点 */
 .tb-sync.warn { color: var(--warn); }
 .tb-sync.warn .d { background: var(--warn); }
 @keyframes tbPulse { 50% { opacity: .3; } }

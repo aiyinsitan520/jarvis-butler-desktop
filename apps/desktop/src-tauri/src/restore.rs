@@ -12,8 +12,8 @@ use std::io::Read;
 use std::path::{Path, PathBuf};
 use zip::ZipArchive;
 
-const NOT_OURS: &str = "这不是贾维斯管家的导出包。请选「导出全部」得到的那个 zip";
-const TOO_NEW: &str = "这个导出包是新版贾维斯管家导出的，这台电脑上的贾维斯管家读不懂。请先更新贾维斯管家再恢复";
+const NOT_OURS: &str = "这不是贾维喵管家的导出包。请选「导出全部」得到的那个 zip";
+const TOO_NEW: &str = "这个导出包是新版贾维喵管家导出的，这台电脑上的贾维喵管家读不懂。请先更新贾维喵管家再恢复";
 
 /// 选好包后先给用户看的：哪天导出的、各有多少条
 #[derive(Serialize, Clone, Debug)]
@@ -39,7 +39,7 @@ fn open_zip(path: &Path) -> Result<ZipArchive<std::fs::File>, String> {
     ZipArchive::new(f).map_err(|_| NOT_OURS.to_string())
 }
 
-/// 核对 `数据/manifest.json`：是不是贾维斯管家的包、格式这台电脑读不读得懂
+/// 核对 `数据/manifest.json`：是不是贾维喵管家的包、格式这台电脑读不读得懂
 pub fn read_manifest(path: &Path) -> Result<Manifest, String> {
     let mut z = open_zip(path)?;
     let mut text = String::new();
@@ -69,7 +69,7 @@ fn unpack_attachments(z: &mut ZipArchive<std::fs::File>, data_dir: &Path) -> Res
     let mut files = Vec::new();
     for i in 0..z.len() {
         let mut f = z.by_index(i).map_err(|e| format!("导出包坏了：{e}"))?;
-        // 名字不是 UTF-8 的（不是贾维斯管家导出的）不认
+        // 名字不是 UTF-8 的（不是贾维喵管家导出的）不认
         let Ok(name) = f.name().map(|n| n.into_owned()) else { continue };
         let Some((sub, file)) = name.strip_prefix(&prefix).and_then(|r| r.split_once('/')) else { continue };
         // 文件名会拼进路径：只认附件文件名的规矩（db::valid_att_file），zip 里的「../」、绝对路径、设备名都不认
@@ -227,7 +227,7 @@ mod tests {
     }
 
     /// 攻击：别人给的导出包里附件的名字带 ../、绝对路径、设备名、备用数据流，想把文件写到附件文件夹外面。
-    /// 贾维斯管家不用 zip 库的 extract（RUSTSEC-2026-0367/0368/0369/0429 都在 extract 里），每个名字自己核对；解出来的标上「来自网络」
+    /// 贾维喵管家不用 zip 库的 extract（RUSTSEC-2026-0367/0368/0369/0429 都在 extract 里），每个名字自己核对；解出来的标上「来自网络」
     #[test]
     fn evil_package_cannot_write_outside() {
         let base = temp("evil-pkg");
@@ -280,7 +280,7 @@ mod tests {
         let m = read_manifest(&pkg).unwrap();
         assert_eq!((m.reminders, m.notes, m.attachments), (2, 1, 1));
 
-        // 不是 zip、不是贾维斯管家的 zip
+        // 不是 zip、不是贾维喵管家的 zip
         std::fs::write(dir.join("x.zip"), b"hello").unwrap();
         assert_eq!(read_manifest(&dir.join("x.zip")).unwrap_err(), NOT_OURS);
         let write_zip = |name: &str, files: &[(&str, &str)]| {
@@ -296,7 +296,7 @@ mod tests {
         assert_eq!(read_manifest(&write_zip("other.zip", &[("readme.txt", "hi")])).unwrap_err(), NOT_OURS);
         let other_app = serde_json::to_string(&Manifest { app: "uTools".into(), ..m.clone() }).unwrap();
         assert_eq!(read_manifest(&write_zip("app.zip", &[(MANIFEST_PATH, &other_app), (DB_PATH, "")])).unwrap_err(), NOT_OURS);
-        // 新版贾维斯管家导出的包
+        // 新版贾维喵管家导出的包
         let newer = serde_json::to_string(&Manifest { format: FORMAT + 1, ..m.clone() }).unwrap();
         assert_eq!(read_manifest(&write_zip("new.zip", &[(MANIFEST_PATH, &newer), (DB_PATH, "")])).unwrap_err(), TOO_NEW);
         // 没有数据库的

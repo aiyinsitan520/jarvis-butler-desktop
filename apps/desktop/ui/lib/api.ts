@@ -87,7 +87,7 @@ export interface TermsDoc {
   started: boolean;
 }
 
-/** 三份协议：用户协议、隐私说明、贾维斯管家同步服务协议（键和官网 terms.json 一样） */
+/** 三份协议：用户协议、隐私说明、贾维喵管家同步服务协议（键和官网 terms.json 一样） */
 export interface TermsView {
   terms: TermsDoc;
   privacy: TermsDoc;
@@ -157,18 +157,18 @@ export interface FolderPeek {
   files: { name: string; path: string; dir: boolean; modified: number }[];
 }
 
-/** 贾维斯管家同步：到期后接着用的那一段（换档时剩下的时长） */
+/** 贾维喵管家同步：到期后接着用的那一段（换档时剩下的时长） */
 export interface NextPlan {
   plan: string;
   /** 用到哪天（YYYY-MM-DD）；null 是不会到期 */
   until: string | null;
 }
 
-/** 贾维斯管家同步：这个空间的账（服务器每次连上时告诉电脑，见 docs/方案/同步方案.md 第 16 节） */
+/** 贾维喵管家同步：这个空间的账（服务器每次连上时告诉电脑，见 docs/方案/同步方案.md 第 16 节） */
 export interface SyncAccount {
   /** 空间的短编号，比如 S-7K2M9，联系客服时报这个 */
   space: string;
-  /** 服务器开了兑换码，也就是贾维斯管家同步（自建服务器是 false，不用显示套餐和到期） */
+  /** 服务器开了兑换码，也就是贾维喵管家同步（自建服务器是 false，不用显示套餐和到期） */
   official: boolean;
   /** 套餐名，比如「标准」 */
   plan: string;
@@ -236,21 +236,21 @@ export interface BetaInfo {
 export interface SyncStatus {
   /** off 没开启 / locked 配对过但还差同步密码 / connecting 正在连 / online 已连接 / offline 连不上 */
   /** outdated：这个版本太旧（官网的最低版本），同步先停下，等更新 */
-  /** expired：贾维斯管家同步已到期（停止同步，详情在 account，续费后自己接着同步） */
+  /** expired：贾维喵管家同步已到期（停止同步，详情在 account，续费后自己接着同步） */
   /** keys_lost：凭据管理器里没有这台电脑的同步钥匙了（重装过系统、数据从别的电脑拷来），要重新加入 */
   /** keys_retry：这次没从凭据管理器读出钥匙，30 秒后再试（error 里是原因） */
   state: "off" | "locked" | "connecting" | "online" | "offline" | "outdated" | "expired" | "keys_lost" | "keys_retry";
-  /** 连的是贾维斯管家同步 */
+  /** 连的是贾维喵管家同步 */
   official: boolean;
   /** 上次连上时服务器说的这个空间的账；旧服务器、没连上过是 null */
   account: SyncAccount | null;
   /** 空间满了没传上去、先只在这台电脑上的图片和文件有几个；0 是都传上去了 */
   held_files: number;
-  /** 超过贾维斯管家同步套餐单个文件的大小、不传、只在这台电脑上的有几个 */
+  /** 超过贾维喵管家同步套餐单个文件的大小、不传、只在这台电脑上的有几个 */
   only_here_files?: number;
   /** locked 时：空间还没设同步密码（刚用兑换码开通），要设一个（输两次）；syncUnlock 会回恢复码 */
   need_setup: boolean;
-  /** 服务器不收这台电脑的原因：deleted 贾维斯管家同步到期太久、数据删了（要用兑换码重新开通）等，见 dingmi_sync::refuse */
+  /** 服务器不收这台电脑的原因：deleted 贾维喵管家同步到期太久、数据删了（要用兑换码重新开通）等，见 dingmi_sync::refuse */
   refused: string | null;
   server: string | null;
   device: string | null;
@@ -261,15 +261,15 @@ export interface SyncStatus {
   need_recovery: boolean;
   /** server 自建服务器 / folder 网盘文件夹；没开启时是空的 */
   kind: "" | "server" | "folder";
-  /** 网盘文件夹方式：「贾维斯管家数据」文件夹的位置 */
+  /** 网盘文件夹方式：「贾维喵管家数据」文件夹的位置 */
   folder: string | null;
 }
 
-/** 选中的文件夹里有没有贾维斯管家的数据 */
+/** 选中的文件夹里有没有贾维喵管家的数据 */
 export interface FolderProbe {
-  /** 「贾维斯管家数据」文件夹会放在哪 */
+  /** 「贾维喵管家数据」文件夹会放在哪 */
   dir: string;
-  /** empty 没有贾维斯管家数据（第一台电脑）/ space 已经在用（加入）/ bad 用不了 */
+  /** empty 没有贾维喵管家数据（第一台电脑）/ space 已经在用（加入）/ bad 用不了 */
   state: "empty" | "space" | "bad";
   devices: number;
   error: string | null;
@@ -293,7 +293,7 @@ export interface FolderDevice {
 /** 另存一份备份 */
 export interface BackupStatus {
   on: boolean;
-  /** 「贾维斯管家数据」文件夹的位置 */
+  /** 「贾维喵管家数据」文件夹的位置 */
   dir: string | null;
   /** 上次备份的时间 */
   last: string | null;
@@ -346,7 +346,7 @@ export interface AttachmentInfo {
   size: number;
   /** 原文件在不在本机（文件附件点开时才下载） */
   local: boolean;
-  /** 贾维斯管家同步的套餐不传它（太大）：原文件只在这台设备上（设备编号）；null 是照常同步的 */
+  /** 贾维喵管家同步的套餐不传它（太大）：原文件只在这台设备上（设备编号）；null 是照常同步的 */
   only_on: string | null;
 }
 
@@ -551,28 +551,28 @@ export const api = {
   /** 输同步密码解锁；没有空间密钥的电脑输恢复码（这时不用同步密码）。
    * 刚用兑换码开通（状态里 need_setup）时这就是设同步密码：回新的恢复码，要请用户存好；别的时候回 null */
   syncUnlock: (password: string, recovery: string | null = null) => invoke<string | null>("sync_unlock", { password, recovery }),
-  /** 贾维斯管家同步：用兑换码开通。兑换码不对、用过了会直接报错（原话给人看）；成了回这个空间的账，
+  /** 贾维喵管家同步：用兑换码开通。兑换码不对、用过了会直接报错（原话给人看）；成了回这个空间的账，
    * 这台电脑已经登记好（设备名在这里给），下一步调 syncUnlock(同步密码) 设密码、拿恢复码。
    * email 选填（空的不留）；agree 是勾了「同意协议」，没勾不开通 */
   officialRedeem: (code: string, name: string, email: string, agree: boolean) =>
     invoke<SyncAccount>("official_redeem", { code, name, email: email.trim() || null, agree }),
-  /** 贾维斯管家同步：公测免费体验现在怎样（开通那一步用）；连不上时报错 */
+  /** 贾维喵管家同步：公测免费体验现在怎样（开通那一步用）；连不上时报错 */
   officialBetaInfo: () => invoke<BetaInfo>("official_beta_info"),
-  /** 贾维斯管家同步：领公测免费体验开通，之后和兑换码开通一样设同步密码 */
+  /** 贾维喵管家同步：领公测免费体验开通，之后和兑换码开通一样设同步密码 */
   officialBeta: (name: string, email: string, agree: boolean) =>
     invoke<SyncAccount>("official_beta", { name, email: email.trim() || null, agree }),
-  /** 贾维斯管家同步：留 / 改邮箱（写了），删掉（空的）。回改好以后的账 */
+  /** 贾维喵管家同步：留 / 改邮箱（写了），删掉（空的）。回改好以后的账 */
   officialEmail: (email: string) => invoke<SyncAccount>("official_email", { email: email.trim() || null }),
-  /** 贾维斯管家同步：唯一的电脑没了，用恢复码找回。password 写了就顺便换成新的同步密码（忘了原来的），空的不换；
+  /** 贾维喵管家同步：唯一的电脑没了，用恢复码找回。password 写了就顺便换成新的同步密码（忘了原来的），空的不换；
    * 成了以后请用户换一个恢复码（syncNewRecovery） */
   officialRecover: (recovery: string, name: string, password = "") =>
     invoke<SyncAccount>("official_recover", { recovery, name, password }),
-  /** 贾维斯管家同步：兑换码 + 同步密码加入（这个空间开通、续费用过的哪个码都行）。replace：本机有数据时用服务器上的替换 */
+  /** 贾维喵管家同步：兑换码 + 同步密码加入（这个空间开通、续费用过的哪个码都行）。replace：本机有数据时用服务器上的替换 */
   officialJoin: (code: string, password: string, name: string, replace: boolean) =>
     invoke<SyncAccount>("official_join", { code, password, name, replace }),
-  /** 贾维斯管家同步：打开兑换码加入（输一次同步密码，要 10 位以上） */
+  /** 贾维喵管家同步：打开兑换码加入（输一次同步密码，要 10 位以上） */
   officialJoinOn: (password: string) => invoke<SyncAccount>("official_join_on", { password }),
-  /** 贾维斯管家同步：关掉兑换码加入 */
+  /** 贾维喵管家同步：关掉兑换码加入 */
   officialJoinOff: () => invoke<SyncAccount>("official_join_off"),
   /** 用手机加入：要 8 位数字 */
   officialPhoneStart: (name: string) => invoke<PhoneWait>("official_phone_start", { name }),
@@ -580,13 +580,13 @@ export const api = {
   officialPhonePoll: () => invoke<boolean>("official_phone_poll"),
   /** 用手机加入：手机允许了，输同步密码加入 */
   officialPhoneJoin: (password: string, name: string, replace: boolean) => invoke<void>("official_phone_join", { password, name, replace }),
-  /** 贾维斯管家同步：删掉服务器上的数据（输同步密码确认），删完这台电脑回到不同步 */
+  /** 贾维喵管家同步：删掉服务器上的数据（输同步密码确认），删完这台电脑回到不同步 */
   officialDelete: (password: string) => invoke<void>("official_delete", { password }),
-  /** 贾维斯管家同步：续费（填兑换码），回续好以后的账；到期了（30 天内）也能续 */
+  /** 贾维喵管家同步：续费（填兑换码），回续好以后的账；到期了（30 天内）也能续 */
   officialRenew: (code: string) => invoke<SyncAccount>("official_renew", { code }),
-  /** 贾维斯管家同步：联系客服用的 6 位核对码，10 分钟有效 */
+  /** 贾维喵管家同步：联系客服用的 6 位核对码，10 分钟有效 */
   officialSupportCode: () => invoke<{ code: string; expires_at: string }>("official_support_code"),
-  /** 贾维斯管家同步：连上去问一次现在的账（状态里的 account 是上次连上时的） */
+  /** 贾维喵管家同步：连上去问一次现在的账（状态里的 account 是上次连上时的） */
   officialAccount: () => invoke<SyncAccount>("official_account"),
   /** 换一个恢复码，旧的作废，回新的 */
   syncNewRecovery: () => invoke<string>("sync_new_recovery"),
@@ -655,7 +655,7 @@ export const api = {
   /** 桌面组件能不能开毛玻璃（Windows 11 才有） */
   widgetGlassOk: () => invoke<boolean>("widget_glass_ok"),
   hotkeyNotice: () => invoke<string | null>("hotkey_notice"),
-  /** 调试用的测试副本（和正在用的贾维斯管家同时开着时分得清） */
+  /** 调试用的测试副本（和正在用的贾维喵管家同时开着时分得清） */
   isTestCopy: () => invoke<boolean>("is_test_copy"),
   getFocus: () => invoke<FocusInfo>("get_focus"),
   setFocus: (on: boolean) => invoke<FocusInfo>("set_focus", { on }),
@@ -702,9 +702,9 @@ export const api = {
   updateDownload: () => invoke<void>("update_download"),
   /** 这个版本不再提示 */
   updateDismiss: () => invoke<void>("update_dismiss"),
-  /** 启动下载好的安装包，贾维斯管家随即退出，装完自动重新打开 */
+  /** 启动下载好的安装包，贾维喵管家随即退出，装完自动重新打开 */
   updateInstall: () => invoke<void>("update_install", {confirmed:true}),
-  /** 更新后第一次打开时的提示："贾维斯管家已经更新到 x" */
+  /** 更新后第一次打开时的提示："贾维喵管家已经更新到 x" */
   updateNotice: () => invoke<string | null>("update_notice"),
   /** 协议：哪份最近更新过、有没有要通知的重大修改（官网 terms.json，检查更新时顺便取的；变了发 terms-changed） */
   termsInfo: () => invoke<TermsView>("terms_info"),
@@ -728,7 +728,7 @@ export const api = {
   onboardOpen: () => invoke<void>("onboard_open"),
   /** 引导走完或跳过：以后启动不再打开 */
   onboardDone: () => invoke<void>("onboard_done"),
-  /** 放「贾维斯管家怎么用」笔记（分类「资料」）；放过的不再放，回 null */
+  /** 放「贾维喵管家怎么用」笔记（分类「资料」）；放过的不再放，回 null */
   onboardGuideNote: (title: string, body: string) => invoke<number | null>("onboard_guide_note", { title, body }),
   /** 上手清单；同步开着、AI Key 填了的顺便勾上 */
   checklistGet: () => invoke<Checklist>("checklist_get"),

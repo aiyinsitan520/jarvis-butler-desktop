@@ -89,10 +89,10 @@ body.onboard { background: transparent; overflow: hidden; }
 .ob .seg { justify-self: start; }
 /* 最后一步按钮上面那行小字：《用户协议》《隐私说明》点了用浏览器打开 */
 .ob p.agree { margin: 2px 0 0; text-align: right; color: var(--ink-3); font-size: calc(12px * var(--fs)); }
-/* 加入同步那一屏：贾维斯管家同步配对码 / 恢复码之间切换的链接 */
+/* 加入同步那一屏：贾维喵管家同步配对码 / 恢复码之间切换的链接 */
 .ob .agree .lnk, .ob p.s .lnk { display: inline; padding: 0; border: 0; background: none; font: inherit; color: var(--accent-ink); cursor: pointer; }
 .ob .agree .lnk:hover, .ob p.s .lnk:hover { text-decoration: underline; text-underline-offset: 2px; }
-/* 贾维斯管家同步的四种加法、用手机加入的数字和 4 个字（需求-1.x 第 34 节） */
+/* 贾维喵管家同步的四种加法、用手机加入的数字和 4 个字（需求-1.x 第 34 节） */
 .opt > .lucide:last-child { margin-left: auto; width: 16px; height: 16px; color: var(--ink-3); }
 .tagr { margin-left: 6px; padding: 0 7px; border-radius: 99px; background: var(--accent-soft); color: var(--accent-ink); font-size: calc(10.5px * var(--fs)); font-style: normal; font-weight: 500; vertical-align: 1px; }
 .phone-wait { display: grid; justify-items: center; gap: 10px; padding: 14px; border-radius: var(--r-lg); background: var(--surf); box-shadow: var(--sh-1); }

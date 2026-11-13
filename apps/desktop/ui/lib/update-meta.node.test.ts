@@ -1,4 +1,4 @@
-// update.json 里 version、min_version、sha256 的签名（安全审查第 8 条）：发布脚本签的文字要和贾维斯管家核对时拼的一模一样
+// update.json 里 version、min_version、sha256 的签名（安全审查第 8 条）：发布脚本签的文字要和贾维喵管家核对时拼的一模一样
 // （apps/desktop/src-tauri/src/update.rs 的 meta_text_matches_release_script 对的是同样的字符串）
 import { describe, expect, it } from "vitest";
 // @ts-expect-error 脚本是 .mjs，没有类型

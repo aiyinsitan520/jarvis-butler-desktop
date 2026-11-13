@@ -1,4 +1,4 @@
-//! 诊断信息（需求-0.3 第 12 节）：平时记日志，出了问题用户自己导出一个 zip 发给作者。贾维斯管家自己不往外发任何东西。
+//! 诊断信息（需求-0.3 第 12 节）：平时记日志，出了问题用户自己导出一个 zip 发给作者。贾维喵管家自己不往外发任何东西。
 //!
 //! - 日志在数据目录的 `logs/` 里，每天一个文件，留 7 天，单个文件太大就截掉前面的。
 //! - 只记出错、启动退出、同步、检查更新、快捷键、窗口这类事情；**不记任何内容**：提醒和笔记的标题正文、
@@ -128,7 +128,7 @@ pub fn prepare(app: &AppHandle) -> Result<Vec<Part>, String> {
         parts.push(Part { name: name.into(), desc: desc.into(), path: p.display().to_string() });
         Ok(())
     };
-    put("电脑和贾维斯管家.txt", "贾维斯管家和 Windows 的版本、屏幕、WebView2、占用的内存", system_text(app))?;
+    put("电脑和贾维喵管家.txt", "贾维喵管家和 Windows 的版本、屏幕、WebView2、占用的内存", system_text(app))?;
     // 内容是 JSON，存成 .txt：很多电脑上 .json 没有默认打开方式，「打开看看」会没反应
     put("设置.txt", "各项设置的值；AI Key、同步密码、配对信息已经去掉", settings_text(app))?;
     put("同步.txt", "同步方式、最后同步的时间、几台电脑、最近的出错原因；不含服务器地址和文件夹位置", sync_text(app))?;
@@ -151,14 +151,14 @@ pub fn prepare(app: &AppHandle) -> Result<Vec<Part>, String> {
     Ok(parts)
 }
 
-/// 打成 zip 放到桌面：贾维斯管家诊断_2026-11-05_1430.zip。回 zip 的位置
+/// 打成 zip 放到桌面：贾维喵管家诊断_2026-11-05_1430.zip。回 zip 的位置
 pub fn export(app: &AppHandle) -> Result<PathBuf, String> {
     let dir = temp_dir();
     if !dir.exists() {
         prepare(app)?;
     }
     let desk = app.path().desktop_dir().map_err(|e| format!("找不到桌面：{e}"))?;
-    let stem = format!("贾维斯管家诊断_{}", chrono::Local::now().format("%Y-%m-%d_%H%M"));
+    let stem = format!("贾维喵管家诊断_{}", chrono::Local::now().format("%Y-%m-%d_%H%M"));
     let to = (1..100)
         .map(|n| desk.join(if n == 1 { format!("{stem}.zip") } else { format!("{stem} ({n}).zip") }))
         .find(|p| !p.exists())
@@ -195,7 +195,7 @@ fn system_text(app: &AppHandle) -> String {
         .map(|m| format!("{}×{} 缩放 {:.0}%", m.size().width, m.size().height, m.scale_factor() * 100.0))
         .collect();
     format!(
-        "贾维斯管家 {}\nWindows {}\n屏幕 {} 块：{}\nWebView2 {}\n贾维斯管家占用的内存 {}\n导出时间 {}\n",
+        "贾维喵管家 {}\nWindows {}\n屏幕 {} 块：{}\nWebView2 {}\n贾维喵管家占用的内存 {}\n导出时间 {}\n",
         app.package_info().version,
         windows_version(),
         monitors.len(),
@@ -297,7 +297,7 @@ fn windows_version() -> String {
     std::env::consts::OS.into()
 }
 
-/// 贾维斯管家这个进程占了多少内存（工作集）
+/// 贾维喵管家这个进程占了多少内存（工作集）
 #[cfg(windows)]
 fn memory() -> Option<u64> {
     use windows_sys::Win32::System::ProcessStatus::{K32GetProcessMemoryInfo, PROCESS_MEMORY_COUNTERS};

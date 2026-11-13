@@ -1,6 +1,6 @@
 import "../lib/workspace-status";
 // 首次引导（需求-0.2 第 5 节、U10）：第 1 步你是第一次用吗（或者加入同步、从导出包恢复）→ 第 2 步试一下快捷框 → 第 3 步几个开关。
-// 只在这台电脑第一次打开贾维斯管家时由 Rust 打开（onboard.rs）；「设置 → 关于 → 再看一遍引导」也能打开
+// 只在这台电脑第一次打开贾维喵管家时由 Rust 打开（onboard.rs）；「设置 → 关于 → 再看一遍引导」也能打开
 import "../styles/ui.css";
 import "../styles/onboard.css";
 import { mascotOn } from "../lib/look";
@@ -43,9 +43,9 @@ const S = {
   /** 第 2 步顶上的小条：刚加入同步、刚恢复完 */
   after: null as Note | null,
   // 加入同步
-  /** folder 网盘文件夹 / server 自建服务器的配对码 / official 贾维斯管家同步（平时也是配对码，原来的电脑都没了时 rec 换成恢复码） */
+  /** folder 网盘文件夹 / server 自建服务器的配对码 / official 贾维喵管家同步（平时也是配对码，原来的电脑都没了时 rec 换成恢复码） */
   mode: "folder" as "folder" | "server" | "official",
-  /** 贾维斯管家同步走哪一种（需求-1.x 第 34 节）：ways 先选 / code 兑换码 + 同步密码 / pair 配对码 / rec 恢复码 / phone 用手机加入 / phonepw 手机允许了 */
+  /** 贾维喵管家同步走哪一种（需求-1.x 第 34 节）：ways 先选 / code 兑换码 + 同步密码 / pair 配对码 / rec 恢复码 / phone 用手机加入 / phonepw 手机允许了 */
   osub: "ways" as "ways" | "code" | "pair" | "rec" | "phone" | "phonepw",
   redeem: "",
   /** 用手机加入：8 位数字、4 个字；gone 是过期了、手机上点了「不是我」 */
@@ -55,7 +55,7 @@ const S = {
   probe: null as FolderProbe | null,
   pw: "",
   code: "",
-  /** 贾维斯管家同步：恢复码，和（可选的）新同步密码 */
+  /** 贾维喵管家同步：恢复码，和（可选的）新同步密码 */
   rc: "",
   newPw: "",
   name: "",
@@ -117,7 +117,7 @@ function syncScreen(): [string, string] {
   const o = S.mode === "official" ? S.osub : null;
   const rec = o === "rec";
   const other = `<button type="button" class="lnk" data-osub="ways">${t.otherWays}</button>`;
-  // 贾维斯管家同步：先选四种加法里的一种（需求-1.x 第 34 节）；原来的电脑都没了用恢复码 + 名字 +（忘了原来的才填）新的同步密码（需求-1.0 第 30.4 节）
+  // 贾维喵管家同步：先选四种加法里的一种（需求-1.x 第 34 节）；原来的电脑都没了用恢复码 + 名字 +（忘了原来的才填）新的同步密码（需求-1.0 第 30.4 节）
   const opt = ([k, ic, b, small]: string[], i: number) =>
     `<button class="opt" data-osub="${k}"><span class="ic">${icon(ic as IconName)}</span><div><b>${b}${i ? "" : `<em class="tagr">${T.sync.best}</em>`}</b><small>${small}</small></div>${icon("chevron-right")}</button>`;
   const digits = (c: string) => `<div class="digits">${[...c].map((d, i) => `${i === 4 ? "<i></i>" : ""}<span>${esc(d)}</span>`).join("")}</div>`;
@@ -259,7 +259,7 @@ async function loadInfo() {
 
 // ---------- 第 1 步的几条路 ----------
 
-/** 放「贾维斯管家怎么用」：按这台电脑上实际设的快捷键写。放不进去也不耽误往下走 */
+/** 放「贾维喵管家怎么用」：按这台电脑上实际设的快捷键写。放不进去也不耽误往下走 */
 async function placeNote() {
   try {
     const s = await api.getSettings();
@@ -278,7 +278,7 @@ async function startSync() {
   if (S.screen === "sync") render();
 }
 
-/** 选了一个文件夹：要里面已经有贾维斯管家的数据（另一台电脑在用）才能加入 */
+/** 选了一个文件夹：要里面已经有贾维喵管家的数据（另一台电脑在用）才能加入 */
 async function useFolder(path: string) {
   S.msg = null;
   try {
@@ -327,7 +327,7 @@ async function join() {
   }
 }
 
-/** 贾维斯管家同步：兑换码 + 同步密码加入，或者手机允许以后输同步密码（需求-1.x 第 34 节） */
+/** 贾维喵管家同步：兑换码 + 同步密码加入，或者手机允许以后输同步密码（需求-1.x 第 34 节） */
 async function joinOfficial() {
   const t = T.sync;
   const need = (text: string) => {
@@ -393,13 +393,13 @@ async function startPhone() {
 }
 let phoneRun: object | null = null;
 
-/** 不等手机了：这一轮作废（后台不再问服务器，手机那边允许了也不跳过来）；再回到贾维斯管家同步时重新选方式 */
+/** 不等手机了：这一轮作废（后台不再问服务器，手机那边允许了也不跳过来）；再回到贾维喵管家同步时重新选方式 */
 function stopPhone() {
   phoneRun = null;
   if (S.osub === "phone") S.osub = "ways";
 }
 
-/** 贾维斯管家同步：用恢复码找回。成了以后建议换一个新的恢复码（在「设置 → 同步」里） */
+/** 贾维喵管家同步：用恢复码找回。成了以后建议换一个新的恢复码（在「设置 → 同步」里） */
 async function recover() {
   const t = T.sync;
   const need = (text: string) => {
@@ -499,7 +499,7 @@ async function finish() {
   await win.close();
 }
 
-// Alt + F4 关掉：当成「跳过」，不然什么窗口都没有，像是贾维斯管家没打开
+// Alt + F4 关掉：当成「跳过」，不然什么窗口都没有，像是贾维喵管家没打开
 win.onCloseRequested((e) => {
   if (leaving) return;
   e.preventDefault();

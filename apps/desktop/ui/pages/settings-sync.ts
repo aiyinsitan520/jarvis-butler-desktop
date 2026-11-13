@@ -1,7 +1,7 @@
 import "../lib/workspace-status";
 // 设置 → 同步（UI设计.md U9 的 9 个同步画面）：选方式、选网盘文件夹、第一台 / 加入、配对服务器、开着同步、出问题、锁着；
 // 换同步密码、恢复码、备份、手机。流程和后台调用跟 0.1 一样，只换了样子和字。
-// 贾维斯管家同步（需求-1.0 第 18、30、31 节，u9-settings 的「官方同步 · 开通 / 已开通」）：填兑换码 + 设备名开通 → 设同步密码 →
+// 贾维喵管家同步（需求-1.0 第 18、30、31 节，u9-settings 的「官方同步 · 开通 / 已开通」）：填兑换码 + 设备名开通 → 设同步密码 →
 // 保存恢复码；已开通时的套餐、到期、容量、续费、联系客服；到期、删了、设备满了的提示；用恢复码找回。
 // 新电脑方便加入（需求-1.x 第 34 节、U18）：开通前先问「第一次开通 / 已经开通过」，已经开通过的四种加法（兑换码 + 同步密码、
 // 用手机、配对码、恢复码）；只有一台时的提示、老空间补开、兑换码加入的开关、删掉服务器上的数据（第 35 节）
@@ -21,12 +21,12 @@ const R = ROWS.sync;
 /** 开通时填了用过的码、那个空间能用兑换码加入：后台报错前面带着这个（sync::JOINABLE_MARK） */
 const JOINABLE = "joinable:";
 
-/** 同步出问题（还差同步密码、版本太旧、找不到同步文件夹、贾维斯管家同步到期了 / 数据删了）：导航里「同步」右边一个小红点，
+/** 同步出问题（还差同步密码、版本太旧、找不到同步文件夹、贾维喵管家同步到期了 / 数据删了）：导航里「同步」右边一个小红点，
  *  和托盘一样（需求-0.2 第 7.2 节） */
 export const syncBad = (s: SyncStatus | null) =>
   !!s && (s.state === "locked" || s.state === "outdated" || s.state === "expired" || s.state === "keys_lost" || (s.state === "offline" && (s.kind === "folder" || s.refused === "deleted")));
 
-/** 贾维斯管家同步该提醒快到期了（7 天内、明天） */
+/** 贾维喵管家同步该提醒快到期了（7 天内、明天） */
 export const expiringSoon = (a: SyncAccount | null | undefined) => !!a && !a.expired && (a.remind === "expire_7d" || a.remind === "expire_1d");
 
 /** 「 · 到 2027-11-06」/「 · 不会到期」 */
@@ -87,7 +87,7 @@ function flowHtml(f: SyncFlow, s: SyncStatus): string {
   if (f.step === "choose") {
     const way = ([k, ic, name, text, foot]: string[]) => {
       const card = `<button class="way" data-sync-pick="${k}">${icon(ic as IconName, "s20")}<b>${name}</b><span>${text}</span><em>${foot}</em></button>`;
-      // 贾维斯管家同步：卡片里再放一个「去买兑换码」（按钮里不能套按钮，压在卡片下边）
+      // 贾维喵管家同步：卡片里再放一个「去买兑换码」（按钮里不能套按钮，压在卡片下边）
       return k === "official" ? `<div class="way-box" data-row="official">${card}<button class="lnk way-buy" data-buy>${icon("external-link")}${TS.buy}</button></div>` : card;
     };
     return `${head(TS.crumb, T.hint.sync as string)}
@@ -170,7 +170,7 @@ function candRow(c: FolderCandidate) {
     ${drive(c.label)}<div>${esc(c.label)}<small class="path">${esc(c.path)}</small></div><span class="ago ${cls}">${esc(st)}</span>${icon("chevron-right", "s16")}</button>`;
 }
 
-// ---------- 贾维斯管家同步：开通、设同步密码、用恢复码找回 ----------
+// ---------- 贾维喵管家同步：开通、设同步密码、用恢复码找回 ----------
 
 /** 这台电脑上已经有提醒、笔记时说一句：开通 / 找回后会传上去、合在一起 */
 const localNote = (text: (r: number, n: number) => string) =>
@@ -241,7 +241,7 @@ function officialHtml(s: SyncStatus) {
 
 // ---------- 新电脑方便加入（需求-1.x 第 34 节、U18） ----------
 
-/** 进贾维斯管家同步先问一句：第一次开通 / 已经在别的电脑上开通过（再开通一次就是另一个空间） */
+/** 进贾维喵管家同步先问一句：第一次开通 / 已经在别的电脑上开通过（再开通一次就是另一个空间） */
 function forkHtml(s: SyncStatus) {
   const card = (pick: string, ic: IconName, [name, text]: [string, string]) =>
     `<button class="way" data-sync-pick="${pick}">${icon(ic, "s20")}<b>${esc(name)}</b><span>${esc(text)}</span></button>`;
@@ -326,7 +326,7 @@ async function startPhone() {
   }
 }
 
-/** 这台电脑已经在另一个贾维斯管家同步空间里（多半是在这台电脑上又开通了一次）：加入别的空间前先说清楚。回 true 是接着加入 */
+/** 这台电脑已经在另一个贾维喵管家同步空间里（多半是在这台电脑上又开通了一次）：加入别的空间前先说清楚。回 true 是接着加入 */
 function leaveSpaceOk(): Promise<boolean> {
   const s = S.sync;
   const a = s?.account;
@@ -487,7 +487,7 @@ function recoverHtml(s: SyncStatus) {
     ${msgLine}${acts(`<button class="btn pri" id="sy-recover">${TS.recoverGo}</button>`)}`;
 }
 
-// ---------- 贾维斯管家同步：已开通 ----------
+// ---------- 贾维喵管家同步：已开通 ----------
 
 /** 「续费」按钮（顶上的提示条和账的那一块都有） */
 const renewBtn = (cls = "") => `<button class="btn${cls ? ` ${cls}` : ""}" data-renew>${TS.renewBtn}</button>`;
@@ -630,7 +630,7 @@ function lockedHtml(s: SyncStatus) {
     )}${msgLine}`;
 }
 
-/** 开着同步时最下面的「更多」；chpw：有没有「换同步密码」（贾维斯管家同步的数据删了时没有） */
+/** 开着同步时最下面的「更多」；chpw：有没有「换同步密码」（贾维喵管家同步的数据删了时没有） */
 function moreHtml(s: SyncStatus, extra = "", chpw = true) {
   const folder = s.kind === "folder";
   return `${h5(TS.more)}${rows(
@@ -711,7 +711,7 @@ async function loadFolderDevices() {
 
 // ---------- 手机（只有服务器方式有） ----------
 
-/** 上次画的是哪种：list 手机列表 / gone 贾维斯管家同步到期了 / no 用不了手机；null 没画 */
+/** 上次画的是哪种：list 手机列表 / gone 贾维喵管家同步到期了 / no 用不了手机；null 没画 */
 let phonesShown: string | null = null;
 
 /** 开着服务器同步才有手机；连接状态来回变时不重画，免得关掉正在看的二维码 */
@@ -726,7 +726,7 @@ function renderPhone() {
     phonesShown = null;
     return;
   }
-  // 贾维斯管家同步到期了、服务器上的数据删了：手机也用不了
+  // 贾维喵管家同步到期了、服务器上的数据删了：手机也用不了
   const gone = s.official && (s.state === "expired" || s.refused === "deleted");
   const show = s.kind === "server" && !gone && ["online", "offline", "connecting"].includes(s.state);
   const shownKey = show ? "list" : gone ? `gone-${s.refused ?? s.state}` : "no";
@@ -885,7 +885,7 @@ function backupMsg(text: string) {
   else if (text) toast(text);
 }
 
-/** 选好了备份文件夹：看看里面有没有贾维斯管家的数据，再在弹窗里输密码 */
+/** 选好了备份文件夹：看看里面有没有贾维喵管家的数据，再在弹窗里输密码 */
 async function pickBackupFolder(path: string) {
   if (!path.trim()) return backupMsg(TS.needDir);
   backupMsg("");
@@ -956,7 +956,7 @@ function showChangePassword() {
 }
 
 /** 恢复卡：恢复码、它的二维码和几句说明画成一张 PNG，回 base64（打印或存进手机相册）。
- *  这张图离开贾维斯管家单独看，颜色不跟着风格变 */
+ *  这张图离开贾维喵管家单独看，颜色不跟着风格变 */
 function recoveryCard(code: string): string {
   const scale = 2;
   const [w, h] = [640, 400];
@@ -997,7 +997,7 @@ function recoveryCard(code: string): string {
   return cv.toDataURL("image/png").split(",")[1];
 }
 
-/** 显示恢复码请用户存好：贾维斯管家不保存它，只显示这一次。勾了「我已经存好了」才能关；关了以后调 after */
+/** 显示恢复码请用户存好：贾维喵管家不保存它，只显示这一次。勾了「我已经存好了」才能关；关了以后调 after */
 function showRecovery(code: string, fresh: boolean, after?: () => void) {
   dialog(
     `<h4>${fresh ? TS.rcFresh : TS.rcNew}</h4>
@@ -1011,7 +1011,7 @@ function showRecovery(code: string, fresh: boolean, after?: () => void) {
   );
   $("#rc-img").onclick = async () => {
     try {
-      const saved = await api.savePng(`贾维斯管家恢复码_${new Date().toISOString().slice(0, 10)}.png`, recoveryCard(code));
+      const saved = await api.savePng(`贾维喵管家恢复码_${new Date().toISOString().slice(0, 10)}.png`, recoveryCard(code));
       if (saved) toast(TS.rcSaved);
     } catch (e) {
       toast(TS.rcSaveFail(errText(e)));
@@ -1030,7 +1030,7 @@ function showRecovery(code: string, fresh: boolean, after?: () => void) {
   setTimeout(() => $("#rc-copy")?.focus(), 40);
 }
 
-// ---------- 贾维斯管家同步：续费、联系客服、找回以后换恢复码 ----------
+// ---------- 贾维喵管家同步：续费、联系客服、找回以后换恢复码 ----------
 
 /** 兑换码框：输入时自动大写、分组；改了就清掉下面的出错提示 */
 function redeemInput(el: HTMLInputElement) {
@@ -1174,7 +1174,7 @@ async function act(b: HTMLButtonElement, text: string, run: () => Promise<unknow
   else toast(done);
 }
 
-/** 选了一个文件夹：看里面有没有贾维斯管家的数据，决定是「第一台电脑」还是「加入」 */
+/** 选了一个文件夹：看里面有没有贾维喵管家的数据，决定是「第一台电脑」还是「加入」 */
 async function pickFolder(path: string) {
   if (!path.trim()) return syncMsg(TS.needDir);
   syncMsg("");
@@ -1259,7 +1259,7 @@ export async function syncClick(el: HTMLElement): Promise<boolean> {
   const pick = b.dataset.syncPick;
   if (pick) {
     syncMsg("");
-    // 贾维斯管家同步：先问「第一次开通 / 已经开通过」（需求-1.x 第 34.5 节）
+    // 贾维喵管家同步：先问「第一次开通 / 已经开通过」（需求-1.x 第 34.5 节）
     const step = pick === "official" ? "fork" : pick === "first" ? "official" : pick;
     if (step === "phone") void startPhone();
     else if (["server", "official", "recover", "pair", "fork", "ways", "ojoin"].includes(step)) {
@@ -1344,7 +1344,7 @@ export async function syncClick(el: HTMLElement): Promise<boolean> {
       const pw = $<HTMLInputElement>("#sy-pw").value;
       if (!code) { syncMsg(TS.needCode); return true; }
       if ([...pw].length < 8) { syncMsg(TS.pwShort); return true; }
-      // 加入贾维斯管家同步那一页只输一次（密码是别的电脑设好的）；自建服务器可能是第一台，要输两次
+      // 加入贾维喵管家同步那一页只输一次（密码是别的电脑设好的）；自建服务器可能是第一台，要输两次
       const pw2 = document.querySelector<HTMLInputElement>("#sy-pw2");
       if (pw2 && pw !== pw2.value) { syncMsg(TS.pwDiff); return true; }
       const name = $<HTMLInputElement>("#sy-name").value;
@@ -1358,7 +1358,7 @@ export async function syncClick(el: HTMLElement): Promise<boolean> {
       }, TS.paired);
       return true;
     }
-    // 贾维斯管家同步：兑换码 + 设备名 → 开通 → 下一步设同步密码
+    // 贾维喵管家同步：兑换码 + 设备名 → 开通 → 下一步设同步密码
     case "sy-redeem-go": {
       const inp = $<HTMLInputElement>("#sy-redeem");
       const fail = (t: string) => ($("#sy-redeem-msg").textContent = t);
@@ -1566,7 +1566,7 @@ export async function syncClick(el: HTMLElement): Promise<boolean> {
     }
     case "sy-invite": {
       syncMsg("");
-      // 贾维斯管家同步的设备满了：配对码生成了那台电脑也进不来，先说清楚
+      // 贾维喵管家同步的设备满了：配对码生成了那台电脑也进不来，先说清楚
       const full = devicesFull();
       if (full) {
         $("#sy-invite-box").innerHTML = deviceFullHtml(full);
@@ -1638,7 +1638,7 @@ export async function syncClick(el: HTMLElement): Promise<boolean> {
     case "ph-add": {
       const name = $<HTMLInputElement>("#ph-name").value.trim() || TS.phoneDefault;
       $("#phone-msg").textContent = "";
-      // 贾维斯管家同步的设备满了（31.1 第 2 条）：说清楚，手机列表就在上面
+      // 贾维喵管家同步的设备满了（31.1 第 2 条）：说清楚，手机列表就在上面
       const full = devicesFull();
       if (full) {
         phoneShown = null;
@@ -1686,7 +1686,7 @@ export async function syncClick(el: HTMLElement): Promise<boolean> {
         toast(TS.pcRevoked);
         await loadPcs();
       }
-      // 贾维斯管家同步：设备数跟着变（账的那一块、设备满了的判断都用它）
+      // 贾维喵管家同步：设备数跟着变（账的那一块、设备满了的判断都用它）
       if (S.sync?.official) {
         const a = await api.officialAccount().catch(() => null);
         if (a && S.sync) {

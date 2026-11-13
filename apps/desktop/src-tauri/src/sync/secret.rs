@@ -2,7 +2,7 @@
 
 use keyring::Entry;
 
-/// 调试时用单独的数据目录（JARVIS_DESKTOP_DATA_DIR）运行，密钥也分开放，不碰正在用的贾维斯管家的
+/// 调试时用单独的数据目录（JARVIS_DESKTOP_DATA_DIR）运行，密钥也分开放，不碰正在用的贾维喵管家的
 fn service() -> &'static str {
     if crate::dev_data_dir().is_some() {
         "jarvis-desktop-dev"

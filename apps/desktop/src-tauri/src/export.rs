@@ -1,4 +1,4 @@
-//! 一键导出（需求-0.1 第 4 节）：提醒、笔记、图片和文件打包成一个 zip，离开贾维斯管家也能看，也能再导回贾维斯管家。
+//! 一键导出（需求-0.1 第 4 节）：提醒、笔记、图片和文件打包成一个 zip，离开贾维喵管家也能看，也能再导回贾维喵管家。
 //! 笔记一条一个 Markdown（带文件头，Obsidian、Typora 都认），按笔记分类分文件夹；提醒是一个清单 `提醒.md`；
 //! `数据/dingmi.db` 是去掉了 AI Key、同步配对信息、发布私钥和只属于这台电脑的东西的完整数据库，恢复时只用它和 `附件/`（见 restore.rs）。
 //! 回收站里的不导出。
@@ -15,12 +15,12 @@ use std::path::{Path, PathBuf};
 use zip::write::SimpleFileOptions;
 use zip::{CompressionMethod, ZipWriter};
 
-/// 导出包的格式版本。包里的结构或数据库变得旧版贾维斯管家读不懂时加一
+/// 导出包的格式版本。包里的结构或数据库变得旧版贾维喵管家读不懂时加一
 pub const FORMAT: u32 = 1;
 pub const DB_PATH: &str = "数据/dingmi.db";
 pub const MANIFEST_PATH: &str = "数据/manifest.json";
 pub const ATT_DIR: &str = "附件";
-/// 认出贾维斯管家导出包用的
+/// 认出贾维喵管家导出包用的
 pub const APP: &str = "dingmi";
 
 /// 数据库里要带走的表；别的表（只属于这台电脑的同步状态这类）一律不带
@@ -36,7 +36,7 @@ pub struct Manifest {
     /// 固定是 "dingmi"
     pub app: String,
     pub format: u32,
-    /// 导出时的贾维斯管家版本
+    /// 导出时的贾维喵管家版本
     pub version: String,
     pub exported_at: String,
     pub reminders: usize,
@@ -305,9 +305,9 @@ pub fn reminders_markdown(rs: &[Reminder], tags: &[TagDef], devices: &[Device]) 
     out.join("\n") + "\n"
 }
 
-/// 默认存到哪：文档\贾维斯管家导出\贾维斯管家导出_2026-11-05_1430.zip
+/// 默认存到哪：文档\贾维喵管家导出\贾维喵管家导出_2026-11-05_1430.zip
 pub fn default_path(documents: &Path, now: NaiveDateTime) -> PathBuf {
-    documents.join("贾维斯管家导出").join(format!("贾维斯管家导出_{}.zip", now.format("%Y-%m-%d_%H%M")))
+    documents.join("贾维喵管家导出").join(format!("贾维喵管家导出_{}.zip", now.format("%Y-%m-%d_%H%M")))
 }
 
 /// 要导出的附件：(编号, 文件名)。导出前看看哪些还没下载到这台电脑
@@ -527,22 +527,22 @@ fn describe_missing(a: &db::AttachmentInfo, notes: &[Note]) -> String {
 /// `说明.txt`：导出时间、版本、各有多少条、缺了的文件、怎么用这个包。记事本打开，用 Windows 的换行
 pub fn readme(m: &Manifest, missing: &[String]) -> String {
     let mut lines = vec![
-        "贾维斯管家导出包".to_string(),
+        "贾维喵管家导出包".to_string(),
         String::new(),
         format!("导出时间：{}", m.exported_at),
-        format!("贾维斯管家版本：{}", m.version),
+        format!("贾维喵管家版本：{}", m.version),
         format!("提醒 {} 条、笔记 {} 条、附件 {} 个（回收站里的不在里面）", m.reminders, m.notes, m.attachments),
         String::new(),
         "里面有什么".into(),
         "- 提醒.md：全部提醒，分成「还没做的」「周期提醒」「做完的」三段".into(),
         "- 笔记\\：一条笔记一个 Markdown 文件，按笔记分类分文件夹，没分类的在「未分类」。整个文件夹拖进 Obsidian、Typora 就能看，图片也在".into(),
         "- 附件\\：笔记里的图片（images）和文件（files）".into(),
-        "- 数据\\：完整的数据库和核对用的 manifest.json，给贾维斯管家恢复用，不用打开".into(),
+        "- 数据\\：完整的数据库和核对用的 manifest.json，给贾维喵管家恢复用，不用打开".into(),
         String::new(),
         "怎么用".into(),
         "- 直接看：解压后打开 提醒.md 和 笔记 文件夹".into(),
-        "- 导回贾维斯管家：在贾维斯管家里「设置 → 数据 → 从导出包恢复」选这个 zip，不用解压。可以「合并」，也可以「替换」".into(),
-        "- 恢复时只用 数据\\dingmi.db 和 附件\\，不读 Markdown：在 Markdown 里改过的不会导回贾维斯管家".into(),
+        "- 导回贾维喵管家：在贾维喵管家里「设置 → 数据 → 从导出包恢复」选这个 zip，不用解压。可以「合并」，也可以「替换」".into(),
+        "- 恢复时只用 数据\\dingmi.db 和 附件\\，不读 Markdown：在 Markdown 里改过的不会导回贾维喵管家".into(),
         String::new(),
         "注意".into(),
         "- 导出包里是全部内容的明文，没有加密，请注意保管".into(),
@@ -701,7 +701,7 @@ pub(crate) mod tests {
     #[test]
     fn default_location() {
         let p = default_path(Path::new(r"C:\Users\me\Documents"), at("2026-11-05 14:30"));
-        assert_eq!(p, Path::new(r"C:\Users\me\Documents").join("贾维斯管家导出").join("贾维斯管家导出_2026-11-05_1430.zip"));
+        assert_eq!(p, Path::new(r"C:\Users\me\Documents").join("贾维喵管家导出").join("贾维喵管家导出_2026-11-05_1430.zip"));
     }
 
     #[test]
@@ -735,11 +735,11 @@ pub(crate) mod tests {
         let gone = upsert_reminder(&c, &Reminder { title: "删掉的提醒".into(), due_at: "2026-11-06 15:00".into(), ..Default::default() }).unwrap();
         db::delete_reminder(&c, gone).unwrap();
 
-        let out = dir.join("out").join("贾维斯管家导出_2026-11-05_1430.zip");
+        let out = dir.join("out").join("贾维喵管家导出_2026-11-05_1430.zip");
         let r = export_to(&c, &dir, &out);
         assert_eq!((r.reminders, r.notes, r.attachments), (1, 3, 2));
         assert_eq!(r.missing, vec!["合同.zip（笔记「周报」）".to_string()]);
-        assert!(!dir.join("out").join("贾维斯管家导出_2026-11-05_1430.zip.part").exists());
+        assert!(!dir.join("out").join("贾维喵管家导出_2026-11-05_1430.zip.part").exists());
 
         assert_eq!(
             names(&out),
@@ -761,7 +761,7 @@ pub(crate) mod tests {
         assert_eq!(read(&out, &format!("附件/images/{img}")), b"png");
         assert!(String::from_utf8(read(&out, "提醒.md")).unwrap().contains("- [ ] 2026-11-06 15:00 周四评审\n"));
         let readme = String::from_utf8(read(&out, "说明.txt")).unwrap();
-        assert!(readme.contains("贾维斯管家版本：0.1.0\r\n") && readme.contains("- 合同.zip（笔记「周报」）\r\n"));
+        assert!(readme.contains("贾维喵管家版本：0.1.0\r\n") && readme.contains("- 合同.zip（笔记「周报」）\r\n"));
 
         let m: Manifest = serde_json::from_slice(&read(&out, MANIFEST_PATH)).unwrap();
         assert_eq!(

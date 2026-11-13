@@ -69,7 +69,7 @@ pub struct SAttachment {
     /// 文件附件的原文件名（后加的，图片和旧版传来的没有）
     #[serde(default)]
     pub name: String,
-    /// 贾维斯管家同步的套餐不传它（超过单个附件的大小，或者图片压不下来，需求-1.0 第 32.1 节第 5 条）：
+    /// 贾维喵管家同步的套餐不传它（超过单个附件的大小，或者图片压不下来，需求-1.0 第 32.1 节第 5 条）：
     /// 原文件只在这台设备上（设备编号，和提醒的 only_on 一样）。别的设备看到记录、知道文件在哪，不去下载；
     /// 后来放得下了（换了套餐、换了同步方式）那台设备会清掉它、把文件传上去
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -149,7 +149,7 @@ pub fn dirty(c: &Connection, limit: usize) -> rusqlite::Result<Vec<Dirty>> {
     collect(c, "dirty=1", "", limit)
 }
 
-/// 同上，但不要还得传原文件的附件（贾维斯管家同步的空间满了：附件先留在这台电脑上，文字照常传；
+/// 同上，但不要还得传原文件的附件（贾维喵管家同步的空间满了：附件先留在这台电脑上，文字照常传；
 /// 彻底删除的附件记录照样要，删掉它能腾出地方）
 /// （不传原文件、只在一台设备上的附件记录也照样要，它用不着传文件）
 pub fn dirty_without_files(c: &Connection, limit: usize) -> rusqlite::Result<Vec<Dirty>> {
@@ -161,7 +161,7 @@ pub fn held_files(c: &Connection) -> rusqlite::Result<u32> {
     c.query_row("SELECT COUNT(*) FROM attachments WHERE dirty=1 AND COALESCE(purged,0)=0 AND only_on IS NULL", [], |r| r.get(0))
 }
 
-/// 贾维斯管家同步的套餐对单个图片、单个附件的限额（Account.max_image / max_file），None 不限；me 是这台电脑的设备编号
+/// 贾维喵管家同步的套餐对单个图片、单个附件的限额（Account.max_image / max_file），None 不限；me 是这台电脑的设备编号
 #[derive(Clone, Debug, Default)]
 pub struct Limits {
     pub max_image: Option<u64>,
@@ -529,7 +529,7 @@ pub fn fix_links(c: &Connection) -> rusqlite::Result<()> {
 
 /// 记录到了、原图还没下载的图片：(编号, 文件名)。文件附件不在这里，点开时才下载
 pub fn missing_files(c: &Connection) -> rusqlite::Result<Vec<(String, String)>> {
-    // 只在别的设备上的（太大、贾维斯管家同步不传）不去下载
+    // 只在别的设备上的（太大、贾维喵管家同步不传）不去下载
     let mut st =
         c.prepare("SELECT uid, file FROM attachments WHERE purged=0 AND local_ok=0 AND mime LIKE 'image/%' AND only_on IS NULL")?;
     let out = st.query_map([], |r| Ok((r.get(0)?, r.get(1)?)))?.collect();

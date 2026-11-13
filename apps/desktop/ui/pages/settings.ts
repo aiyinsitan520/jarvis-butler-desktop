@@ -996,7 +996,7 @@ function termsSub(t: { sub?: string }, d: TermsDoc | undefined): string | undefi
 async function aboutHtml() {
   if (true) {
     const version = await getVersion();
-    return `<div class="about-top">${appIcon(56)}<div><h4>贾维斯管家 ${esc(version)}</h4><p>基于 Dingmi 1.0.8，融合 Jarvis Butler 知识管理。</p></div></div><div class="srows"><p>AGPL-3.0-only · 保留上游与第三方版权声明。上游作者未为本版本背书。</p><p>本版使用原创白色小猫图标与助手形象，不包含 Dingmi 团子猫或 Islenote 标志。</p><p>本版使用独立签名更新通道；安装前保存编辑并备份资料。</p><button class="btn" id="jarvis-open-updates">检查软件更新与更新记录</button><button class="btn" id="jarvis-open-settings">打开知识工作台</button></div>`;
+    return `<div class="about-top">${appIcon(56)}<div><h4>贾维喵管家 ${esc(version)}</h4><p>基于 Dingmi 1.0.8，融合 Jarvis Butler 知识管理。</p></div></div><div class="srows"><p>AGPL-3.0-only · 保留上游与第三方版权声明。上游作者未为本版本背书。</p><p>本版使用原创白色小猫图标与助手形象，不包含 Dingmi 团子猫或 Islenote 标志。</p><p>本版使用独立签名更新通道；安装前保存编辑并备份资料。</p><button class="btn" id="jarvis-open-updates">检查软件更新与更新记录</button><button class="btn" id="jarvis-open-settings">打开知识工作台</button></div>`;
   }
 
   const A = ROWS.about;
@@ -1030,7 +1030,7 @@ async function aboutHtml() {
 }
 
 async function installUpdate() {
-  if (!confirm("安装更新将重启贾维斯。请先保存未发送内容；确认后将备份本机资料。是否继续？")) return;
+  if (!confirm("安装更新将重启贾维喵。请先保存未发送内容；确认后将备份本机资料。是否继续？")) return;
   try {
     await api.updateInstall();
   } catch (e) {
@@ -1176,7 +1176,7 @@ body.addEventListener("click", async (e) => {
     return;
   }
   const b = el.closest<HTMLButtonElement>("button");
-  // 关于里的官网链接：使用说明、常见问题、隐私说明、用户协议、贾维斯管家同步服务协议、联系我们（网址照 UI设计.md U16、需求-1.0 第 32.1 节）
+  // 关于里的官网链接：使用说明、常见问题、隐私说明、用户协议、贾维喵管家同步服务协议、联系我们（网址照 UI设计.md U16、需求-1.0 第 32.1 节）
   const site = b?.closest<HTMLElement>("[data-site]")?.dataset.site;
   if (site) return void api.openUrl(`https://dingmi.app${site}`).catch((err) => toast(errText(err)));
   switch (b?.id) {

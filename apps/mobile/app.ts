@@ -1,4 +1,4 @@
-// 贾维斯管家手机版（UI设计 U11，设计稿 design/ui/u11-mobile.html）：今天 / 提醒 / 笔记本 / 我的。
+// 贾维喵管家手机版（UI设计 U11，设计稿 design/ui/u11-mobile.html）：今天 / 提醒 / 笔记本 / 我的。
 // 网址是 /m/#t=<手机令牌>.<收件箱公钥>&k=<空间密钥>（以前是 /m/<手机令牌>.<收件箱公钥>，照样认，见 pair.ts），和原来的收件箱网页是同一个。
 // 没输同步密码时只能发给电脑（收件箱）；输过之后能看、能记，数据在手机上解密，见同步方案第 14 节。
 import "./app.css";
@@ -563,7 +563,7 @@ function openStyle() {
 
 const steps = (list: readonly string[]) => `<ol class="steps">${list.map((x) => `<li>${x}</li>`).join("")}</ol>`;
 
-/** 加一台电脑（需求-1.x 第 34.3 节）：贾维斯管家同步输电脑上的 8 位数字、核对 4 个字再允许；自建服务器生成配对码 */
+/** 加一台电脑（需求-1.x 第 34.3 节）：贾维喵管家同步输电脑上的 8 位数字、核对 4 个字再允许；自建服务器生成配对码 */
 async function openAddPc() {
   const auth = { Authorization: "Bearer " + token };
   const official = await fetch("/m/api/space", { headers: auth })
@@ -1023,7 +1023,7 @@ function editNote(n: SNote | null) {
         toast(T.attTooBig(picked.name));
         continue;
       }
-      // 贾维斯管家同步的套餐：图片超了先压缩，文件超了传不了
+      // 贾维喵管家同步的套餐：图片超了先压缩，文件超了传不了
       if (overLimit(picked.type, picked.size, limits)) {
         say.hidden = false;
         say.textContent = T.shrinking;
@@ -1101,7 +1101,7 @@ async function uploadAttachment(f: File, noteUid: string): Promise<{ att: SAttac
   return { att, line: image ? `![](att:${file})` : `[${name}](att:${file})` };
 }
 
-// ---------- 贾维斯管家同步的套餐限单个图片 / 文件多大（需求-1.0 第 32.1 节第 5 条） ----------
+// ---------- 贾维喵管家同步的套餐限单个图片 / 文件多大（需求-1.0 第 32.1 节第 5 条） ----------
 
 /** 服务器说的限额；自建服务器、旧服务器没有这个接口，都是 null（不限） */
 let limits: Limits = { max_image: null, max_file: null };
@@ -1163,7 +1163,7 @@ async function shrinkImage(f: File, max: number): Promise<File | null> {
   }
 }
 
-/** 太大、贾维斯管家同步不传的附件：原文件只在哪台设备上（给人看的一句）；照常同步的回 undefined */
+/** 太大、贾维喵管家同步不传的附件：原文件只在哪台设备上（给人看的一句）；照常同步的回 undefined */
 function awayOf(a: SAttachment): string | undefined {
   if (!a.only_on) return undefined;
   const pc = of("device").find((d) => d.uid === a.only_on)?.name;
@@ -1230,7 +1230,7 @@ function loadImages(root: HTMLElement) {
       p.dataset.msg = T.imgGone;
       continue;
     }
-    // 太大、贾维斯管家同步不传的：服务器上没有，不去下载
+    // 太大、贾维喵管家同步不传的：服务器上没有，不去下载
     const away = awayOf(a);
     if (away) {
       p.dataset.msg = away;
@@ -1634,7 +1634,7 @@ app.addEventListener("change", (e) => {
   f.value = "";
 });
 
-/** 选好的图片、文件放进待发列表；单个和一次合起来都不能超过 50 MB。贾维斯管家同步的套餐：图片超了先压缩，文件超了直接说 */
+/** 选好的图片、文件放进待发列表；单个和一次合起来都不能超过 50 MB。贾维喵管家同步的套餐：图片超了先压缩，文件超了直接说 */
 async function addFiles(list: File[]) {
   for (const picked of list) {
     if (picked.size > MAX_ATTACHMENT) {
@@ -1743,7 +1743,7 @@ function showUnlock() {
     <p>${T.hiLead}</p>
     ${S.lockMsg ? `<div class="banner info">${icon("info")}<div>${esc(S.lockMsg)}</div></div>` : ""}
     <form id="ul" autocomplete="on">
-      <input type="text" name="username" value="贾维斯管家同步" autocomplete="username" hidden>
+      <input type="text" name="username" value="贾维喵管家同步" autocomplete="username" hidden>
       <label class="fld">${T.pw}<input class="field" type="password" id="pw" placeholder="${T.pwPh}" autocomplete="current-password"></label>
       <p class="cap-msg" id="ul-msg" role="status"></p>
       <button class="btn pri full" id="ul-go" type="submit">${T.go}</button>
@@ -1827,7 +1827,7 @@ function showShare(content: string, files: File[], then: () => void) {
     if (m) (m.textContent = text), (m.className = "cap-msg " + kind);
   };
   // 和网页里选图片一样：单个、一次合起来都不能超过 50 MB，超了的不放进来，直接说；
-  // 贾维斯管家同步的套餐：图片超了先压缩，文件超了直接说
+  // 贾维喵管家同步的套餐：图片超了先压缩，文件超了直接说
   S.files = [];
   void (async () => {
     for (const picked of files) {

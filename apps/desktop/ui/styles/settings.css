@@ -224,8 +224,8 @@ h5.flash { color: var(--accent-ink); }
 .srow.ldrop.over { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-ink); }
 .srow.ldrop.over .lucide { color: var(--accent-ink); }
 
-/* ---------- 贾维斯管家同步（u9-settings 的「官方同步 · 开通 / 已开通」） ---------- */
-/* 选方式：贾维斯管家同步卡片下边压一个「去买兑换码」（按钮里不能套按钮） */
+/* ---------- 贾维喵管家同步（u9-settings 的「官方同步 · 开通 / 已开通」） ---------- */
+/* 选方式：贾维喵管家同步卡片下边压一个「去买兑换码」（按钮里不能套按钮） */
 .way-box { position: relative; display: grid; }
 .way-box .way { padding-bottom: calc(14px + 1.6em * var(--fs)); }
 .way-buy { position: absolute; left: 12px; bottom: 10px; display: inline-flex; align-items: center; gap: 3px; font-size: calc(11.5px * var(--fs)); }
@@ -241,7 +241,7 @@ h5.flash { color: var(--accent-ink); }
 .dialog #rn-code::placeholder { text-transform: none; }
 .dialog .fl > span small .lnk { margin-left: 2px; }
 .spage .more-way { margin: 10px 0 0; font-size: calc(12.5px * var(--fs)); }
-/* 贾维斯管家同步开通：同意协议的勾选、试运营的小字、公测免费体验那一块（需求-1.0 第 32.1 节） */
+/* 贾维喵管家同步开通：同意协议的勾选、试运营的小字、公测免费体验那一块（需求-1.0 第 32.1 节） */
 .spage .agree { display: flex; align-items: flex-start; gap: 8px; margin: 12px 0 0; font-size: calc(12.5px * var(--fs)); line-height: 1.6; color: var(--ink-2); cursor: pointer; }
 .spage .agree input { width: 16px; height: 16px; margin: 2px 0 0; flex: none; accent-color: var(--accent); }
 .spage .agree .lnk { font-size: inherit; padding: 0; }

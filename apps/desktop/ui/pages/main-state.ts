@@ -7,7 +7,7 @@ import { $ } from "@shared/util";
 export type View = "today" | "reminders" | "notes" | "settings" | "trash" | "knowledge";
 
 /** 同步页正在走的流程（选方式 → 选文件夹 → 第一台 / 加入，或者配对服务器；
- *  贾维斯管家同步：填兑换码开通 official → 设同步密码 setup → 保存恢复码，或者用恢复码找回 recover）；没在走时是 null */
+ *  贾维喵管家同步：填兑换码开通 official → 设同步密码 setup → 保存恢复码，或者用恢复码找回 recover）；没在走时是 null */
 export type SyncFlow = {
   step: "choose" | "pick" | "first" | "join" | "server" | "official" | "pair" | "setup" | "recover" | "fork" | "ways" | "ojoin" | "phone" | "phonepw";
   probe?: FolderProbe;

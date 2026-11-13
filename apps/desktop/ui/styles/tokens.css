@@ -1,4 +1,4 @@
-/* 贾维斯管家的设计变量：三种风格（需求-0.2 第 29 节、design/ui/u14-styles.html），每种浅色深色各一套。
+/* 贾维喵管家的设计变量：三种风格（需求-0.2 第 29 节、design/ui/u14-styles.html），每种浅色深色各一套。
    根元素上的属性由 lib/look.ts 设：data-style = warm（默认，可以不写）/ simple / calm；data-mode = light / dark（「跟随系统」时它按系统换）；
    data-motion = on 照常动 / system 跟着 Windows 的「动画效果」/ reduce 不动。界面只用这里的变量，不写死颜色、圆角、阴影、动效 */
 

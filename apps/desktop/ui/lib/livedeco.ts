@@ -214,7 +214,7 @@ class ImageW extends WidgetType {
     const say = view.state.facet(liveConf).say;
     const el = document.createElement("div");
     el.className = "lp-img";
-    // 只在别的设备上的（贾维斯管家同步不传太大的）：读不到时说清楚在哪，不说「正在下载」
+    // 只在别的设备上的（贾维喵管家同步不传太大的）：读不到时说清楚在哪，不说「正在下载」
     const wait = fileInfoOf(this.file)?.away ?? T.imgLoading;
     el.innerHTML = `<img alt="${esc(this.alt)}" title="${T.imgView}"><div class="lp-imgwait">${esc(wait)}</div><div class="lp-tools">${toolBtn("view", "maximize-2", T.imgView)}${toolBtn(
       "copy",

@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "贾维斯管家各本地窗口的 Tauri 核心事件与窗口权限",
+  "description": "贾维喵管家各本地窗口的 Tauri 核心事件与窗口权限",
   "windows": [
     "main",
     "flash",

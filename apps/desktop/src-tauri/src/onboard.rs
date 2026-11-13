@@ -1,8 +1,8 @@
 //! 首次引导和上手清单（需求-0.2 第 5 节）。
 //!
-//! 第一次打开：启动时 kv 里还没有设置、也没有一条提醒或笔记（包括回收站里的），就算这台电脑第一次用贾维斯管家，
+//! 第一次打开：启动时 kv 里还没有设置、也没有一条提醒或笔记（包括回收站里的），就算这台电脑第一次用贾维喵管家，
 //! kv 里记 onboard = "pending"，打开引导窗口而不是主窗口；走完或者点「跳过」改成 "done"。
-//! 走到一半退出了贾维斯管家，下次打开还是引导。
+//! 走到一半退出了贾维喵管家，下次打开还是引导。
 //!
 //! 上手清单：7 项各自做过没有，记在 kv 的 onboard_checklist（只在这台电脑，不同步），格式
 //! `{"done":["flash","card",...],"hidden":false}`；done 按做到的先后排。全部做完自动 hidden。
@@ -16,7 +16,7 @@ use tauri::{AppHandle, Emitter, Manager};
 
 const KV_STATE: &str = "onboard";
 const KV_LIST: &str = "onboard_checklist";
-/// 「贾维斯管家怎么用」放过的话记下它的 uid，以后不再放、也不再改
+/// 「贾维喵管家怎么用」放过的话记下它的 uid，以后不再放、也不再改
 const KV_NOTE: &str = "onboard_note";
 
 /// 上手清单的 7 项，顺序就是「今天」页上的顺序：
@@ -48,7 +48,7 @@ pub struct Checklist {
     pub hidden: bool,
 }
 
-/// 这台电脑是不是第一次用贾维斯管家：还没存过设置，也没有任何提醒和笔记。要在启动时、存设置之前调用
+/// 这台电脑是不是第一次用贾维喵管家：还没存过设置，也没有任何提醒和笔记。要在启动时、存设置之前调用
 pub fn fresh(c: &Connection) -> bool {
     let count = |t: &str| c.query_row(&format!("SELECT COUNT(*) FROM {t}"), [], |r| r.get::<_, i64>(0)).unwrap_or(1);
     db::kv_get(c, "settings").is_none() && count("reminders") == 0 && count("notes") == 0
@@ -190,7 +190,7 @@ pub fn onboard_done(st: tauri::State<AppState>) -> Result<(), String> {
     finish(&st.db.lock().unwrap()).map_err(|e| e.to_string())
 }
 
-/// 放「贾维斯管家怎么用」笔记（分类「资料」）。只放一次：放过的（哪怕用户已经删了）不再放，回 None
+/// 放「贾维喵管家怎么用」笔记（分类「资料」）。只放一次：放过的（哪怕用户已经删了）不再放，回 None
 #[tauri::command]
 pub fn onboard_guide_note(app: AppHandle, st: tauri::State<AppState>, title: String, body: String) -> Result<Option<i64>, String> {
     let tag = st.settings.lock().unwrap().note_cats.iter().any(|t| t.id == "ref").then(|| "ref".to_string());
@@ -315,11 +315,11 @@ mod tests {
     #[test]
     fn guide_note_only_once() {
         let c = temp_db();
-        let id = place_note(&c, "贾维斯管家怎么用", "# 贾维斯管家怎么用", Some("ref".into())).unwrap().unwrap();
+        let id = place_note(&c, "贾维喵管家怎么用", "# 贾维喵管家怎么用", Some("ref".into())).unwrap().unwrap();
         let n = db::get_note(&c, id).unwrap().unwrap();
-        assert_eq!((n.title.as_str(), n.tag.as_deref()), ("贾维斯管家怎么用", Some("ref")));
+        assert_eq!((n.title.as_str(), n.tag.as_deref()), ("贾维喵管家怎么用", Some("ref")));
         // 再打开引导、或者用户删了它：都不再放
         db::delete_note(&c, id).unwrap();
-        assert!(place_note(&c, "贾维斯管家怎么用", "x", None).unwrap().is_none());
+        assert!(place_note(&c, "贾维喵管家怎么用", "x", None).unwrap().is_none());
     }
 }

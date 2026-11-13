@@ -25,7 +25,7 @@
 .dmd p.att img { max-width: 100%; max-height: 380px; border-radius: var(--r-md); box-shadow: var(--sh-1); cursor: zoom-in; display: block; }
 .dmd p.att.wait img { display: none; }
 .dmd p.att.wait::after { content: "正在下载图片…"; display: grid; place-items: center; width: 260px; max-width: 100%; height: 72px; border-radius: var(--r-md); background: var(--surf-2); color: var(--ink-2); font-size: calc(12.5px * var(--fs)); }
-/* 只在别的设备上的图片（贾维斯管家同步的套餐不传太大的）：说清楚在哪，不说「正在下载」 */
+/* 只在别的设备上的图片（贾维喵管家同步的套餐不传太大的）：说清楚在哪，不说「正在下载」 */
 .dmd p.att.wait[data-away]::after { content: attr(data-away); padding: 0 12px; text-align: center; height: auto; min-height: 72px; }
 .dmd .att-file { margin: 6px 0; }
 .dmd .file-card { display: inline-grid; grid-template-columns: 34px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 10px; align-items: center; max-width: min(420px, 100%); border: 1px solid var(--line); background: var(--surf); border-radius: var(--r-md); padding: 8px 12px 8px 10px; text-align: left; line-height: 1.4; cursor: pointer; }

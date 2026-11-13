@@ -16,7 +16,7 @@ fn store(app:&AppHandle)->tauri::State<'_,workspace::Runtime>{app.state::<worksp
 pub fn export_attachments(app:&AppHandle)->Res<()>{let st=app.state::<AppState>();let from=st.data_dir.join("attachments");if !from.exists(){return Ok(());}let root=library(app);for e in std::fs::read_dir(&from).map_err(|_|"附件目录不可读")?{let e=e.map_err(|_|"附件读取失败")?;safe(&from,&e.path())?;if !e.file_type().map_err(|_|"附件不可用")?.is_file(){continue;}let target=root.join("attachments").join(e.file_name());safe(&root,&target)?;if !target.exists(){let bytes=std::fs::read(e.path()).map_err(|_|"无法读取附件")?;atomic(&target,&bytes)?;}}Ok(())}
 #[tauri::command]pub fn workspace_local_status(app:AppHandle)->Res<Value>{let r=store(&app);Ok(json!({"platform":std::env::consts::OS,"root":library(&app),"vault":r.store.vault_status()?,"collectors":r.store.get_value("collectors")?.unwrap_or(json!([])),"collection":r.store.get_value("collector-status")?,"learning":r.store.get_value("learning-config")?.unwrap_or(json!({"auto":false,"wechat":false})),"reports":r.store.get_value("learning-reports")?.unwrap_or(json!({})),"backgroundError":r.store.get_value("background-error")?}))}
 #[tauri::command]pub fn workspace_notification_test(app:AppHandle)->Res<String>{
- #[cfg(target_os="macos")] {use tauri_plugin_notification::NotificationExt;app.notification().builder().title("贾维斯学习回顾").body("通知测试。若没有出现，请在系统设置 → 通知中允许贾维斯管家。").show().map_err(|_|"系统未接受通知请求，请检查系统通知设置")?;return Ok("已向系统提交通知请求；实际显示取决于通知权限与专注模式".into());}
+ #[cfg(target_os="macos")] {use tauri_plugin_notification::NotificationExt;app.notification().builder().title("贾维喵学习回顾").body("通知测试。若没有出现，请在系统设置 → 通知中允许贾维喵管家。").show().map_err(|_|"系统未接受通知请求，请检查系统通知设置")?;return Ok("已向系统提交通知请求；实际显示取决于通知权限与专注模式".into());}
  #[cfg(not(target_os="macos"))] {let _=app;Ok("Windows 使用原生提醒卡片，学习报告会进入提醒队列".into())}
 }
 #[tauri::command]pub fn workspace_local_open(app:AppHandle)->Res<()>{let root=library(&app);std::fs::create_dir_all(&root).map_err(|_|"无法创建资料目录")?;open(&root)}
@@ -41,7 +41,7 @@ fn copy_library(from:&Path,to:&Path)->Res<()>{for name in ["notes","todos","insp
  let _=native.execute_batch("PRAGMA query_only=OFF");let _=r.store.freeze(false);result?;Ok(dest.to_string_lossy().into())
 }
 #[tauri::command]pub async fn workspace_local_restore(app:AppHandle)->Res<bool>{
- let Some(source)=app.dialog().file().set_title("选择包含 backup.json 的贾维斯备份目录").blocking_pick_folder()else{return Ok(false);};let source=source.into_path().map_err(|_|"备份位置无效")?;
+ let Some(source)=app.dialog().file().set_title("选择包含 backup.json 的贾维喵备份目录").blocking_pick_folder()else{return Ok(false);};let source=source.into_path().map_err(|_|"备份位置无效")?;
  safe(&source,&source.join("backup.json"))?;let manifest:Value=serde_json::from_slice(&std::fs::read(source.join("backup.json")).map_err(|_|"缺少备份清单")?).map_err(|_|"备份清单损坏")?;if manifest["format"]!="jarvis-portable-backup"||manifest["version"]!=1{return Err("不支持的备份版本".into());}
  for name in ["dingmi.db","workspace.db"]{safe(&source,&source.join(name))?;let c=rusqlite::Connection::open_with_flags(source.join(name),rusqlite::OpenFlags::SQLITE_OPEN_READ_ONLY).map_err(|_|"备份数据库不可用")?;let check:String=c.query_row("PRAGMA integrity_check",[],|r|r.get(0)).map_err(|_|"备份校验失败")?;if check!="ok"{return Err("备份完整性检查失败".into());}}
  let Some(target)=app.dialog().file().set_title("选择新的空文件夹用于恢复；原资料保留，成功后重启").blocking_pick_folder()else{return Ok(false);};let target=target.into_path().map_err(|_|"目标位置无效")?;

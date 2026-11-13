@@ -3,7 +3,7 @@
 export const T = {
   more: "更多",
   menu: {
-    open: "打开贾维斯管家",
+    open: "打开贾维喵管家",
     move: "移动位置",
     pins: "编辑常用",
     parts: "设置这几块",

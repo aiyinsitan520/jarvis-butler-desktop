@@ -33,8 +33,8 @@ describe("搜设置", () => {
     expect(matchRow({ page: "p", id: "x", name: "开机自动启动" }, "开启")?.marks).toEqual([[0, 1], [4, 5]]);
   });
 
-  it("贾维斯管家同步的几行（需求-1.0 第 31.2 节 E）", () => {
-    expect(top("贾维斯管家同步")[0]).toBe("sync/official");
+  it("贾维喵管家同步的几行（需求-1.0 第 31.2 节 E）", () => {
+    expect(top("贾维喵管家同步")[0]).toBe("sync/official");
     expect(top("兑换码")).toContain("sync/official");
     expect(top("兑换码")).toContain("sync/renew");
     expect(top("续费")[0]).toBe("sync/renew");
@@ -52,7 +52,7 @@ describe("搜设置", () => {
     expect(top("邮箱")).toContain("about/contact");
     expect(top("用户协议")[0]).toBe("about/terms");
     expect(top("协议")).toContain("about/terms");
-    // 「客服」还是先到贾维斯管家同步的联系客服
+    // 「客服」还是先到贾维喵管家同步的联系客服
     expect(top("客服")[0]).toBe("sync/support");
   });
 

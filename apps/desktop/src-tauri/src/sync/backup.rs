@@ -1,6 +1,6 @@
 //! 另存一份备份（一主一备的「备」）。需求见需求-0.1 第 3.5 节。
 //!
-//! 备份文件夹就是一个和网盘文件夹同步一样格式的「贾维斯管家同步」文件夹（见 folder.rs），只往里写、不从里面读。
+//! 备份文件夹就是一个和网盘文件夹同步一样格式的「贾维喵管家同步」文件夹（见 folder.rs），只往里写、不从里面读。
 //! 主的坏了，在任意一台电脑上把同步方式换成「网盘文件夹」、选这个文件夹、输密码，它就变成主的了。
 //!
 //! - 备份有自己的主密钥（凭据管理器里的 BACKUP_KEY），和同步的分开：换同步方式、停止同步都不影响备份。
@@ -43,7 +43,7 @@ fn busy() -> std::sync::MutexGuard<'static, ()> {
 /// 备份的设置，存在 kv 表的 "sync_backup"；主密钥在 Windows 凭据管理器里
 #[derive(Serialize, Deserialize, Clone, Default)]
 struct Cfg {
-    /// 「贾维斯管家同步」文件夹的完整路径
+    /// 「贾维喵管家同步」文件夹的完整路径
     dir: String,
     /// 上次写快照的时间
     #[serde(default)]
@@ -62,7 +62,7 @@ struct Cfg {
 #[derive(Serialize, Clone, Default)]
 pub struct BackupStatus {
     pub on: bool,
-    /// 「贾维斯管家同步」文件夹的位置
+    /// 「贾维喵管家同步」文件夹的位置
     pub dir: Option<String>,
     /// 上次备份的时间
     pub last: Option<String>,
@@ -89,7 +89,7 @@ fn key() -> Option<DataKey> {
     secret::get(BACKUP_KEY).and_then(|k| k.try_into().ok())
 }
 
-/// 两个「贾维斯管家同步」文件夹是不是同一个（大小写、末尾的斜杠、写法不同都算同一个）
+/// 两个「贾维喵管家同步」文件夹是不是同一个（大小写、末尾的斜杠、写法不同都算同一个）
 fn same_dir(a: &Path, b: &Path) -> bool {
     let norm = |p: &Path| {
         let p = std::fs::canonicalize(p).unwrap_or_else(|_| p.to_path_buf());
@@ -135,7 +135,7 @@ fn due(cfg: &Cfg) -> bool {
     (Local::now().naive_local() - last).num_minutes() >= SNAP_EVERY_MIN
 }
 
-/// 选好的备份文件夹：还没有贾维斯管家的数据就建一个（用这个密码锁一把新的主密钥）；
+/// 选好的备份文件夹：还没有贾维喵管家的数据就建一个（用这个密码锁一把新的主密钥）；
 /// 已经有了（比如以前的备份）就用这个密码打开，沿用里面的主密钥
 fn open_or_create(dir: &Path, password: &str) -> Result<DataKey, String> {
     match folder::probe(dir)? {
@@ -151,7 +151,7 @@ fn open_or_create(dir: &Path, password: &str) -> Result<DataKey, String> {
             let s = folder::read_space(dir)?;
             crypto::unlock(password, &s.salt, &s.box1, None).map_err(|e| {
                 if e == WRONG_PASSWORD {
-                    "这个文件夹里已经有贾维斯管家的数据（比如以前的备份），用这个密码打不开。输当时设的密码，或者换一个文件夹".to_string()
+                    "这个文件夹里已经有贾维喵管家的数据（比如以前的备份），用这个密码打不开。输当时设的密码，或者换一个文件夹".to_string()
                 } else {
                     e
                 }
@@ -291,7 +291,7 @@ pub fn backup_status(app: AppHandle) -> BackupStatus {
     }
 }
 
-/// 开备份：选的文件夹里建（或者沿用）一个「贾维斯管家同步」文件夹，马上写第一份。
+/// 开备份：选的文件夹里建（或者沿用）一个「贾维喵管家同步」文件夹，马上写第一份。
 /// 开着同步时 password 要是现在的同步密码；不同步时是新设的密码（文件夹里已经有数据时是当时设的密码）
 #[tauri::command]
 pub async fn backup_start(app: AppHandle, path: String, password: String) -> Result<BackupStatus, String> {
@@ -308,8 +308,8 @@ pub async fn backup_start(app: AppHandle, path: String, password: String) -> Res
     }
     let d2 = dir.clone();
     let key = tokio::task::spawn_blocking(move || open_or_create(&d2, &password)).await.map_err(err)?.map_err(|e| {
-        if syncing && e.starts_with("这个文件夹里已经有贾维斯管家的数据") {
-            "这个文件夹里已经有贾维斯管家的数据，用现在的同步密码打不开，请换一个文件夹".to_string()
+        if syncing && e.starts_with("这个文件夹里已经有贾维喵管家的数据") {
+            "这个文件夹里已经有贾维喵管家的数据，用现在的同步密码打不开，请换一个文件夹".to_string()
         } else {
             e
         }

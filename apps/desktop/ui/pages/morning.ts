@@ -11,7 +11,7 @@ import { $, addDays, dayStr, esc, fireAt, fmtDT, hotkeyText, isRecurring, parseD
 import { dateLine, morningText as T, remindText as R, whenPast } from "../text/cards";
 
 // 每日开场白（U5）：每天第一次开电脑时弹，屏幕中间偏下。纸页伙伴伸懒腰。
-// 上面一段话说今天几件事、最要紧的是哪件、有没有剩下的；有 AI Key 时这段让 AI 写。不显示天气（贾维斯管家不取天气）
+// 上面一段话说今天几件事、最要紧的是哪件、有没有剩下的；有 AI Key 时这段让 AI 写。不显示天气（贾维喵管家不取天气）
 
 const win = getCurrentWindow();
 const stage = $("#stage");

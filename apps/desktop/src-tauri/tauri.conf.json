@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "贾维斯管家",
+  "productName": "贾维喵管家",
   "mainBinaryName": "jarvis-desktop",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "identifier": "org.jarvis.butler.desktop",
   "build": {
     "beforeDevCommand": {

@@ -75,7 +75,7 @@ describe("公测、邮箱、套餐限额（需求-1.0 第 32.1 节）", () => {
     for (const bad of ["", "me@qq", "@qq.com", "me qq@example.com", "me@@example.com", "me@.com", "me@example.com.", "a,b@example.com"]) expect(emailOk(bad), bad).toBe(false);
   });
 
-  it("太大、贾维斯管家同步不传的附件：说清楚在哪台设备上", () => {
+  it("太大、贾维喵管家同步不传的附件：说清楚在哪台设备上", () => {
     const devices = [
       { uid: "me1", name: "家里电脑", me: true },
       { uid: "pc2", name: "公司电脑", me: false },

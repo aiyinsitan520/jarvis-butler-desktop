@@ -1,7 +1,7 @@
 [package]
 name = "jarvis-desktop"
-version = "0.4.4"
-description = "贾维斯管家：本地知识、AI学习回顾与快捷记录"
+version = "0.4.5"
+description = "贾维喵管家：本地知识、AI学习回顾与快捷记录"
 edition = "2021"
 license = "AGPL-3.0-only"
 

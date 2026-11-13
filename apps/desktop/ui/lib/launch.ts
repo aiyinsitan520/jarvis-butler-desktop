@@ -98,7 +98,7 @@ export function recent(items: LaunchItem[], stats: LaunchStats, n = 8): LaunchIt
 
 /**
  * 输入框空着时显示的那一行：放在「常用」里的在前（和桌面组件共用），再是最近用过的；
- * 不够的按用得多少补满（刚开始用时就是 Windows 记的最常用的）；一样多的桌面上的、自己加的在前，Windows 文件夹里的系统工具最后，贾维斯管家自己不算
+ * 不够的按用得多少补满（刚开始用时就是 Windows 记的最常用的）；一样多的桌面上的、自己加的在前，Windows 文件夹里的系统工具最后，贾维喵管家自己不算
  */
 export function firstRow(items: LaunchItem[], cfg: LaunchConfig, stats: LaunchStats, n = 8): LaunchItem[] {
   const byId = new Map(items.map((i) => [i.id, i]));
@@ -111,7 +111,7 @@ export function firstRow(items: LaunchItem[], cfg: LaunchConfig, stats: LaunchSt
   const order = (i: LaunchItem) =>
     i.id.startsWith("desk:") ? 0 : /^(path|url):/.test(i.id) ? 1 : i.kind === "store" || !/^(c:\\windows|::)/i.test(i.path) ? 2 : 3;
   items
-    .filter((i) => i.name !== "贾维斯管家")
+    .filter((i) => i.name !== "贾维喵管家")
     .sort((a, b) => used(b, stats) - used(a, stats) || order(a) - order(b) || a.name.localeCompare(b.name, "zh"))
     .forEach(add);
   return out;

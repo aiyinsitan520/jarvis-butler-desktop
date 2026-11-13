@@ -133,11 +133,11 @@ export const T = {
   noServer: "连不上服务器",
   imgLoading: "图片加载中…",
   imgGone: "这张图片还没传到服务器，等电脑同步完再看",
-  // 贾维斯管家同步的套餐限单个图片 / 文件多大（需求-1.0 第 32.1 节第 5 条）
-  awayOn: (pc: string) => `超过贾维斯管家同步单个文件的大小，没有传过来，只在「${pc}」上`,
+  // 贾维喵管家同步的套餐限单个图片 / 文件多大（需求-1.0 第 32.1 节第 5 条）
+  awayOn: (pc: string) => `超过贾维喵管家同步单个文件的大小，没有传过来，只在「${pc}」上`,
   someOtherPc: "另一台电脑",
-  overFile: (name: string, max: string) => `「${name}」超过 ${max}，贾维斯管家同步传不了`,
-  imgTooBig: (name: string) => `「${name}」太大了，压缩以后还是超过贾维斯管家同步的大小，传不了`,
+  overFile: (name: string, max: string) => `「${name}」超过 ${max}，贾维喵管家同步传不了`,
+  imgTooBig: (name: string) => `「${name}」太大了，压缩以后还是超过贾维喵管家同步的大小，传不了`,
   shrinking: "正在压缩图片…",
   pic: "图片",
   close: "关掉",
@@ -175,9 +175,9 @@ export const T = {
   // 用手机帮新电脑加入（需求-1.x 第 34.3 节）
   addPc: "加一台电脑",
   addPcSub: "新电脑在身边、旧电脑关着时用",
-  addPcLead: "在新电脑上「设置 → 同步 → 贾维斯管家同步 → 已经开通过 → 用手机加入」，输它显示的 8 位数字：",
+  addPcLead: "在新电脑上「设置 → 同步 → 贾维喵管家同步 → 已经开通过 → 用手机加入」，输它显示的 8 位数字：",
   addPcNext: "下一步",
-  addPcAsk: (name: string) => `「${name}」要加入你的贾维斯管家同步。`,
+  addPcAsk: (name: string) => `「${name}」要加入你的贾维喵管家同步。`,
   addPcLook: "看看电脑上显示的 4 个字，和这里一样吗？",
   addPcYes: "一样，允许",
   addPcNo: "不一样 / 不是我",
@@ -211,7 +211,7 @@ export const T = {
   homeNote: "以后从桌面图标打开，像 App 一样，没有地址栏。",
 
   // ---------- 第一次打开 ----------
-  hi: "你好，我是贾维斯管家",
+  hi: "你好，我是贾维喵管家",
   hiLead: "输一次同步密码，就能在手机上看提醒和笔记。",
   pw: "同步密码",
   pwPh: "和电脑上的一样",
@@ -227,7 +227,7 @@ export const T = {
 
   // ---------- 只往电脑发东西 ----------
   inboxTitle: "发给电脑",
-  inboxSub: "发到贾维斯管家",
+  inboxSub: "发到贾维喵管家",
   inboxNote: "内容在这部手机上加密后才发出去，只有你的电脑能解开。",
   inboxHome: "在 Safari 里点「分享 → 添加到主屏幕」，以后从桌面图标打开。",
 
@@ -241,5 +241,5 @@ export const T = {
   bOffline: "连不上服务器",
   bOfflineText: "手机上的内容照常看；改的先存在手机上，连上了自动传。",
   bRetry: "再试一次",
-  badLink: "这个页面要从电脑上的贾维斯管家打开：在「设置 → 手机」里添加这部手机，用相机扫电脑上的二维码。",
+  badLink: "这个页面要从电脑上的贾维喵管家打开：在「设置 → 手机」里添加这部手机，用相机扫电脑上的二维码。",
 };

@@ -1,4 +1,4 @@
-//! 检查更新（需求-0.1 第 2 节）。所有贾维斯管家都从官网的 update.json 看有没有新版本，和用不用同步、用哪种同步无关。
+//! 检查更新（需求-0.1 第 2 节）。所有贾维喵管家都从官网的 update.json 看有没有新版本，和用不用同步、用哪种同步无关。
 //!
 //! - 检查：启动 1 分钟后一次，之后每 6 小时（「设置 → 关于」里可以关掉自动检查，只在点按钮时查）。
 //!   请求里只带版本号（User-Agent: Dingmi/x），不带别的。
@@ -7,7 +7,7 @@
 //! - update.json 里的 min_version 比本机新时，顶上一直提示，同步要停下（见 too_old）。
 //!   决定行为的几样（version、min_version、安装包的 sha256）发布时另外签了名（meta_signature，见 meta_text）：
 //!   签名对不上、或者是没有这个签名的旧 update.json，就不认 min_version（更新照旧能用，安装包本身有签名）。
-//!   免得更新通道被劫持时，有人写一个很大的 min_version 让所有贾维斯管家停下同步。
+//!   免得更新通道被劫持时，有人写一个很大的 min_version 让所有贾维喵管家停下同步。
 //! - 检查时顺便取官网的 terms.json（协议的版本，见 terms.rs），同样的节奏、同样的 User-Agent。
 //! - 发布新版本用 scripts/release.mjs（用法见它开头）。
 
@@ -53,7 +53,7 @@ pub struct Info {
     pub size: u64,
     /// 安装包的签名（tauri signer sign 生成的 .sig 文件内容）
     pub signature: String,
-    /// 比这个版本旧的贾维斯管家要先更新才能同步，可以不写
+    /// 比这个版本旧的贾维喵管家要先更新才能同步，可以不写
     #[serde(default)]
     pub min_version: Option<String>,
     /// 安装包的 SHA-256（十六进制，官网下载页「核对安装包」显示的）；0.4.0 那时发的没有
@@ -448,7 +448,7 @@ async fn download_inner(app: &AppHandle, info: &Info) -> Result<PathBuf, String>
     Ok(path)
 }
 
-/// 重启更新：再核对一遍签名，记下现在的版本，启动安装包后退出（静默安装，装完会重新打开贾维斯管家）
+/// 重启更新：再核对一遍签名，记下现在的版本，启动安装包后退出（静默安装，装完会重新打开贾维喵管家）
 pub fn install(app: &AppHandle) -> Result<(), String> {
     let path = READY.lock().unwrap().clone().ok_or("还没有下载好的新版本")?;
     let info = LATEST.lock().unwrap().clone().ok_or("还没有下载好的新版本")?;
@@ -499,7 +499,7 @@ pub fn take_notice(app: &AppHandle) -> Option<String> {
     };
     let _ = std::fs::remove_dir_all(update_dir(app));
     let now = current(app);
-    (from != now).then(|| format!("贾维斯管家已经更新到 {now}"))
+    (from != now).then(|| format!("贾维喵管家已经更新到 {now}"))
 }
 
 pub fn start(app: AppHandle) {
@@ -626,7 +626,7 @@ mod tests {
         assert_eq!(meta_text("0.5.0", None, None), "dingmi-update-meta-v1\nversion:0.5.0\nmin_version:\nsha256:\n");
     }
 
-    /// 攻击：更新通道被劫持，有人往 update.json 里写一个很大的 min_version（修之前 min_version 没签名，所有贾维斯管家都会停下同步）。
+    /// 攻击：更新通道被劫持，有人往 update.json 里写一个很大的 min_version（修之前 min_version 没签名，所有贾维喵管家都会停下同步）。
     /// 现在 min_version 要和 version、sha256 一起签名，对不上、没签名都不认；安装包照旧能核对、能更新
     #[test]
     fn unsigned_min_version_is_ignored() {

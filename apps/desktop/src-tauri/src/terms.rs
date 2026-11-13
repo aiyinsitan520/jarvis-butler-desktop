@@ -1,10 +1,10 @@
 //! 协议的版本（需求-1.x 第 36.6 节；后台、官网那一半在官方版里）。
 //!
-//! - 三份协议（用户协议 terms、隐私说明 privacy、贾维斯管家同步服务协议 sync_terms）在后台改、发布，官网写一份 terms.json。
+//! - 三份协议（用户协议 terms、隐私说明 privacy、贾维喵管家同步服务协议 sync_terms）在后台改、发布，官网写一份 terms.json。
 //!   检查更新时顺便取一次（同样的节奏、同样的 User-Agent，见 update.rs check），存在 kv 里。
 //! - 取不到、看不懂就当没有：不报错，不影响检查更新，留着上次存的。
 //! - 用在三处：「设置 → 关于」里协议那一行写「M 月 D 日更新」（30 天内）；重大修改在主窗口顶上通知一次（点「知道了」按
-//!   notice.version 记下，不再显示）；开通、续费贾维斯管家同步时带的协议版本（sync_version，没取到过就用 TERMS_FALLBACK）。
+//!   notice.version 记下，不再显示）；开通、续费贾维喵管家同步时带的协议版本（sync_version，没取到过就用 TERMS_FALLBACK）。
 
 use crate::{db, AppState};
 use chrono::{Local, NaiveDate};
@@ -89,7 +89,7 @@ pub struct View {
 
 static CACHE: Mutex<Option<Terms>> = Mutex::new(None);
 
-/// 开通贾维斯管家同步时同意的协议版本：terms.json 里的 sync_terms.version，没取到过就用写死的那个
+/// 开通贾维喵管家同步时同意的协议版本：terms.json 里的 sync_terms.version，没取到过就用写死的那个
 pub fn sync_version() -> String {
     CACHE
         .lock()

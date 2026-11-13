@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 import { complete, matches, nextAfter, normalize, overLimit, type Repeat as RepeatRule, type SReminder } from "./model";
 
-// 贾维斯管家同步的套餐限单个图片 / 文件多大（需求-1.0 第 32.1 节第 5 条）：图片超了压缩，文件超了传不了，自建服务器不限
+// 贾维喵管家同步的套餐限单个图片 / 文件多大（需求-1.0 第 32.1 节第 5 条）：图片超了压缩，文件超了传不了，自建服务器不限
 describe("套餐限额", () => {
   const l = { max_image: 5 << 20, max_file: 10 << 20 };
   it("图片按图片的、文件按文件的", () => {

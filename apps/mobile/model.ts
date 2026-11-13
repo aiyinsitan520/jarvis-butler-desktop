@@ -56,11 +56,11 @@ export interface SAttachment {
   purged: boolean;
   /** 文件附件的原文件名，图片没有 */
   name?: string;
-  /** 贾维斯管家同步的套餐不传它（太大）：原文件只在这台设备上（设备编号），服务器上没有 */
+  /** 贾维喵管家同步的套餐不传它（太大）：原文件只在这台设备上（设备编号），服务器上没有 */
   only_on?: string | null;
 }
 
-/** 贾维斯管家同步的套餐对单个图片、单个文件的限额（服务器 /m/api/limits 说的，字节；null 不限） */
+/** 贾维喵管家同步的套餐对单个图片、单个文件的限额（服务器 /m/api/limits 说的，字节；null 不限） */
 export interface Limits {
   max_image: number | null;
   max_file: number | null;
