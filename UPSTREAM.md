@@ -9,3 +9,5 @@
 - shared/mascot.ts 现为原创纸页轨道图形，其兼容函数名沿用旧接口，不包含上游猫形象。应用图标由该源文件生成。
 - 没有包含 Islenote 提取代码、标志、图片或原安装包。上游截图和 Dingmi 图标未复制。
 - 字体和第三方代码的原许可继续适用，见 THIRD_PARTY_LICENSES.md、字体目录 OFL.txt。
+
+2026-11-13 0.4.0 修改：可迁移Markdown资料库、会话采集、学习报告、Mac Keychain／菜单／路径／启动器／通知适配与CI。应用及手机网页图标均由原创shared/mascot.ts重新生成；apps/server/web/app.html由本版mobile源码重新构建，替换上游旧内嵌图形。保留字体OFL与第三方许可全文；原更新公钥仅为遗留验证测试的公开材料，默认no-update禁止上游更新。
