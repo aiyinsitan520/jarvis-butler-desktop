@@ -20,3 +20,12 @@ Mac运行43415511550已通过27项核心、12／18项共享集成、平台原生
 最终候选修正：关闭自动整理时仍可显式请求单次模型整理；该请求缺模型应显示waiting_model，不误报已整理。核心28项通过。原生回归脚本改为等待原生投影的下一次刷新，避免在核心已保存而原生5秒刷新未完成时提前断言。自动工作从不因此额外启用云端模型。
 
 0.4.1 模型选择专项：参考CC Switch交互，独立实现。605前端、31核心及9项模型页面回归通过；覆盖空默认模型拉取、未保存地址与Key、搜索点选、OpenAI侧栏切换、刷新恢复、已保存Key复用、失败保留选择及跨接口拒绝Key复用。原生preview构建成功，用户原两库快照备份后已打开新进程62176。测试只使用合成Key与本机模拟HTTP，不验证真实8326上模型推理能力。
+
+## 最终公开交付（2026-11-13）
+
+v0.4.1-preview.1，源码fd5a9d3，GitHub Actions 43421072269成功。Windows与Apple Silicon均完成605前端、31核心、12共享／18服务器集成；Windows原生140通过／11忽略，Mac原生136通过／9忽略。363文件公开源码审计通过；二进制随包包含AGPL／MIT／字体OFL与第三方许可全文。
+
+下载后的Windows EXE与Mac DMG的SHA-256均匹配Release校验清单。Windows最终包实际installerExit=0、launchResponding=true、uninstallerExit=0，重装前／后和卸载后均保留合成资料数据库；测试安装已卸载。本机用户预览62176保持响应，原两库在重启前已快照备份。Mac系统交互仍需本人真机，未公证；真实模型调用及微信主动推送仍未代用户验证。
+
+发布：https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.1-preview.1
+构建：https://github.com/aiyinsitan520/jarvis-butler-desktop/actions/runs/43421072269

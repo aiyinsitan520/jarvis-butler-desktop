@@ -13,3 +13,7 @@
 Mac 真机的中文输入、睡眠唤醒、快捷键、安装卸载体验仍待用户验收。真实微信扫码、协议主动推送限制和真实模型效果需要本人配置验证。CI 构建和模拟测试不代表这些环节已完成。
 
 资料在本机以 SQLite／Markdown 明文保存，请使用系统账户与磁盘保护。云端模型会收到用户授权的会话摘录；选择 Ollama 可在本机推理。运行中的数据库不支持网盘跨设备直接同步。当前 VPS 功能继续使用独立的数据同步页面。
+
+构建与验证：本标签对应fd5a9d3。Windows及Apple Silicon的前端、核心、原生库、共享服务兼容、许可证和源码审核均通过。Windows最终安装包已实际安装、启动、卸载、重装，保留测试数据库；下载后的双平台SHA-256核对通过。Mac真机体验与真实微信／模型仍按上文边界验收。
+
+[对应源码](https://github.com/aiyinsitan520/jarvis-butler-desktop/tree/v0.4.1-preview.1) · [构建记录](https://github.com/aiyinsitan520/jarvis-butler-desktop/actions/runs/43421072269)
