@@ -39,6 +39,10 @@ reports=wait(lambda:value('learning-reports'))
 assert len(value('learning-archive')['sessions'])==1
 assert list((root/'library/conversations').glob('*.md'))
 assert any(r['status']=='excerpt' and r['desktop']=='queued' for r in reports.values())
+def native_updated():
+    with sqlite3.connect(root/'dingmi.db') as c:
+        return c.execute('SELECT body FROM notes WHERE uid=?',('portable-native-note',)).fetchone()[0]=='外部AI修改的合成笔记'
+wait(native_updated)
 with sqlite3.connect(root/'dingmi.db') as c:
-    assert c.execute('SELECT body FROM notes WHERE uid=?',('portable-native-note',)).fetchone()[0]=='外部AI修改的合成笔记'
-print(json.dumps({'nativeWorker':True,'markdownToDatabaseToNative':True,'automaticTranscript':True,'dailyReportAndDesktopQueue':True,'realModelCalls':0,'productionWrites':0},ensure_ascii=False))
+    assert c.execute("SELECT COUNT(*) FROM reminders WHERE uid LIKE 'jarvis-learning-review-%'").fetchone()[0]==1
+print(json.dumps({'nativeWorker':True,'markdownToDatabaseToNative':True,'automaticTranscript':True,'dailyReportAndDesktopQueue':True,'dailyNoticeDeduplicated':True,'realModelCalls':0,'productionWrites':0},ensure_ascii=False))
