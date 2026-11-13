@@ -29,3 +29,10 @@ v0.4.1-preview.1，源码fd5a9d3，GitHub Actions 43421072269成功。Windows与
 
 发布：https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.1-preview.1
 构建：https://github.com/aiyinsitan520/jarvis-butler-desktop/actions/runs/43421072269
+
+
+## 白猫测试版发布验证（2026-11-13）
+
+v0.4.2-preview.2，源码9e1673b，Actions43430213795全部success。双平台605前端、31核心、12共享／18服务器场景通过；Windows原生140通过／11忽略，Mac原生136通过／9忽略。386项源码、410Rust／40npm／6人工素材许可检查通过。Windows EXE与Mac DMG已下载，两个SHA-256均匹配Release清单。白猫资源、Windows隔离原生截图与11项眼神交互通过；用户两库在线备份后本机白猫preview75280正常响应。
+
+本轮没有重测0.4.2安装／卸载；0.4.1的成功记录仅为历史证据。Mac真机、真实模型／微信、客户端自动下载安装仍未验证／未实现；自有更新通道后续从docs/updating.md继续。GitHub Actions提示旧action运行时兼容性警告；未影响本轮结果，后续单独升级验证。继承57条dead-code warnings与根Islenote历史audit缺文件问题不变。外部代理0，主模型未知。

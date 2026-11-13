@@ -1,8 +1,8 @@
 # 贾维斯管家使用指南
 
-适用版本：0.4.1 测试版。目标是把快捷记录、AI 对话、原文归档与每日复习放在一个桌面工作台里。第一次使用不需要配置服务器或微信。
+适用版本：0.4.2 测试版。目标是把快捷记录、AI 对话、原文归档与每日复习放在一个桌面工作台里。第一次使用不需要配置服务器或微信。
 
-[下载 Windows／Mac 安装包](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.1-preview.1) · [返回项目首页](../README.md) · [截图来源](screenshots/README.md)
+[下载 Windows／Mac 安装包](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.2-preview.2) · [返回项目首页](../README.md) · [截图来源](screenshots/README.md)
 
 本文插图来自本项目运行的界面，使用合成演示资料；AI 回答、模型列表和回顾内容是示例，不是对真实账号或服务的验收证明。Windows 原生截图与前端演示桥截图分别标注，未提供 Mac 真机截图。
 
@@ -10,8 +10,8 @@
 
 | 你的电脑 | 下载文件 | 打开方式 |
 | --- | --- | --- |
-| Windows x64 | `JarvisButler-0.4.1-Windows-x64-setup.exe` | 安装后从开始菜单打开“贾维斯管家” |
-| Mac M1／M2／M3 等 Apple Silicon | `JarvisButler-0.4.1-macOS-AppleSilicon.dmg` | 双击 DMG，把应用拖入 Applications 后打开 |
+| Windows x64 | `JarvisButler-0.4.2-Windows-x64-setup.exe` | 安装后从开始菜单打开“贾维斯管家” |
+| Mac M1／M2／M3 等 Apple Silicon | `JarvisButler-0.4.2-macOS-AppleSilicon.dmg` | 双击 DMG，把应用拖入 Applications 后打开 |
 
 `Source code` 是源码压缩包，普通使用者选择 EXE 或 DMG。Intel Mac 不在本次安装包支持范围。
 
@@ -196,6 +196,6 @@ ChatGPT 等网页账号没有被本程序自动登录或实时抓取，仍通过
 
 本地资料是明文 SQLite／Markdown，系统凭据存储保护 API Key 与微信认证，不代表所有笔记都已加密。自行保管系统账户、磁盘和备份。云端模型与自建服务器的可见范围不同，开启前确认分享范围。
 
-整体按 AGPL-3.0-only 开源，保留 Dingmi、Jarvis MIT、字体和其他依赖声明。本版使用自行生成的书签芽机器人与独立SVG适配，未使用上游受限团子猫或 Islenote 提取素材；原作者未为本版背书。详见 [来源说明](../UPSTREAM.md) 与 [第三方许可](../THIRD_PARTY_LICENSES.md)。
+整体按 AGPL-3.0-only 开源，保留 Dingmi、Jarvis MIT、字体和其他依赖声明。本版使用自行生成的白色小猫与独立SVG适配，未使用上游受限团子猫或 Islenote 提取素材；原作者未为本版背书。详见 [来源说明](../UPSTREAM.md) 与 [第三方许可](../THIRD_PARTY_LICENSES.md)。
 
 自动化与构建证据见 [验证记录](validation-0.4.0.md)。Windows 最终安装／卸载／重装保留测试资料已检查；Mac 构建和测试通过不等于真机交互、真实微信或真实模型服务已经验收。

@@ -6,7 +6,7 @@
 
 保留 [Dingmi](https://github.com/qingzo/dingmi) 的主面板、快捷记录与主题，融合 Jarvis Butler 的知识管理能力。一个窗口写笔记、看待办，在右侧与 AI 对话；把重要会话归档，第二天继续复习。
 
-[下载 Windows／Mac 测试版](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.1-preview.1) · [完整中文使用指南](docs/usage.zh-CN.md) · [功能与用法](#功能与用法) · [实际界面图库](#实际界面图库) · [来源与许可](#来源与许可)
+[下载 Windows／Mac 测试版](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.2-preview.2) · [完整中文使用指南](docs/usage.zh-CN.md) · [功能与用法](#功能与用法) · [实际界面图库](#实际界面图库) · [来源与许可](#来源与许可)
 
 ![记忆看板与 AI 侧栏，运行中的项目实际前端，合成演示资料](docs/screenshots/memory-light.png)
 
@@ -24,8 +24,8 @@
 
 | 平台 | 安装包 | 状态 |
 | --- | --- | --- |
-| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.1-preview.1/JarvisButler-0.4.1-Windows-x64-setup.exe) | 已构建，安装、启动、卸载与重装保留测试资料已检查 |
-| Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.1-preview.1/JarvisButler-0.4.1-macOS-AppleSilicon.dmg) | 构建与自动化测试通过；真机体验待验收，未公证 |
+| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.2-preview.2/JarvisButler-0.4.2-Windows-x64-setup.exe) | 构建与自动化测试通过；0.4.1安装／重装保留资料已验证，0.4.2安装流程未重测 |
+| Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.2-preview.2/JarvisButler-0.4.2-macOS-AppleSilicon.dmg) | 构建与自动化测试通过；真机体验待验收，未公证 |
 
 Windows 安装后从开始菜单打开；Mac 把应用从 DMG 拖入 Applications。当前均为测试包，Windows 无商业代码签名，Mac 使用 ad-hoc 签名；按系统正常的安全审批流程决定是否打开，不关闭系统保护。Intel Mac 暂无本版安装包。
 
@@ -86,7 +86,7 @@ ChatGPT／Claude 网页版通过官方导出文件导入；本地 CLI 工具在�
 
 ## 实际界面图库
 
-新图标：白色小猫。前端截图已更新为0.4.2；旧原生截图在下方折叠区标注版本。
+新图标：白色小猫。前端与 Windows 原生截图均已更新为0.4.2白猫版。
 
 ![新图标与小尺寸托盘适配](docs/screenshots/brand-preview.png)
 
