@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["apps/desktop/src-tauri", "apps/server", "crates/sync", "crates/workspace"]
+members = ["apps/desktop/src-tauri", "apps/server", "crates/sync", "crates/workspace", "crates/updater"]
 
 # 同步密码换算密钥（Argon2）在调试版里也要快，不然测试和开发时每次要等好几秒
 [profile.dev.package.argon2]

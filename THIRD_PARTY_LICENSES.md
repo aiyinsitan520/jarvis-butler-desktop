@@ -18,7 +18,7 @@
 
 本版纸页轨道图标与助手为原创；保留的上游品牌说明见 TRADEMARK.md，本版不分发其受限素材。第三方许可全文见 licenses/THIRD_PARTY_NOTICES.txt。
 
-## Rust 依赖（410 个）
+## Rust 依赖（426 个）
 
 桌面端统计 Windows x64 与 macOS Apple Silicon；服务器统计 Linux 与 Windows。知识库为 jarvis-workspace。
 
@@ -72,6 +72,7 @@
 | [chrono](https://github.com/chronotope/chrono) | 0.4.45 | MIT OR Apache-2.0 | 桌面端、服务器、知识库 |
 | [cipher](https://github.com/RustCrypto/traits) | 0.4.4 | MIT OR Apache-2.0 | 桌面端、服务器、同步库、知识库 |
 | [cookie](https://github.com/SergioBenitez/cookie-rs) | 0.18.2 | MIT OR Apache-2.0 | 桌面端 |
+| [core-foundation](https://github.com/servo/core-foundation-rs) | 0.9.4 | MIT OR Apache-2.0 | 桌面端、知识库 |
 | [core-foundation](https://github.com/servo/core-foundation-rs) | 0.10.1 | MIT OR Apache-2.0 | 桌面端 |
 | [core-foundation-sys](https://github.com/servo/core-foundation-rs) | 0.8.7 | MIT OR Apache-2.0 | 桌面端、知识库 |
 | [core-graphics](https://github.com/servo/core-foundation-rs) | 0.25.0 | MIT OR Apache-2.0 | 桌面端 |
@@ -116,10 +117,12 @@
 | [embed-resource](https://github.com/nabijaczleweli/rust-embed-resource) | 3.0.12 | MIT | 桌面端 |
 | [equivalent](https://github.com/indexmap-rs/equivalent) | 1.0.3 | Apache-2.0 OR MIT | 桌面端 |
 | [erased-serde](https://github.com/dtolnay/erased-serde) | 0.4.11 | MIT OR Apache-2.0 | 桌面端 |
+| [errno](https://github.com/lambda-fairy/rust-errno) | 0.3.14 | MIT OR Apache-2.0 | 桌面端 |
 | [fallible-iterator](https://github.com/sfackler/rust-fallible-iterator) | 0.3.0 | MIT/Apache-2.0 | 桌面端、服务器、知识库 |
 | [fallible-streaming-iterator](https://github.com/sfackler/fallible-streaming-iterator) | 0.1.9 | MIT/Apache-2.0 | 桌面端、服务器、知识库 |
 | [fastrand](https://github.com/smol-rs/fastrand) | 2.5.0 | Apache-2.0 OR MIT | 桌面端 |
 | [fdeflate](https://github.com/image-rs/fdeflate) | 0.3.7 | MIT OR Apache-2.0 | 桌面端 |
+| [filetime](https://github.com/alexcrichton/filetime) | 0.2.29 | MIT/Apache-2.0 | 桌面端 |
 | [find-msvc-tools](https://github.com/rust-lang/cc-rs) | 0.1.15 | MIT OR Apache-2.0 | 桌面端、服务器、知识库 |
 | [flate2](https://github.com/rust-lang/flate2-rs) | 1.1.10 | MIT OR Apache-2.0 | 桌面端 |
 | [fnv](https://github.com/servo/rust-fnv) | 1.0.7 | Apache-2.0 / MIT | 桌面端 |
@@ -200,7 +203,7 @@
 | [memchr](https://github.com/BurntSushi/memchr) | 2.8.3 | Unlicense OR MIT | 桌面端、服务器、同步库、知识库 |
 | [mime](https://github.com/hyperium/mime) | 0.3.17 | MIT OR Apache-2.0 | 桌面端 |
 | [minimal-lexical](https://github.com/Alexhuszagh/minimal-lexical) | 0.2.1 | MIT/Apache-2.0 | 服务器 |
-| [minisign-verify](https://github.com/jedisct1/rust-minisign-verify) | 0.2.5 | MIT | 桌面端 |
+| [minisign-verify](https://github.com/jedisct1/rust-minisign-verify) | 0.3.0 | MIT | 桌面端 |
 | [miniz_oxide](https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide) | 0.8.9 | MIT OR Zlib OR Apache-2.0 | 桌面端 |
 | [miniz_oxide](https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide) | 0.9.1 | MIT OR Zlib OR Apache-2.0 | 桌面端 |
 | [mio](https://github.com/tokio-rs/mio) | 1.2.4 | MIT | 桌面端、服务器、同步库、知识库 |
@@ -222,12 +225,14 @@
 | [objc2-exception-helper](https://github.com/madsmtm/objc2) | 0.1.1 | Zlib OR Apache-2.0 OR MIT | 桌面端 |
 | [objc2-foundation](https://github.com/madsmtm/objc2) | 0.3.2 | MIT | 桌面端 |
 | [objc2-io-surface](https://github.com/madsmtm/objc2) | 0.3.2 | Zlib OR Apache-2.0 OR MIT | 桌面端 |
+| [objc2-osa-kit](https://github.com/madsmtm/objc2) | 0.3.2 | Zlib OR Apache-2.0 OR MIT | 桌面端 |
 | [objc2-quartz-core](https://github.com/madsmtm/objc2) | 0.3.2 | Zlib OR Apache-2.0 OR MIT | 桌面端 |
 | [objc2-web-kit](https://github.com/madsmtm/objc2) | 0.3.2 | Zlib OR Apache-2.0 OR MIT | 桌面端 |
 | [oid-registry](https://github.com/rusticata/oid-registry.git) | 0.7.1 | MIT OR Apache-2.0 | 服务器 |
 | [once_cell](https://github.com/matklad/once_cell) | 1.21.4 | MIT OR Apache-2.0 | 桌面端、服务器、知识库 |
 | [opaque-debug](https://github.com/RustCrypto/utils) | 0.3.1 | MIT OR Apache-2.0 | 桌面端、服务器、同步库 |
 | [option-ext](https://github.com/soc/option-ext.git) | 0.2.0 | MPL-2.0 | 桌面端 |
+| [osakit](https://github.com/mdevils/rust-osakit) | 0.3.1 | MIT OR Apache-2.0 | 桌面端 |
 | [parking_lot](https://github.com/Amanieu/parking_lot) | 0.12.5 | MIT OR Apache-2.0 | 桌面端 |
 | [parking_lot_core](https://github.com/Amanieu/parking_lot) | 0.9.12 | MIT OR Apache-2.0 | 桌面端 |
 | [password-hash](https://github.com/RustCrypto/traits/tree/master/password-hash) | 0.5.0 | MIT OR Apache-2.0 | 桌面端 |
@@ -270,14 +275,17 @@
 | [regex-automata](https://github.com/rust-lang/regex) | 0.4.18 | MIT OR Apache-2.0 | 桌面端 |
 | [regex-syntax](https://github.com/rust-lang/regex) | 0.8.11 | MIT OR Apache-2.0 | 桌面端 |
 | [reqwest](https://github.com/seanmonstar/reqwest) | 0.12.28 | MIT OR Apache-2.0 | 桌面端、知识库 |
+| [reqwest](https://github.com/seanmonstar/reqwest) | 0.13.5 | MIT OR Apache-2.0 | 桌面端 |
 | [rfd](https://github.com/PolyMeilex/rfd) | 0.17.2 | MIT | 桌面端 |
 | [ring](https://github.com/briansmith/ring) | 0.17.14 | Apache-2.0 AND ISC | 桌面端、服务器、知识库 |
 | [rusqlite](https://github.com/rusqlite/rusqlite) | 0.32.1 | MIT | 桌面端、服务器、知识库 |
 | [rustc_version](https://github.com/djc/rustc-version-rs) | 0.4.1 | MIT OR Apache-2.0 | 桌面端、服务器、同步库 |
 | [rustc-hash](https://github.com/rust-lang/rustc-hash) | 2.1.3 | Apache-2.0 OR MIT | 桌面端、知识库 |
 | [rusticata-macros](https://github.com/rusticata/rusticata-macros.git) | 4.1.0 | MIT/Apache-2.0 | 服务器 |
+| [rustix](https://github.com/bytecodealliance/rustix) | 1.1.6 | Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT | 桌面端 |
 | [rustls](https://github.com/rustls/rustls) | 0.23.46 | Apache-2.0 OR ISC OR MIT | 桌面端、服务器、知识库 |
 | [rustls-pki-types](https://github.com/rustls/pki-types) | 1.15.1 | MIT OR Apache-2.0 | 桌面端、服务器、知识库 |
+| [rustls-platform-verifier](https://github.com/rustls/rustls-platform-verifier) | 0.7.1 | MIT OR Apache-2.0 | 桌面端 |
 | [rustls-webpki](https://github.com/rustls/webpki) | 0.103.16 | ISC | 桌面端、服务器、知识库 |
 | [ryu](https://github.com/dtolnay/ryu) | 1.0.23 | Apache-2.0 OR BSL-1.0 | 桌面端、知识库 |
 | [salsa20](https://github.com/RustCrypto/stream-ciphers) | 0.10.2 | MIT OR Apache-2.0 | 桌面端 |
@@ -327,7 +335,10 @@
 | [sync_wrapper](https://github.com/Actyx/sync_wrapper) | 1.0.2 | Apache-2.0 | 桌面端、知识库 |
 | [synstructure](https://github.com/mystor/synstructure) | 0.13.2 | MIT | 服务器 |
 | [synstructure](https://github.com/mystor/synstructure) | 0.14.0 | MIT | 桌面端、知识库 |
+| [system-configuration](https://github.com/mullvad/system-configuration-rs) | 0.7.0 | MIT OR Apache-2.0 | 桌面端、知识库 |
+| [system-configuration-sys](https://github.com/mullvad/system-configuration-rs) | 0.6.0 | MIT OR Apache-2.0 | 桌面端、知识库 |
 | [tao](https://github.com/tauri-apps/tao) | 0.37.2 | Apache-2.0 | 桌面端 |
+| [tar](https://github.com/composefs/tar-rs) | 0.4.46 | MIT OR Apache-2.0 | 桌面端 |
 | [tauri](https://github.com/tauri-apps/tauri) | 2.12.5 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-build](https://github.com/tauri-apps/tauri) | 2.7.4 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-codegen](https://github.com/tauri-apps/tauri) | 2.7.4 | Apache-2.0 OR MIT | 桌面端 |
@@ -338,10 +349,12 @@
 | [tauri-plugin-global-shortcut](https://github.com/tauri-apps/plugins-workspace) | 2.4.1 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-plugin-notification](https://github.com/tauri-apps/plugins-workspace) | 2.8.1 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-plugin-single-instance](https://github.com/tauri-apps/plugins-workspace) | 2.5.5 | Apache-2.0 OR MIT | 桌面端 |
+| [tauri-plugin-updater](https://github.com/tauri-apps/plugins-workspace) | 2.14.1 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-runtime](https://github.com/tauri-apps/tauri) | 2.12.2 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-runtime-wry](https://github.com/tauri-apps/tauri) | 2.12.3 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-utils](https://github.com/tauri-apps/tauri) | 2.10.2 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-winres](https://github.com/tauri-apps/winres) | 0.3.7 | MIT | 桌面端 |
+| [tempfile](https://github.com/Stebalien/tempfile) | 3.27.0 | MIT OR Apache-2.0 | 桌面端 |
 | [tendril](https://github.com/servo/html5ever) | 0.5.1 | MIT OR Apache-2.0 | 桌面端 |
 | [thiserror](https://github.com/dtolnay/thiserror) | 1.0.69 | MIT OR Apache-2.0 | 服务器 |
 | [thiserror](https://github.com/dtolnay/thiserror) | 2.0.21 | MIT OR Apache-2.0 | 桌面端、知识库 |
@@ -355,6 +368,7 @@
 | [tokio](https://github.com/tokio-rs/tokio) | 1.54.1 | MIT | 桌面端、服务器、同步库、知识库 |
 | [tokio-macros](https://github.com/tokio-rs/tokio) | 2.7.2 | MIT | 桌面端、服务器、同步库、知识库 |
 | [tokio-rustls](https://github.com/rustls/tokio-rustls) | 0.26.6 | MIT OR Apache-2.0 | 桌面端、服务器、知识库 |
+| [tokio-util](https://github.com/tokio-rs/tokio) | 0.7.20 | MIT | 桌面端 |
 | [toml](https://github.com/toml-rs/toml) | 1.1.8+spec-1.1.0 | MIT OR Apache-2.0 | 桌面端 |
 | [toml_datetime](https://github.com/toml-rs/toml) | 1.1.2+spec-1.1.0 | MIT OR Apache-2.0 | 桌面端 |
 | [toml_parser](https://github.com/toml-rs/toml) | 1.1.5+spec-1.1.0 | MIT OR Apache-2.0 | 桌面端 |
@@ -404,8 +418,9 @@
 | [windows-interface](https://github.com/microsoft/windows-rs) | 0.59.3 | MIT OR Apache-2.0 | 桌面端 |
 | [windows-link](https://github.com/microsoft/windows-rs) | 0.2.1 | MIT OR Apache-2.0 | 桌面端、服务器、同步库、知识库 |
 | [windows-numerics](https://github.com/microsoft/windows-rs) | 0.3.1 | MIT OR Apache-2.0 | 桌面端 |
-| [windows-result](https://github.com/microsoft/windows-rs) | 0.4.1 | MIT OR Apache-2.0 | 桌面端 |
-| [windows-strings](https://github.com/microsoft/windows-rs) | 0.5.1 | MIT OR Apache-2.0 | 桌面端 |
+| [windows-registry](https://github.com/microsoft/windows-rs) | 0.6.1 | MIT OR Apache-2.0 | 桌面端、服务器、知识库 |
+| [windows-result](https://github.com/microsoft/windows-rs) | 0.4.1 | MIT OR Apache-2.0 | 桌面端、服务器、知识库 |
+| [windows-strings](https://github.com/microsoft/windows-rs) | 0.5.1 | MIT OR Apache-2.0 | 桌面端、服务器、知识库 |
 | [windows-sys](https://github.com/microsoft/windows-rs) | 0.59.0 | MIT OR Apache-2.0 | 桌面端 |
 | [windows-sys](https://github.com/microsoft/windows-rs) | 0.60.2 | MIT OR Apache-2.0 | 桌面端 |
 | [windows-sys](https://github.com/microsoft/windows-rs) | 0.61.2 | MIT OR Apache-2.0 | 桌面端、服务器、同步库、知识库 |
@@ -418,6 +433,7 @@
 | [writeable](https://github.com/unicode-org/icu4x) | 0.6.4 | Unicode-3.0 | 桌面端、知识库 |
 | [wry](https://github.com/tauri-apps/wry) | 0.57.1 | Apache-2.0 OR MIT | 桌面端 |
 | [x509-parser](https://github.com/rusticata/x509-parser.git) | 0.16.0 | MIT OR Apache-2.0 | 服务器 |
+| [xattr](https://github.com/Stebalien/xattr) | 1.7.0 | MIT OR Apache-2.0 | 桌面端 |
 | [yasna](https://github.com/qnighy/yasna.rs) | 0.5.2 | MIT OR Apache-2.0 | 服务器 |
 | [yoke](https://github.com/unicode-org/icu4x) | 0.8.4 | Unicode-3.0 | 桌面端、知识库 |
 | [yoke-derive](https://github.com/unicode-org/icu4x) | 0.8.4 | Unicode-3.0 | 桌面端、知识库 |

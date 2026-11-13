@@ -1,3 +1,4 @@
+import {trackNoteSave} from "./update-save-barrier";
 import { invoke } from "@tauri-apps/api/core";
 import type { Reminder, Repeat, Tag, TagDef } from "@shared/types";
 export type { Reminder, Repeat, RepeatKind, Tag, TagDef } from "@shared/types";
@@ -453,7 +454,7 @@ export type TrashKind = "reminder" | "note";
 export interface UpdateStatus {
   current: string;
   /** idle 没有新版本 / available 有新版本 / downloading 正在下载 / ready 下载好了等着装 */
-  state: "idle" | "available" | "downloading" | "ready";
+  state: "idle" | "available" | "downloading" | "ready" | "installing";
   checking: boolean;
   version: string | null;
   notes: string | null;
@@ -533,7 +534,7 @@ export const api = {
   openNoteWindow: (id: number) => invoke<void>("open_note_window", { id }),
   /** 哪些笔记开着单独的编辑窗口 */
   noteWindows: () => invoke<number[]>("note_windows"),
-  saveNote: (note: Note) => invoke<Note>("save_note", { note }),
+  saveNote: (note: Note) => trackNoteSave(invoke<Note>("save_note", { note })),
   deleteNote: (id: number) => invoke<void>("delete_note", { id }),
   /** 分类删掉后，把用到它的提醒和笔记改成没有分类 */
   /** 删掉分类后清掉用着它的：notes 为 true 时是笔记分类 */
@@ -664,7 +665,7 @@ export const api = {
   aiTest: (settings: Settings) => invoke<string>("ai_test", { settings }),
   /** 让 AI 整理笔记的格式（不动内容），回整理后的标题和正文 */
   aiTidyNote: (title: string, body: string, ask = "") => invoke<{ title: string; body: string }>("ai_tidy_note", { title, body, ask }),
-  openWindow: (name: "sync" | "workspace" | "main" | "flash" | "qnote" | "morning" | "wrap") => invoke<void>("open_window", { name }),
+  openWindow: (name: "updates" | "sync" | "workspace" | "main" | "flash" | "qnote" | "morning" | "wrap") => invoke<void>("open_window", { name }),
   /** 到主窗口的某一页；设置时 sub 是哪一页、row 是那一行（比如 "general", "hk_flash"） */
   openMainNav: (view: string, noteId?: number, reminderId?: number, sub?: string, row?: string) =>
     invoke<void>("open_main_nav", { view, noteId: noteId ?? null, reminderId: reminderId ?? null, sub: sub ?? null, row: row ?? null }),
@@ -693,6 +694,7 @@ export const api = {
   /** 移动位置后记住；reset 时放回右上角 */
   widgetPlace: (reset = false) => invoke<void>("widget_place", { reset }),
   widgetOff: () => invoke<void>("widget_off"),
+  updatePrepareAck: (token: string, error: string | null) => invoke<void>("update_prepare_ack", {token,error}),
   updateStatus: () => invoke<UpdateStatus>("update_status"),
   /** 点按钮检查：连不上时报错「连不上，过会儿再试」 */
   updateCheck: () => invoke<UpdateStatus>("update_check"),
@@ -701,7 +703,7 @@ export const api = {
   /** 这个版本不再提示 */
   updateDismiss: () => invoke<void>("update_dismiss"),
   /** 启动下载好的安装包，贾维斯管家随即退出，装完自动重新打开 */
-  updateInstall: () => invoke<void>("update_install"),
+  updateInstall: () => invoke<void>("update_install", {confirmed:true}),
   /** 更新后第一次打开时的提示："贾维斯管家已经更新到 x" */
   updateNotice: () => invoke<string | null>("update_notice"),
   /** 协议：哪份最近更新过、有没有要通知的重大修改（官网 terms.json，检查更新时顺便取的；变了发 terms-changed） */

@@ -1,3 +1,4 @@
+import {flushNoteSaves} from "../lib/update-save-barrier";
 import "../lib/workspace-status";
 import "./fusion";
 // 主窗口（UI设计.md U6、design/ui/u6-main.html）：标题栏、侧栏（今天、提醒、笔记本、提醒分类、专注、设置）和右边的内容面板。
@@ -2476,6 +2477,7 @@ $("#modal").addEventListener("mousedown", (e) => {
   listen<number[]>("note-windows", (e) => noteWins(e.payload));
   api.noteWindows().then(noteWins).catch(() => {});
   listen<UpdateStatus>("update-status", (e) => {
+    document.body.dataset.updateInstalling=String(e.payload.state==="installing");
     S.update = e.payload;
     renderUpdate();
   });
@@ -2484,6 +2486,17 @@ $("#modal").addEventListener("mousedown", (e) => {
     renderUpdate();
   });
   api.updateNotice().then((n) => n && say(n));
+  listen<string>("update-prepare", async e => {
+    let error: string | null = null;
+    try {
+      if (conflict) throw new Error("请先解决笔记冲突，再安装更新。");
+      if (pendingSave) await saveNote();
+      await flushNoteSaves();
+      if (conflict || document.querySelector("#ne-state.bad")) throw new Error("笔记尚未保存成功，请先处理或导出草稿。");
+      if (Array.from(document.querySelectorAll<HTMLTextAreaElement>("#cap,.xiaoyu-composer textarea,.fusion-idea textarea")).some(x=>x.value.trim())) throw new Error("有未保存的记录、对话或灵感，请先保存或清空，再安装更新。");
+    } catch (err) { error=errText(err); }
+    await api.updatePrepareAck(e.payload,error).catch(()=>{});
+  });
   // 协议：检查更新时顺便取的；主窗口没开着时来的，下次打开时显示
   listen<TermsView>("terms-changed", (e) => {
     S.terms = e.payload;

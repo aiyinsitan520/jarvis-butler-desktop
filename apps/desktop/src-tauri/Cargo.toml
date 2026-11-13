@@ -1,6 +1,6 @@
 [package]
 name = "jarvis-desktop"
-version = "0.4.2"
+version = "0.4.3"
 description = "贾维斯管家：本地知识、AI学习回顾与快捷记录"
 edition = "2021"
 license = "AGPL-3.0-only"
@@ -10,7 +10,7 @@ name = "dingmi_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [features]
-default = ["no-update"]
+default = []
 # 给自己试用的测试包：不检查更新（npm run tauri build -- --features no-update）
 no-update = []
 
@@ -19,6 +19,9 @@ tauri-build = { version = "2", features = [] }
 
 [dependencies]
 jarvis-workspace = { path = "../../../crates/workspace" }
+jarvis-updater = { path = "../../../crates/updater" }
+tauri-plugin-updater = "=2.14.1"
+semver = "1"
 tauri = { version = "2", features = ["tray-icon", "image-png", "protocol-asset"] }
 tauri-plugin-global-shortcut = "2"
 tauri-plugin-single-instance = "2"
@@ -40,7 +43,6 @@ chacha20poly1305 = "0.10"
 crypto_box = "0.9"
 hkdf = "0.12"
 sha2 = "0.10"
-minisign-verify = "0.2"
 pinyin = "0.10"
 png = "0.18"
 # 叮咪同步的套餐限单个图片多大：超过的压一份小的再传（只要 JPEG、PNG，tauri 本来就带着 image）
@@ -63,6 +65,7 @@ windows-sys = { version = "0.59", features = ["Win32_UI_Shell", "Win32_UI_Input_
 windows = { version = "0.62", features = ["Win32_UI_Shell", "Win32_UI_Shell_Common", "Win32_UI_Shell_PropertiesSystem", "Win32_System_Com", "Win32_Storage_EnhancedStorage", "Win32_Graphics_Gdi", "Win32_UI_WindowsAndMessaging", "Win32_Foundation", "Win32_System_Registry"] }
 
 [dev-dependencies]
+minisign-verify = "0.2"
 tokio = { version = "1", features = ["rt", "macros"] }
 # 测试里给假的安装包签名
 minisign = "0.10"

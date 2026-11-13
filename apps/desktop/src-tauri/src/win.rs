@@ -837,3 +837,6 @@ pub fn open_sync(app: &AppHandle) {
     open_main(app);
     let _=app.emit("fusion-open", "sync");
 }
+
+/// Software updates share the existing main window.
+pub fn open_updates(app: &AppHandle) { open_main(app); let _=app.emit("fusion-open", "updates"); }

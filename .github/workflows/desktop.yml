@@ -18,8 +18,8 @@ jobs:
             bundles: nsis
           - os: macos-latest
             target: aarch64-apple-darwin
-            config: '--config apps/desktop/src-tauri/tauri.macos.conf.json'
-            bundles: dmg
+            config: 'apps/desktop/src-tauri/tauri.macos.conf.json'
+            bundles: app,dmg
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -37,6 +37,7 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: cargo test -p jarvis-workspace --locked -- --test-threads=1
+      - run: cargo test -p jarvis-updater --locked
       - run: cargo build -p jarvis-workspace --bin workspace-driver --locked
       - run: node scripts/test-workspace.mjs
       - run: node scripts/test-server-sync.mjs
@@ -44,13 +45,16 @@ jobs:
       - run: node scripts/licenses.mjs --check
       - run: node scripts/audit-release.mjs
       - name: Build installer
-        run: npx tauri build --ci --target ${{ matrix.target }} --bundles ${{ matrix.bundles }} ${{ matrix.config }}
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        run: node scripts/updater-release.mjs build ${{ matrix.target }} ${{ matrix.bundles }} "${{ matrix.config }}"
+      - name: Stage public installer and signed update package
+        run: node scripts/updater-release.mjs stage ${{ matrix.target }}
       - uses: actions/upload-artifact@v4
         with:
           name: jarvis-${{ matrix.target }}
-          path: |
-            target/${{ matrix.target }}/release/bundle/nsis/*.exe
-            target/${{ matrix.target }}/release/bundle/dmg/*.dmg
+          path: output/release-assets/*
           if-no-files-found: error
   publish:
     if: startsWith(github.ref, 'refs/tags/')
@@ -60,18 +64,29 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: updater-verifier-linux
       - uses: actions/download-artifact@v4
         with:
-          path: packages
+          path: release-assets
           merge-multiple: true
-      - name: Checksums
-        run: |
-          mkdir -p release-assets
-          version=$(jq -r '.version' package.json)
-          find packages -type f -name '*.exe' -exec cp {} "release-assets/JarvisButler-${version}-Windows-x64-setup.exe" \;
-          find packages -type f -name '*.dmg' -exec cp {} "release-assets/JarvisButler-${version}-macOS-AppleSilicon.dmg" \;
-          (cd release-assets && sha256sum *) > SHA256SUMS.txt
+      - name: Assemble versioned update manifest and checksums
+        run: node scripts/updater-release.mjs merge release-assets
+      - name: Verify signatures, signed versions, platform URLs, sizes and hashes
+        run: cargo run -p jarvis-updater --locked -- verify release-assets/latest.json release-assets apps/desktop/src-tauri/updater-pubkey.txt
       - name: Publish testing release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" --prerelease --title "贾维斯管家 $GITHUB_REF_NAME（测试版）" --notes-file docs/release-notes.md release-assets/* SHA256SUMS.txt LICENSE THIRD_PARTY_LICENSES.md
+        run: |
+          if ! gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release create "$GITHUB_REF_NAME" --prerelease --title "贾维斯管家 $GITHUB_REF_NAME（测试版）" --notes-file docs/release-notes.md release-assets/* LICENSE THIRD_PARTY_LICENSES.md
+          fi
+      - name: Promote verified public update channel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/publish-update-channel.mjs release-assets/latest.json

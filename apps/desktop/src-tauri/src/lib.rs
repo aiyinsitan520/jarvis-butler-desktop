@@ -16,7 +16,12 @@ mod settings;
 mod sync;
 mod sys;
 mod terms;
+#[path="release_update.rs"]
 mod update;
+// Legacy protocol checks are test-only, never the production update network path.
+#[cfg(test)]
+#[path="update.rs"]
+mod legacy_update;
 mod win;
 mod workspace;
 mod portable;
@@ -1127,7 +1132,7 @@ async fn save_settings(app: AppHandle, st: tauri::State<'_, AppState>, mut setti
     }
     settings.ai_key = if workspace::model(&app)?.is_some() {"__MANAGED__".into()} else {String::new()};
     settings.sync_ai_key = false;
-    settings.auto_update = false;
+    // Update preferences are local and managed on the update page.
     settings::save(&st.db.lock().unwrap(), &settings).map_err(err)?;
     let custom_changed = std::mem::replace(&mut *st.settings.lock().unwrap(), settings.clone()).launcher.custom != settings.launcher.custom;
     if custom_changed {
@@ -1313,6 +1318,7 @@ async fn open_window(app: AppHandle, name: String) -> Res<()> {
         "main" => win::open_main(&app),
         "workspace" => win::open_workspace(&app),
         "sync" => win::open_sync(&app),
+        "updates" => win::open_updates(&app),
         "flash" => win::toggle_flash(&app),
         "qnote" => win::toggle_qnote(&app),
         "morning" => win::open_morning(&app),
@@ -1556,9 +1562,18 @@ fn update_dismiss(app: AppHandle) {
 }
 
 #[tauri::command]
-fn update_install(app: AppHandle) -> Res<()> {
-    update::install(&app)
+async fn update_install(app: AppHandle, confirmed: bool) -> Res<()> {
+    update::install(&app, confirmed).await
 }
+
+#[tauri::command]
+async fn update_history() -> Res<Vec<update::History>> { update::history().await }
+
+#[tauri::command]
+fn update_preferences(app: AppHandle, channel: String, auto_check: bool) -> Res<update::Status> { update::preferences(&app, channel, auto_check) }
+
+#[tauri::command]
+fn update_prepare_ack(window: tauri::WebviewWindow, token: String, error: Option<String>) -> Res<()> { update::ack(window.label(), token, error) }
 
 /// 更新后第一次打开时的提示
 #[tauri::command]
@@ -1658,28 +1673,7 @@ fn build_tray(app: &AppHandle) -> tauri::Result<()> {
             "wrap" => win::open_wrap(app),
             "sync_now" => sync::sync_now(app.clone()),
             // 下载好了就装；有新版本就开始下载（进度在主窗口顶上）；没有就打开「设置 → 关于」检查一次
-            "update" => match update::state().as_str() {
-                "ready" => {
-                    let _ = update::install(app);
-                }
-                "available" | "downloading" => {
-                    update::download(app);
-                    win::open_main(app);
-                }
-                _ => {
-                    let nav = json!({ "view": "settings", "sub": "about", "row": "update" });
-                    if app.get_webview_window("main").is_some() {
-                        let _ = app.emit_to("main", "nav", nav);
-                    } else {
-                        *app.state::<AppState>().nav.lock().unwrap() = Some(nav);
-                    }
-                    win::open_main(app);
-                    let app = app.clone();
-                    tauri::async_runtime::spawn(async move {
-                        let _ = update::check(&app, true).await;
-                    });
-                }
-            },
+            "update" => { win::open_updates(app); },
             "focus" => {
                 let on = !app.state::<AppState>().focus_manual.load(Ordering::Relaxed);
                 set_focus_manual(app, on);
@@ -1719,6 +1713,7 @@ pub fn run() {
         }));
     }
     builder
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_dialog::init())
         // 拖进窗口的文件（桌面组件上拖进来加到「常用」）：路径是系统给的，记下来，之后能打开、能加到启动器
         .on_webview_event(|_, e| {
@@ -1734,6 +1729,7 @@ pub fn run() {
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, sc, ev| {
+                    if update::state()=="installing" { return; }
                     if ev.state() == ShortcutState::Pressed {
                         on_hotkey(app, sc);
                     }
@@ -1805,6 +1801,7 @@ pub fn run() {
             win::warm_flash(&handle);
             launcher::start(handle.clone());
             workspace::start(handle.clone());
+            update::start(handle.clone());
             sync::backup::start(handle.clone());
             // Upstream automatic update service is disabled in this independently branded build.
             // Shared records use WorkspaceStore exclusively.
@@ -1965,6 +1962,9 @@ pub fn run() {
             update_status,
             update_check,
             update_install,
+            update_preferences,
+            update_history,
+            update_prepare_ack,
             update_notice,
             update_download,
             update_dismiss,

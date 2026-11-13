@@ -975,7 +975,7 @@ function updateRows() {
   return (
     row("update", A.update, (u.version && u.notes ? `<button class="btn sm ghost" data-upd="notes">${T.whatsNew}</button>` : "") + btn, {
       sub: esc(line) + (u.too_old ? `<span class="bad">${esc(T.tooOld)}</span>` : ""),
-    }) + row("auto_update", A.auto_update, tog("auto_update", A.auto_update.name), { local: true })
+    })
   );
 }
 
@@ -996,7 +996,7 @@ function termsSub(t: { sub?: string }, d: TermsDoc | undefined): string | undefi
 async function aboutHtml() {
   if (true) {
     const version = await getVersion();
-    return `<div class="about-top">${appIcon(56)}<div><h4>贾维斯管家 ${esc(version)}</h4><p>基于 Dingmi 1.0.8，融合 Jarvis Butler 知识管理。</p></div></div><div class="srows"><p>AGPL-3.0-only · 保留上游与第三方版权声明。上游作者未为本版本背书。</p><p>本版使用原创白色小猫图标与助手形象，不包含 Dingmi 团子猫或 Islenote 标志。</p><p>自动更新及上游收费同步已关闭。共享资料、模型、微信和只读记忆看板在知识工作台中配置。</p><button class="btn" id="jarvis-open-settings">打开知识工作台</button></div>`;
+    return `<div class="about-top">${appIcon(56)}<div><h4>贾维斯管家 ${esc(version)}</h4><p>基于 Dingmi 1.0.8，融合 Jarvis Butler 知识管理。</p></div></div><div class="srows"><p>AGPL-3.0-only · 保留上游与第三方版权声明。上游作者未为本版本背书。</p><p>本版使用原创白色小猫图标与助手形象，不包含 Dingmi 团子猫或 Islenote 标志。</p><p>本版使用独立签名更新通道；安装前保存编辑并备份资料。</p><button class="btn" id="jarvis-open-updates">检查软件更新与更新记录</button><button class="btn" id="jarvis-open-settings">打开知识工作台</button></div>`;
   }
 
   const A = ROWS.about;
@@ -1030,6 +1030,7 @@ async function aboutHtml() {
 }
 
 async function installUpdate() {
+  if (!confirm("安装更新将重启贾维斯。请先保存未发送内容；确认后将备份本机资料。是否继续？")) return;
   try {
     await api.updateInstall();
   } catch (e) {
@@ -1291,4 +1292,4 @@ listen("launcher-changed", () => {
 
 export { renderSettings };
 
-document.addEventListener("click", e => { const target=e.target as HTMLElement; if (target.closest("#jarvis-open-sync")) void api.openWindow("sync"); else if (target.closest("#jarvis-open-settings")) void api.openWindow("workspace"); });
+document.addEventListener("click", e => { const target=e.target as HTMLElement; if (target.closest("#jarvis-open-updates")) void api.openWindow("updates"); else if (target.closest("#jarvis-open-sync")) void api.openWindow("sync"); else if (target.closest("#jarvis-open-settings")) void api.openWindow("workspace"); });

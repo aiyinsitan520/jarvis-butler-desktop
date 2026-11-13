@@ -1,17 +1,9 @@
-# 贾维斯管家 0.4.2 测试版
+# 贾维斯管家0.4.3测试版
 
-新品牌图标：白色小猫。应用安装图标来自本项目内置图片生成工具；主界面、助手形象及16–32像素托盘使用同一设计的简化SVG适配。保留鼠标眼神跟随，并分别提供正常、专注、提醒、错误状态。
+新增独立“软件更新”页面：版本检查、更新记录、下载进度、测试／稳定渠道、自动检查偏好及确认安装。采用本项目自己的签名密钥与GitHub发布地址。安装前确认保存并备份两库，签名／版本不符拒绝安装；保留白猫图标与现有知识管理功能。
 
-- Windows x64：EXE安装包；Mac Apple Silicon：DMG，拖入Applications。
-- 一键拉取模型、搜索点选、默认模型与侧栏切换保留。
-- 本地Markdown资料库、会话采集、学习回顾、微信与服务器独立设置保留。
-- [功能截图与使用指南](https://github.com/aiyinsitan520/jarvis-butler-desktop#readme)
-- [新图标来源与生成说明](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/branding.md)
+首次从0.4.2或更早版本升级需要手动安装本包，此后支持应用内检查更新。默认自动检查，不自动安装。Mac Apple Silicon DMG用于首次安装，app.tar.gz及sig用于自动更新；未公证，真机升级仍待验收。Windows无商业代码签名，updater签名与系统代码签名不同。
 
-![白色小猫](https://raw.githubusercontent.com/aiyinsitan520/jarvis-butler-desktop/main/shared/assets/jarvis-kitten-source.png)
+[完整用法](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/usage.zh-CN.md) · [更新与发布说明](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/updating.md)
 
-基于Dingmi 1.0.8，融合Jarvis Butler的MIT部分，整体AGPL-3.0-only。新图标不包含上游团子猫、Islenote标志或网上下载的第三方角色。原作者未为本版本背书；生成图标不代表已完成商标检索。
-
-Windows包无商业代码签名；Mac为ad-hoc签名且未公证，使用系统正常安全审批流程，不关闭系统保护。Mac真机、真实微信与模型仍需本人配置验收。资料为本机明文；云端模型会收到授权内容，运行中的SQLite不支持直接用网盘跨设备同步。
-
-安装后若系统仍显示旧图标，退出应用再重开，并从开始菜单重新固定快捷方式；Windows图标缓存可能延迟刷新。源码及构建记录对应本Release的版本标签，不移动旧版本标签。
+AGPL-3.0-only，基于Dingmi并融合Jarvis Butler。原版权与第三方许可证随包保留；未复制Cockpit Tools代码或签名密钥。真实模型、微信与Mac真机验收边界见说明。
