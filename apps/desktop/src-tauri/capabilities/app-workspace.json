@@ -1,0 +1,42 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "app-workspace",
+  "description": "workspace 窗口能调的贾维斯管家命令（node scripts/caps.mjs --write 按页面代码生成，别手改）",
+  "windows": [
+    "workspace"
+  ],
+  "permissions": [
+    "allow-get-settings",
+    "allow-open-url",
+    "allow-open-window",
+    "allow-save-settings",
+    "allow-workspace-ai-cancel",
+    "allow-workspace-ai-chat",
+    "allow-workspace-archive-load",
+    "allow-workspace-archive-save",
+    "allow-workspace-capture",
+    "allow-workspace-command",
+    "allow-workspace-connect-server",
+    "allow-workspace-discard",
+    "allow-workspace-memory-index",
+    "allow-workspace-memory-pick",
+    "allow-workspace-memory-read",
+    "allow-workspace-models",
+    "allow-workspace-open-media",
+    "allow-workspace-preview-server",
+    "allow-workspace-process-capture",
+    "allow-workspace-refresh",
+    "allow-workspace-resume-server",
+    "allow-workspace-retry",
+    "allow-workspace-save-model",
+    "allow-workspace-settings",
+    "allow-workspace-tasks",
+    "allow-workspace-view",
+    "allow-workspace-wechat-enable",
+    "allow-workspace-wechat-login",
+    "allow-workspace-wechat-pair",
+    "allow-workspace-wechat-poll",
+    "allow-workspace-wechat-resend",
+    "allow-workspace-wechat-unbind"
+  ]
+}

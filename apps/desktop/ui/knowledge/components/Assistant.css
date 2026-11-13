@@ -1,0 +1,85 @@
+.xiaoyu-toggle{display:flex;align-items:center;justify-content:center;gap:5px;width:34px;height:34px;flex-shrink:0;border:0;border-radius:50%;background:#81c095;box-shadow:0 2px 12px #81c09566;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.xiaoyu-toggle:hover{transform:translateY(-1px);box-shadow:0 3px 17px #81c09588}
+.xiaoyu-toggle .jarvis-eyes{display:flex;align-items:center;gap:5px;pointer-events:none;transform:translate(var(--gaze-x,0px),var(--gaze-y,0px));transition:transform 110ms cubic-bezier(.2,.8,.2,1)}
+.xiaoyu-toggle .jarvis-eye{display:block;width:4px;height:5px;border-radius:50%;background:#fff;animation:xiaoyu-blink 7s infinite}
+.xiaoyu-panel{--xiaoyu-green:#4ba285;display:none;flex-direction:column;flex-shrink:0;width:358px;min-height:0;margin:6px 6px 6px 0;border:1px solid var(--color-border);border-radius:22px;background:var(--color-card);color:var(--color-ink);box-shadow:0 3px 16px #263e3010;overflow:hidden}
+.xiaoyu-panel.is-open{display:flex}
+.xiaoyu-header{display:flex;align-items:center;gap:2px;min-height:49px;padding:6px 10px 0 8px;flex-shrink:0}
+.xiaoyu-session{position:relative;min-width:0;flex:1}
+.xiaoyu-title{display:flex;align-items:center;gap:7px;max-width:100%;padding:6px 7px;border:0;border-radius:9px;background:transparent;color:var(--color-ink);cursor:pointer;font-size:14px;font-weight:600}
+.xiaoyu-title span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.xiaoyu-title>svg{flex-shrink:0;color:var(--color-ink-soft)}
+.xiaoyu-icon{display:grid;place-items:center;width:29px;height:29px;flex-shrink:0;border:0;border-radius:8px;background:transparent;color:var(--color-ink-faint);cursor:pointer}
+.xiaoyu-icon:hover,.xiaoyu-title:hover{background:var(--color-muted);color:var(--color-ink)}
+.xiaoyu-menu{position:absolute;top:100%;left:0;right:-50px;z-index:5;padding:7px;border:1px solid var(--color-border);border-radius:13px;background:var(--color-popover);box-shadow:var(--shadow-float)}
+.xiaoyu-menu button{display:flex;align-items:center;gap:7px;width:100%;border:0;border-radius:8px;background:transparent;padding:9px;color:var(--color-ink);font-size:12px;cursor:pointer}
+.xiaoyu-menu button:hover{background:var(--color-muted)}
+.xiaoyu-menu p{padding:4px 9px;font-size:10px;color:var(--color-ink-faint);line-height:1.7}
+.xiaoyu-scope{display:flex;align-items:center;gap:5px;margin:0 15px;padding:0 0 2px;color:var(--color-ink-faint);flex-shrink:0}
+.xiaoyu-scope select{min-width:0;max-width:270px;flex:1;border:0;background:transparent;color:var(--color-ink-soft);font:inherit;font-size:10.5px;outline-offset:3px;padding:3px 0}
+.xiaoyu-scope option{color:var(--color-ink);background:var(--color-card)}
+.xiaoyu-body{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:0 13px}
+.xiaoyu-welcome{display:flex;min-height:100%;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 3px 36px}
+.xiaoyu-mark{position:relative;width:82px;height:59px;margin-bottom:16px;flex-shrink:0;animation:xiaoyu-appear .6s ease both}
+.xiaoyu-mark img{position:absolute;left:0;top:0;width:auto;height:59px;max-width:none}
+.xiaoyu-mark>span{position:absolute;left:78px;top:34px;width:15.5px;height:15.5px;background:#81c095;border-radius:50%;animation:xiaoyu-dot .65s .2s cubic-bezier(.2,.8,.3,1.4) both}
+.xiaoyu-welcome h2{font-size:20px;font-weight:650;letter-spacing:-.02em;line-height:1.5;white-space:nowrap;margin:0}
+.xiaoyu-wave{display:inline-block;font-size:19px;transform-origin:bottom right;animation:xiaoyu-wave 1.1s .5s ease-in-out}
+.xiaoyu-subtitle{margin:9px 0 0;font-size:11px;line-height:1.8;color:var(--color-ink-soft)}
+.xiaoyu-skills{display:flex;justify-content:center;gap:6px;margin-top:18px;width:100%}
+.xiaoyu-skills button{display:flex;align-items:center;justify-content:center;gap:4px;min-width:0;padding:7px 8px;border:1px solid #ffffffcc;border-radius:25px;background:var(--color-card);box-shadow:0 2px 10px #1f45360a;white-space:nowrap;color:var(--color-ink-soft);font-size:11px;cursor:pointer;transition:transform .2s}
+.xiaoyu-skills button:hover{transform:translateY(-2px)}
+.xiaoyu-skills svg{color:var(--xiaoyu-green);width:14px;height:14px;flex-shrink:0}
+.xiaoyu-suggestions{width:100%;margin-top:22px;padding:12px;border:1px solid #1f453608;border-radius:21px;background:#f4faf6cc;box-shadow:0 1px 3px #1f453607;text-align:left}
+.xiaoyu-suggestions-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:10px}
+.xiaoyu-suggestions-heading>span{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--color-ink-soft)}
+.xiaoyu-suggestions-heading>span svg{color:var(--xiaoyu-green)}
+.xiaoyu-suggestions-heading>button{display:flex;align-items:center;gap:4px;border:0;background:transparent;padding:3px;color:var(--color-ink-faint);font-size:10px;cursor:pointer}
+.xiaoyu-suggestion{display:flex;align-items:center;gap:10px;width:100%;margin-top:8px;padding:12px 11px;border:1px solid #ffffffcc;border-radius:15px;background:var(--color-card);box-shadow:0 2px 8px #1f45360a;color:var(--color-ink);text-align:left;font-size:11.5px;line-height:1.5;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.xiaoyu-suggestion svg{flex-shrink:0}
+.xiaoyu-suggestion:hover{transform:translateY(-1px);box-shadow:0 5px 15px #1f453611}
+.xiaoyu-messages{display:flex;flex-direction:column;gap:17px;padding:18px 1px 10px}
+.xiaoyu-message{max-width:95%;font-size:12.5px;line-height:1.85;overflow-wrap:anywhere}
+.xiaoyu-message.user{align-self:flex-end}
+.xiaoyu-message.assistant{align-self:flex-start}
+.xiaoyu-message-label{display:block;font-size:10px;color:var(--color-ink-faint);margin:0 4px 4px}
+.xiaoyu-message.user .xiaoyu-message-label{text-align:right}
+.xiaoyu-message>div{white-space:pre-wrap;border-radius:16px;padding:11px 13px;background:var(--color-muted)}
+.xiaoyu-message.user>div{background:#eaf5ee;color:#2e5941;border-bottom-right-radius:4px}
+.xiaoyu-message.assistant>div{border-bottom-left-radius:4px}
+.xiaoyu-thinking{display:flex;align-items:center;gap:7px;color:var(--color-ink-soft)}
+.xiaoyu-footer{padding:8px 12px 9px;flex-shrink:0;max-height:48%;overflow-y:auto}
+.xiaoyu-configure{display:flex;justify-content:space-between;align-items:center;gap:7px;width:100%;border:0;border-radius:10px;background:#f4faf6;color:var(--color-ink-soft);padding:9px;margin-bottom:8px;font-size:10px;line-height:1.6;text-align:left;cursor:pointer}
+.xiaoyu-configure span{white-space:nowrap;color:var(--xiaoyu-green)}
+.xiaoyu-error{margin:0 0 7px;font-size:11px;line-height:1.7;color:var(--color-destructive)}
+.xiaoyu-composer{padding:10px 10px 8px;border:1px solid #a7ccbb88;border-radius:23px;box-shadow:0 2px 8px #1f45360b;background:var(--color-card)}
+.xiaoyu-composer:focus-within{border-color:#81c095;box-shadow:0 0 0 2px #81c09516}
+.xiaoyu-composer textarea{display:block;resize:none;width:100%;height:53px;min-height:45px;max-height:125px;overflow-y:auto;border:0;outline:0;box-shadow:none;background:transparent;color:var(--color-ink);padding:5px 3px;font:inherit;font-size:12.5px;line-height:1.7}
+.xiaoyu-composer textarea::placeholder{color:var(--color-ink-faint)}
+.xiaoyu-composer-tools{display:flex;align-items:center;gap:5px}
+.xiaoyu-chip{display:inline-flex;align-items:center;gap:4px;flex-shrink:0;border:1px solid #a7ccbb55;border-radius:18px;padding:5px 8px;background:transparent;color:var(--color-ink-soft);font-size:10px;line-height:1.4}
+button.xiaoyu-chip{cursor:pointer}
+.xiaoyu-policy{color:var(--color-ink-faint)}
+.xiaoyu-send{display:grid;place-items:center;width:31px;height:31px;margin-left:auto;border:0;border-radius:50%;background:#81c095;color:#fff;cursor:pointer;flex-shrink:0}
+.xiaoyu-send:disabled{background:#cbe6d5;cursor:not-allowed}
+.xiaoyu-privacy{margin:6px 5px 0;font-size:9px;line-height:1.65;color:var(--color-ink-faint)}
+.xiaoyu-attachment{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--color-ink-soft);padding:5px 8px;margin-bottom:6px;background:var(--color-muted);border-radius:8px}
+.xiaoyu-attachment span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.xiaoyu-attachment button{border:0;background:transparent;color:inherit;cursor:pointer}
+.xiaoyu-backdrop{display:none}
+.dark .xiaoyu-mark img{filter:invert(1)}
+.dark .xiaoyu-suggestions,.dark .xiaoyu-configure{background:#81c0950b;border-color:#ffffff0f}
+.dark .xiaoyu-skills button,.dark .xiaoyu-suggestion{border-color:#ffffff0f}
+.dark .xiaoyu-message.user>div{background:#81c09522;color:#c0e4cc}
+.xiaoyu-panel button:focus-visible,.xiaoyu-toggle:focus-visible{outline:2px solid #81c095;outline-offset:2px}
+.xiaoyu-panel button:disabled{cursor:not-allowed;opacity:.6}
+@keyframes xiaoyu-blink{0%,43%,47%,100%{transform:scaleY(1)}45%{transform:scaleY(.15)}}
+@keyframes xiaoyu-appear{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+@keyframes xiaoyu-dot{from{opacity:0;transform:translateY(18px) scale(.15)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes xiaoyu-wave{0%,100%{transform:rotate(0)}25%,65%{transform:rotate(16deg)}45%,85%{transform:rotate(-7deg)}}
+@media(max-width:1179px){.xiaoyu-panel{position:fixed;z-index:50;right:6px;top:6px;bottom:6px;width:min(390px,calc(100vw - 12px));margin:0;box-shadow:var(--shadow-float)}.xiaoyu-backdrop{display:block;position:fixed;z-index:49;inset:0;border:0;background:#1a142833;backdrop-filter:blur(1px)}.xiaoyu-welcome{padding-top:25px;padding-bottom:25px}}
+@media(max-height:720px){.xiaoyu-welcome{padding:20px 3px}.xiaoyu-mark{height:45px;margin-bottom:12px;transform:scale(.8);transform-origin:center bottom}.xiaoyu-suggestions{margin-top:14px}.xiaoyu-suggestion{padding:8px 9px}.xiaoyu-skills{margin-top:12px}.xiaoyu-footer{padding-top:5px}}
+@media(prefers-reduced-motion:reduce){.xiaoyu-toggle span,.xiaoyu-mark,.xiaoyu-mark>span,.xiaoyu-wave{animation:none}.xiaoyu-panel *{scroll-behavior:auto;transition:none}}
+.xiaoyu-toggle:active{box-shadow:0 1px 5px #81c09555}
+:root[data-motion="reduce"] .jarvis-eyes{transform:translate(0,0)!important;transition:none}
+@media(prefers-reduced-motion:reduce){.xiaoyu-toggle .jarvis-eyes{transform:translate(0,0)!important;transition:none}}

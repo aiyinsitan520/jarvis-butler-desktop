@@ -1,0 +1,206 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   贾维斯管家 · 紫蓝浪漫设计系统
+   原创语义 token。浅色 / 深色双主题通过 html.dark 切换。
+   圆角基准 14px，派生 8 / 12 / 14 / 20 / 24。字体栈沿用中文优先设计。
+   ========================================================================== */
+
+@theme {
+  /* ---------- 主色族（紫 → 蓝） ---------- */
+  --color-ocean: #8a72da;
+  --color-ocean-deep: #775fc1;
+  --color-ocean-soft: #efeefd;
+  --color-mint: #558dc8;
+  --color-mint-soft: #e4f1fe;
+  --color-sunrise: #f096c2;
+
+  /* ---------- 墨色三级 ---------- */
+  --color-ink: #35314b;
+  --color-ink-soft: #686381;
+  --color-ink-faint: #a29db7;
+
+  /* ---------- 语义底色 ---------- */
+  --color-background: #fbf8fe;
+  --color-card: #ffffff;
+  --color-popover: #ffffff;
+  --color-muted: #f3f1f8;
+  --color-secondary: #efeefd;
+  --color-accent: #efeefd;
+  --color-border: #35314b14;
+  --color-input: #35314b1a;
+  --color-ring: #8a72da;
+  --color-destructive: #e05d5d;
+
+  /* ---------- 语义标签色（5 组：底 / 字） ---------- */
+  --color-tag-blue: #efeefd;
+  --color-tag-blue-text: #8a72da;
+  --color-tag-teal: #e6f1fd;
+  --color-tag-teal-text: #558dc8;
+  --color-tag-amber: #feebf2;
+  --color-tag-amber-text: #c9789e;
+  --color-tag-rose: #fbe5de;
+  --color-tag-rose-text: #d9776b;
+  --color-tag-purple: #f6eaf8;
+  --color-tag-purple-text: #a463b8;
+
+  /* ---------- 玻璃 / 淡染层 ---------- */
+  --color-tint-white: #ffffff;
+  --color-tint-mint: #f1f6fe;
+  --color-tint-cream: #fdf4f9;
+  --color-tint-pink: #fdf0f4;
+  --color-tint-lavender: #f4f0fd;
+
+  /* ---------- 圆角（14 基准） ---------- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+
+  /* ---------- 阴影（紫墨 #3b2f6e 系） ---------- */
+  --shadow-card: 0 1px 2px #3b2f6e0a, 0 4px 16px #3b2f6e0f;
+  --shadow-float: 0 2px 8px #3b2f6e0f, 0 24px 64px #3b2f6e2e;
+  --shadow-drawer: 0 2px 8px #3b2f6e0a, 0 10px 28px #3b2f6e17;
+
+  /* ---------- 字体 ---------- */
+  --font-sans: 'PingFang SC', 'MiSans', 'HarmonyOS Sans SC', 'Source Han Sans SC',
+    'Microsoft YaHei UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', ui-monospace, monospace;
+}
+
+/* ============================ 深色主题 ============================ */
+html.dark {
+  --color-ocean: #947ee0;
+  --color-ocean-deep: #ada1e8;
+  --color-ocean-soft: #342a54;
+  --color-mint: #6fa9ee;
+  --color-mint-soft: #1f2d4a;
+  --color-sunrise: #ee9cc4;
+
+  --color-ink: #ebe8f5;
+  --color-ink-soft: #b0abc6;
+  --color-ink-faint: #6f6a86;
+
+  --color-background: #120f1c;
+  --color-card: #1c1829;
+  --color-popover: #1c1829;
+  --color-muted: #221d31;
+  --color-secondary: #342a54;
+  --color-accent: #342a54;
+  --color-border: #ffffff14;
+  --color-input: #ffffff1a;
+  --color-ring: #947ee0;
+  --color-destructive: #e06666;
+
+  --color-tag-blue: #342a54;
+  --color-tag-blue-text: #aa9ef0;
+  --color-tag-teal: #1c2d45;
+  --color-tag-teal-text: #7ab0f0;
+  --color-tag-amber: #3e2633;
+  --color-tag-amber-text: #eba0c4;
+  --color-tag-rose: #3d2521;
+  --color-tag-rose-text: #e89184;
+  --color-tag-purple: #3a2648;
+  --color-tag-purple-text: #cf9be0;
+
+  --color-tint-white: #262236;
+  --color-tint-mint: #1f2e47;
+  --color-tint-cream: #3a2a37;
+  --color-tint-pink: #3e2633;
+  --color-tint-lavender: #2f2848;
+
+  --shadow-card: 0 1px 2px #07040f29, 0 4px 16px #07040f29;
+  --shadow-float: 0 2px 8px #07040f59, 0 24px 64px #07040f80;
+  --shadow-drawer: 0 2px 8px #07040f47, 0 10px 28px #07040f57;
+}
+
+/* ============================ 基础样式 ============================ */
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: #8a72da33;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #35314b1f;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #35314b33;
+    background-clip: content-box;
+  }
+  html.dark ::-webkit-scrollbar-thumb {
+    background: #ffffff1f;
+    background-clip: content-box;
+  }
+}
+
+/* ============================ 工具类 ============================ */
+@utility romance-grad {
+  background-image: linear-gradient(135deg, #9a7fe6 0%, #7b86e6 52%, #5b95e2 100%);
+}
+html.dark .romance-grad {
+  background-image: linear-gradient(135deg, #a08af0 0%, #8590ea 52%, #6aa2ec 100%);
+}
+
+@utility romance-text-grad {
+  background-image: linear-gradient(135deg, #9a7fe6 0%, #7b86e6 52%, #5b95e2 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* 工作区氛围层：紫蓝柔光，替代纯色底 */
+@utility ambiance {
+  background-color: var(--color-background);
+  background-image:
+    radial-gradient(1100px 760px at 0% 0%, #b9a6ff30, transparent 62%),
+    radial-gradient(820px 620px at 92% 6%, #f3c3e624, transparent 60%),
+    radial-gradient(1000px 760px at 100% 100%, #9ec3ff2b, transparent 62%);
+}
+html.dark .ambiance {
+  background-image:
+    radial-gradient(1100px 760px at 0% 0%, #6b4fd029, transparent 62%),
+    radial-gradient(820px 620px at 92% 6%, #a04f9a17, transparent 60%),
+    radial-gradient(1000px 760px at 100% 100%, #2f62c224, transparent 62%);
+}
+
+/* 玻璃卡 */
+@utility glass {
+  background-color: color-mix(in srgb, var(--color-card) 62%, transparent);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid color-mix(in srgb, var(--color-border) 100%, transparent);
+  box-shadow: var(--shadow-card);
+}

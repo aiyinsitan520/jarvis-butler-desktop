@@ -1,0 +1,9 @@
+import {describe,it,expect,vi} from 'vitest'
+vi.mock('@tauri-apps/api/core',()=>({invoke:vi.fn()}))
+import {parseConversations,reviewDue,type Session} from './archive'
+describe('local conversation import and review',()=>{
+ it('follows ChatGPT active branch, excludes system and deduplicates by text',async()=>{const raw=[{title:'知识',current_node:'b',mapping:{s:{parent:null,message:{author:{role:'system'},content:{parts:['private instructions']}}},a:{parent:'s',message:{author:{role:'user'},content:{parts:['问题']}}},b:{parent:'a',message:{author:{role:'assistant'},content:{parts:['回答']}}},other:{parent:'a',message:{author:{role:'assistant'},content:{parts:['旧分支']}}}}}];const a=await parseConversations(JSON.stringify(raw),'conversations.json');expect(a[0]?.messages.map(m=>m.content)).toEqual(['问题','回答']);expect((await parseConversations(JSON.stringify(raw),'other.json'))[0]?.id).toBe(a[0]?.id)})
+ it('imports Claude and refuses corrupt JSON',async()=>{expect((await parseConversations(JSON.stringify([{name:'Claude',chat_messages:[{sender:'human',text:'你好'},{sender:'assistant',text:'世界'}]}]),'claude.json'))[0]?.messages).toHaveLength(2);await expect(parseConversations('{','bad.json')).rejects.toThrow('JSON')})
+ it('restores exported archives without changing identities',async()=>{const result=await parseConversations(JSON.stringify({sessions:[{id:'session-12345',title:'备份',source:'贾维斯',createdAt:Date.now()-1000,important:true,messages:[{role:'assistant',content:'总结'}]}]}),'backup.json');expect(result[0]?.id).toBe('session-12345');expect(result[0]?.important).toBe(true)})
+ it('review records catch up without repeating the same stage',()=>{const now=Date.now();const s={id:'one',createdAt:now-4*86400000}as Session;const r={enabled:true,hour:9,lastDay:'',completed:{}};expect(reviewDue(s,r,now)).toBe(true);expect(reviewDue(s,{...r,completed:{one:now}},now)).toBe(false);expect(reviewDue(s,{...r,completed:{one:now}},now+4*86400000)).toBe(true)})
+})

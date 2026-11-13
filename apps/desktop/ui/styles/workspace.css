@@ -1,0 +1,13 @@
+/* Jarvis semantic tokens share the desktop theme. */
+:root, :root.dark {
+ --color-background:var(--bg);--color-card:var(--surf);--color-popover:var(--surf);--color-muted:var(--surf-2);--color-secondary:var(--hover);--color-accent:var(--accent-soft);--color-border:var(--line);--color-input:var(--line-2);--color-ring:var(--accent);
+ --color-ink:var(--ink);--color-ink-soft:var(--ink-2);--color-ink-faint:var(--ink-3);--color-ocean:var(--accent);--color-ocean-deep:var(--accent-hover);--color-ocean-soft:var(--accent-soft);--color-mint:var(--tc-teal);--color-destructive:var(--danger);
+ --color-tag-blue:var(--info-soft);--color-tag-blue-text:var(--tc-blue);--color-tag-teal:var(--ok-soft);--color-tag-teal-text:var(--tc-teal);--color-tag-amber:var(--warn-soft);--color-tag-amber-text:var(--warn);--color-tag-purple:var(--accent-soft);--color-tag-purple-text:var(--tc-purple);--color-tag-rose:var(--danger-soft);--color-tag-rose-text:var(--tc-pink);
+ --shadow-card:var(--sh-1);--shadow-float:var(--sh-2);--font-sans:var(--f-ui);
+}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui)}
+.jarvis-settings{max-width:940px;margin:auto;padding:24px;display:grid;gap:18px}.jarvis-settings section{background:var(--surf);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px}.jarvis-settings h2{font-size:17px;margin:0 0 12px}.jarvis-settings label{display:grid;gap:6px;margin:10px 0;font-size:13px}.jarvis-settings input,.jarvis-settings textarea,.jarvis-settings select{border:1px solid var(--line-2);background:var(--surf-2);border-radius:var(--r-md);padding:9px;color:var(--ink);width:100%}.jarvis-settings button{border:1px solid var(--line-2);border-radius:var(--r-md);padding:7px 12px;margin:4px 8px 4px 0;background:var(--surf-2);cursor:pointer}.jarvis-settings button:hover{background:var(--hover)}.jarvis-settings button:disabled{opacity:.5;cursor:wait}.jarvis-settings p{font-size:13px;line-height:1.7;color:var(--ink-2)}.jarvis-settings .error{color:var(--danger)}.jarvis-settings .qr{background:white;padding:16px;display:inline-block;border-radius:12px}.jarvis-task{border-top:1px solid var(--line);padding:12px 0}.jarvis-task code{font-size:11px;overflow-wrap:anywhere}
+
+.ambiance,html.dark .ambiance{background-image:none!important;background-color:var(--bg)}
+
+.jarvis-settings label:has(input[type="checkbox"]){display:flex;align-items:center;gap:8px}.jarvis-settings input[type="checkbox"]{width:auto;flex-shrink:0}

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "paths": { "@shared/*": ["./shared/*"], "@/*": ["./apps/desktop/ui/knowledge/*"] }
+  },
+  "include": ["apps/desktop/ui", "apps/mobile", "shared"],
+  // AI 抽查要读写文件、读环境变量，*.node.test.ts 要读文件，只在 vitest（Node）里跑
+  "exclude": ["apps/desktop/ui/lib/parse.ai.test.ts", "**/*.node.test.ts", "apps/desktop/ui/knowledge/db/seed.ts"]
+}
