@@ -1,0 +1,19 @@
+{
+  "version": "0.4.3",
+  "notes": "# 贾维斯管家0.4.3测试版\r\n\r\n新增独立“软件更新”页面：版本检查、更新记录、下载进度、测试／稳定渠道、自动检查偏好及确认安装。采用本项目自己的签名密钥与GitHub发布地址。安装前确认保存并备份两库，签名／版本不符拒绝安装；保留白猫图标与现有知识管理功能。\r\n\r\n首次从0.4.2或更早版本升级需要手动安装本包，此后支持应用内检查更新。默认自动检查，不自动安装。Mac Apple Silicon DMG用于首次安装，app.tar.gz及sig用于自动更新；未公证，真机升级仍待验收。Windows无商业代码签名，updater签名与系统代码签名不同。\r\n\r\n[完整用法](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/usage.zh-CN.md) · [更新与发布说明](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/updating.md)\r\n\r\nAGPL-3.0-only，基于Dingmi并融合Jarvis Butler。原版权与第三方许可证随包保留；未复制Cockpit Tools代码或签名密钥。真实模型、微信与Mac真机验收边界见说明。\r\n",
+  "pub_date": "2026-11-13T22:22:01+08:00",
+  "platforms": {
+    "windows-x86_64": {
+      "url": "https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.3-preview.1/JarvisButler-0.4.3-Windows-x64-setup.exe",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRclp0eGRmM2lSQXVMVlh0UVdmTU5xQWc4cEJlTG5FcGxIQmNhenEzVUlzT0FZcmw1L040SVBhbDZSRnkwMGx2cDZuYWNZNUNKWkVXRHZMVHlmYkk3VE9iWXAzcVc0YVEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NTgwMzQ4CWZpbGU66LS+57u05pav566h5a62XzAuNC4zX3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjQuMwpqakZTV3laM1pwOGFLWW56SjF6d0R6c2NEYXYyYm9aN1lndEl0b0p2OWlEd0ZLNTdrNUZKS2JIRkZMV29RSXNQOSt6dlhyNE9YWno0V1hnSi9Xc1pEdz09Cg==",
+      "sha256": "903dffdf50711117357494050f8b390b69d3853561395ad075afabfcd8ed138d",
+      "size": 9032442
+    },
+    "darwin-aarch64": {
+      "url": "https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.3-preview.1/JarvisButler-0.4.3-macOS-AppleSilicon.app.tar.gz",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRclp0eGRmM2lSQW5MZjhLNEdQZmNuWS9LTUhRK0x4anFnbjA5dHErWElzNFFQNlZEdzkyaDBFK3RiT04rSFdXS3pUUi9vSFZnV29uK25CRnNsMk5SUUp0cHZ6UFExM3dnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NTgwMTgyCWZpbGU66LS+57u05pav566h5a62LmFwcC50YXIuZ3oJdmVyc2lvbjowLjQuMwpCaEZoNXMrcVB6ejFGK3V6dVY5Z2hNNHFudFlIeXhubFRrd004N1FrdElWNC9kSnJOczB2NlFteUxUL2k4YXZ4bjcxZHVoc3lSWW8wZkpaQlRBcmxBdz09Cg==",
+      "sha256": "555d9641b96351701d516baf98e27a11b0c7de1c64b9ff6910c9298e72ee36c0",
+      "size": 9557320
+    }
+  }
+}
