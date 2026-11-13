@@ -116,7 +116,7 @@ button.tag { border: 0; cursor: pointer; }
 .panel > .banner .btn { flex: none; }
 
 /* ---------- 今天：随手记 ---------- */
-.capt { display: flex; align-items: flex-start; gap: 10px; min-height: 46px; padding: 0 8px 0 14px; border: 1px solid var(--line-2); border-radius: var(--r-md); background: var(--surf-2); cursor: text; transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), background var(--t-fast) var(--ease); }
+.capt { display: flex; align-items: flex-start; gap: 10px; min-height: 46px; padding: 0 8px 0 14px; border: 1px solid var(--line-2); border-radius: var(--r-md); background: var(--surf-2); cursor: text; container-type: inline-size; transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), background var(--t-fast) var(--ease); }
 .capt:focus-within { border-color: var(--accent); background: var(--surf); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
 .capt .ci { display: grid; place-items: center; height: 44px; color: var(--accent); }
 .capt .ci .lucide { width: 17px; height: 17px; }
@@ -125,6 +125,8 @@ button.tag { border: 0; cursor: pointer; }
 .capt .hint { display: flex; align-items: center; gap: 5px; height: 44px; color: var(--ink-3); font-size: calc(11.5px * var(--fs)); white-space: nowrap; }
 .capt .hint kbd:nth-of-type(2) { margin-left: 8px; }
 @media (max-width: 760px) { .capt .hint { display: none; } }
+/* The AI dock can narrow the field while the outer window remains wide. */
+@container (max-width: 540px) { .capt .hint { display: none; } }
 
 /* 上手清单：一条虚线框，做过的变绿划掉；点一项下面出来一两句说明 */
 .onb { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; align-items: center; gap: 8px 14px; padding: 10px 8px 10px 12px; border: 1px dashed color-mix(in srgb, var(--accent) 45%, var(--line-2)); border-radius: var(--r-lg); }

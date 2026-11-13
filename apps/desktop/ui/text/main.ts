@@ -26,7 +26,7 @@ export const T = {
     settings: "设置",
     newRem: "新建提醒",
     capLabel: "随手记",
-    capPh: "随手记一句，写上时间就到点叫你，没有时间就存进笔记本",
+    capPh: "记点什么，或设个提醒…",
     rmTodo: "还没做的",
     rmCycle: "周期",
     rmDone: "做完的",
