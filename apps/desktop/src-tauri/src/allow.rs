@@ -64,7 +64,7 @@ pub fn local_abs(p: &str) -> bool {
 
 /// `p` 是 `dir` 本身或者在它下面（都先规整过）
 pub fn under(p: &str, dir: &Path) -> bool {
-    #[cfg(not(windows))] {return local_abs(p)&&Path::new(&norm(p)).starts_with(Path::new(&norm(&dir.to_string_lossy())));}
+    #[cfg(not(windows))] {let dir=norm(&dir.to_string_lossy());return !dir.is_empty()&&local_abs(p)&&Path::new(&norm(p)).starts_with(Path::new(&dir));}
     #[cfg(windows)] {
     let (p, d) = (norm(p), norm(&dir.display().to_string()));
     !d.is_empty() && (p == d || p.strip_prefix(&d).is_some_and(|rest| rest.starts_with('\\')))

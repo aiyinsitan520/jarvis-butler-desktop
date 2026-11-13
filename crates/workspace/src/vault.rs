@@ -6,6 +6,7 @@ use std::{path::{Path, PathBuf}, collections::{BTreeMap, HashSet}};
 
 pub fn hash(s: &str) -> String { format!("{:x}", Sha256::digest(s.as_bytes())) }
 pub fn atomic(path: &Path, bytes: &[u8]) -> Result<()> {
+    if std::fs::read(path).ok().as_deref()==Some(bytes){return Ok(());}
     let parent = path.parent().ok_or("文件目录无效")?;
     std::fs::create_dir_all(parent).map_err(|_| "无法创建资料目录")?;
     let temp = parent.join(format!(".jarvis-{}.tmp", uuid::Uuid::new_v4()));
@@ -87,9 +88,9 @@ impl WorkspaceStore {
     pub async fn vault_scan(&self,root:&Path)->Result<Value>{
         std::fs::create_dir_all(root).map_err(|_|"无法创建资料文件夹")?;
         let mut state=self.vault_status()?;let mut entries=state["entries"].as_object().cloned().unwrap_or_default();let mut issues=Vec::new();
-        let mut docs=BTreeMap::new();let mut duplicate=HashSet::new();
+        let mut docs=BTreeMap::new();let mut duplicate=HashSet::new();let mut total_bytes=0usize;
         for table in ["notes","todos","inspirations"] {let dir=root.join(table);std::fs::create_dir_all(&dir).map_err(|_|"无法创建分类目录")?;let mut paths=Vec::new();files(root,&dir,&mut paths)?;
-            for path in paths {let relative=path.strip_prefix(root).unwrap().to_string_lossy().replace('\\',"/");let raw=std::fs::read_to_string(&path).map_err(|_|"资料不是UTF-8")?;
+            for path in paths {let relative=path.strip_prefix(root).unwrap().to_string_lossy().replace('\\',"/");let raw=std::fs::read_to_string(&path).map_err(|_|"资料不是UTF-8")?;total_bytes+=raw.len();if total_bytes>64*1024*1024{return Err("Markdown扫描超过64MiB，请分库处理；原文件未覆盖".into());}
                 match parse(&raw){Ok(doc)=>{let id=doc["id"].as_str().unwrap_or("").to_string();if id.is_empty()||id.len()>128||doc["table"]!=table{issues.push(json!({"path":relative,"error":"保留原始id和table；新增资料请在贾维斯创建"}));continue;}
                     if docs.insert(id.clone(),(table.to_string(),relative,raw,doc)).is_some(){duplicate.insert(id);}
                 },Err(e)=>issues.push(json!({"path":relative,"error":e}))}
