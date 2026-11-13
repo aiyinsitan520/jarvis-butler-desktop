@@ -17,3 +17,14 @@ Mac 真机的中文输入、睡眠唤醒、快捷键、安装卸载体验仍待�
 构建与验证：本标签对应fd5a9d3。Windows及Apple Silicon的前端、核心、原生库、共享服务兼容、许可证和源码审核均通过。Windows最终安装包已实际安装、启动、卸载、重装，保留测试数据库；下载后的双平台SHA-256核对通过。Mac真机体验与真实微信／模型仍按上文边界验收。
 
 [对应源码](https://github.com/aiyinsitan520/jarvis-butler-desktop/tree/v0.4.1-preview.1) · [构建记录](https://github.com/aiyinsitan520/jarvis-butler-desktop/actions/runs/43421072269)
+
+
+## 功能截图与上手说明
+
+已补充本项目自制的11张运行截图、功能总览与完整中文指南，涵盖快捷记录、模型拉取／选择、会话原文、每日回顾、目录迁移、备份恢复、同步与微信入口。
+
+- [图文项目首页](https://github.com/aiyinsitan520/jarvis-butler-desktop#readme)
+- [完整中文使用指南](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/usage.zh-CN.md)
+- [截图来源与复现方法](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/screenshots/README.md)
+
+截图使用合成演示资料：1张为Windows原生窗口，10张为实际构建前端与隔离Rust数据桥；模型目录、AI问答和回顾为示例，微信保持未绑定，不代表真实服务已验收。未提供Mac真机截图。

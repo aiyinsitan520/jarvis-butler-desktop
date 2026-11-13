@@ -6,6 +6,8 @@ import {mkdtemp,readFile} from 'node:fs/promises';
 import path from 'node:path';
 import {tmpdir} from 'node:os';
 import {once} from 'node:events';
+import {seed} from './seed-public-demo.mjs';
+const publicDemo=process.env.JARVIS_PUBLIC_DEMO==='1';
 import {createSyncServer} from '../tests/compatibility/server/api.ts';
 const cwd=process.cwd(),root=await mkdtemp(path.join(tmpdir(),'jarvis-fusion-browser-'));
 const driver=spawn(path.join(cwd,`target/debug/workspace-driver${process.platform==='win32'?'.exe':''}`),[path.join(root,'workspace.db')],{stdio:['pipe','pipe','inherit']});
@@ -19,11 +21,12 @@ if(process.env.JARVIS_SYNC_FIXTURE==='1'){
  const snap=await syncStore.snapshot();await syncStore.command({revision:snap.data.revision,hash:snap.hash},{type:'createTodo',data:{title:'另一端的学习计划'}});
 }
 let model=null,aiCalls=0;const catalogueRequests=[];const launches=[],openedWindows=[];let savedNotes=[],fitHeight=0;
+if(publicDemo){await seed(call);model={kind:'ollama',baseUrl:'http://127.0.0.1:11434',model:'qwen3:8b',models:['qwen3:8b','deepseek-r1:8b'],hasKey:false,autoOrganize:false};}
 const launchItems=['Claude Code','微信','截图工具','UU远程','DeskBox','反代8080','Hermes','QQ'].map((name,i)=>({id:`fixture-app-${i}`,name,kind:'app',path:'fixture-only',pys:[...(name==='微信'?[['wei'],['xin']]:name.toLowerCase().split(' ').map(s=>[s]))],icon:'data:image/svg+xml,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" rx="14" fill="${['#e3c5a8','#15ba79','#4da4da','#5c88ea','#4ba7de','#46526b','#626b59','#252525'][i]}"/><text x="32" y="42" text-anchor="middle" font-family="sans-serif" font-size="26" fill="white">${i+1}</text></svg>`),junk:false,missing:false,runs:0}));
 const settings={style:'warm',theme:'light',font_size:'m',mascot:true,motion:'reduce',tags:[],note_cats:[],widget:false,launcher:{pins:launchItems.map(i=>i.id),aliases:[],custom:[],hidden:[],off:[]},hk_flash:'Alt+Space',hk_qnote:'Ctrl+Alt+N',hk_main:'Ctrl+Alt+H',hk_focus:'Ctrl+Alt+F',ai_key:'',ai_base:'',ai_model:'',morning:false,wrap:false,wrap_time:'18:00',widget_hide:[],web_keys:[],sync_ai_key:false,auto_update:false};
 const emptyArchive=()=>({sessions:[],review:{enabled:false,hour:9,lastDay:'',completed:{}}});
 async function invoke(command,args={}){
- if(command==='workspace_local_status')return {root:path.join(root,'library'),vault:await call({action:'getValue',key:'vault-state'}),collectors:await call({action:'getValue',key:'collectors'})??[],learning:await call({action:'getValue',key:'learning-config'})??{auto:false,wechat:false},reports:await call({action:'getValue',key:'learning-reports'})??{}};
+ if(command==='workspace_local_status')return {root:publicDemo?'D:/Jarvis-Demo/library':path.join(root,'library'),vault:await call({action:'getValue',key:'vault-state'}),collectors:await call({action:'getValue',key:'collectors'})??[],learning:await call({action:'getValue',key:'learning-config'})??{auto:false,wechat:false},reports:await call({action:'getValue',key:'learning-reports'})??{}};
  if(command==='workspace_local_scan')return call({action:'vaultScan'});
  if(command==='workspace_learning_config')return call({action:'setValue',key:'learning-config',value:args});
  if(command==='workspace_collector_preview')return {id:'fixture-collector',path:path.join(root,'synthetic-logs'),kind:args.kind,preview:{files:2}};
@@ -39,7 +42,7 @@ async function invoke(command,args={}){
  if(command==='workspace_connect_server'){const result=await call({action:'connectServer',baseUrl:args.baseUrl,token:args.token||(args.baseUrl.replace(/\/+$/,'')===syncBaseUrl?'synthetic-browser-sync-token':''),previewId:args.previewId,resolution:args.resolution});connection={baseUrl:args.baseUrl};return result;}
  if(command==='fixture_sync_info'){const snap=await syncStore.snapshot();return {baseUrl:syncBaseUrl,revision:snap.data.revision,todoCount:snap.data.todos.length};}
  if(command==='workspace_save_model'){model={...args.config,hasKey:args.config.apiKey==='__KEEP__'?!!model?.hasKey:!!args.config.apiKey};delete model.apiKey;return null;}
- if(command==='workspace_models'){catalogueRequests.push({kind:args.config?.kind,baseUrl:args.config?.baseUrl,model:args.config?.model,hasDraftKey:!!args.config?.apiKey,reusesSavedKey:args.config?.apiKey==='__KEEP__'});if(args.config?.baseUrl?.includes('missing-catalogue'))throw Error('模型列表请求失败（HTTP 404）');return ['fixture-local-model','qwen-learning','claude-study','deepseek-review'];}
+ if(command==='workspace_models'){catalogueRequests.push({kind:args.config?.kind,baseUrl:args.config?.baseUrl,model:args.config?.model,hasDraftKey:!!args.config?.apiKey,reusesSavedKey:args.config?.apiKey==='__KEEP__'});if(args.config?.baseUrl?.includes('missing-catalogue'))throw Error('模型列表请求失败（HTTP 404）');return publicDemo?['qwen3:8b','deepseek-r1:8b']:['fixture-local-model','qwen-learning','claude-study','deepseek-review'];}
  if(command==='fixture_catalogue_requests')return catalogueRequests;
  if(command==='workspace_ai_chat'){aiCalls++;await new Promise(r=>setTimeout(r,80));return '学习要点：主动回忆与间隔复习。建议明天回顾今天的概念，并用自己的例子解释。';}
  if(command==='workspace_ai_cancel')return null;
