@@ -8,9 +8,13 @@ use std::time::Duration;
 pub struct ModelConfig { pub kind:String, pub base_url:String, pub model:String, #[serde(default)] pub models:Vec<String>, #[serde(default)] pub api_key:String, #[serde(default)] pub auto_organize:bool }
 impl ModelConfig {
     pub fn validate(&self)->Result<()> {
-        let u=reqwest::Url::parse(&self.base_url).map_err(|_|"模型地址无效")?;
-        if !matches!(self.kind.as_str(),"ollama"|"openai"|"jumbo")||!matches!(u.scheme(),"http"|"https")||!u.username().is_empty()||u.password().is_some()||u.query().is_some()||u.fragment().is_some()||self.model.trim().is_empty(){return Err("模型配置无效".into());}Ok(())
+        self.validate_endpoint()?;if self.model.trim().is_empty(){return Err("请选择或填写默认模型".into());}Ok(())
     }
+    pub fn validate_endpoint(&self)->Result<()> {
+        let u=reqwest::Url::parse(&self.base_url).map_err(|_|"模型地址无效")?;
+        if !matches!(self.kind.as_str(),"ollama"|"openai"|"jumbo")||!matches!(u.scheme(),"http"|"https")||!u.username().is_empty()||u.password().is_some()||u.query().is_some()||u.fragment().is_some(){return Err("模型配置无效".into());}Ok(())
+    }
+    pub fn reuse_key(&mut self,stored:&Self)->Result<()>{if self.kind!=stored.kind||self.base_url.trim().trim_end_matches('/')!=stored.base_url.trim().trim_end_matches('/'){return Err("接口已改变，请填写对应的API Key；旧Key未发送".into());}self.api_key=stored.api_key.clone();Ok(())}
     pub fn public(&self)->Value {json!({"kind":self.kind,"baseUrl":self.base_url,"model":self.model,"models":self.models,"hasKey":!self.api_key.is_empty(),"autoOrganize":self.auto_organize})}
     pub fn endpoint(&self,path:&str)->String {
         let base=self.base_url.trim().trim_end_matches('/');
@@ -46,11 +50,22 @@ pub async fn organize(config:&ModelConfig,raw:&str,notebooks:&Value)->Result<Org
     let out=chat(config,json!([{"role":"system","content":prompt},{"role":"user","content":json!({"notebooks":catalogue,"raw":raw}).to_string()}]),true).await?;
     parse_organized(&out,notebooks)
 }
+pub fn parse_models(v:&Value,kind:&str)->Result<Vec<String>>{
+    let xs=if kind=="ollama"{v["models"].as_array()}else{v["data"].as_array().or_else(||v["models"].as_array()).or_else(||v.as_array())}.ok_or("模型列表格式无效，请检查是否为兼容接口")?;
+    let mut ids=std::collections::BTreeSet::new();for m in xs {if let Some(id)=m["id"].as_str().or_else(||m["name"].as_str()).or_else(||m["model"].as_str()).or_else(||m.as_str()).map(str::trim).filter(|s|!s.is_empty()&&s.len()<=512&&!s.chars().any(char::is_control)){ids.insert(id.to_string());}if ids.len()>=1000{break;}}Ok(ids.into_iter().collect())
+}
 pub async fn list_models(config:&ModelConfig)->Result<Vec<String>>{
-    config.validate()?;let client=reqwest::Client::builder().timeout(Duration::from_secs(15)).redirect(reqwest::redirect::Policy::none()).build().map_err(|_|"无法连接模型服务")?;
-    let r=client.get(config.endpoint(if config.kind=="ollama"{"tags"}else{"models"})).bearer_auth(&config.api_key).send().await.map_err(|_|"模型列表连接失败")?;
-    if !r.status().is_success(){return Err(format!("模型列表请求失败（HTTP {}）",r.status().as_u16()));}
-    let v:Value=r.json().await.map_err(|_|"模型列表无效")?;let xs=if config.kind=="ollama"{v["models"].as_array()}else{v["data"].as_array()}.ok_or("模型列表无效")?;
-    Ok(xs.iter().filter_map(|m|if config.kind=="ollama"{m["name"].as_str()}else{m["id"].as_str()}).take(200).map(str::to_owned).collect())
+    config.validate_endpoint()?;let client=reqwest::Client::builder().timeout(Duration::from_secs(15)).redirect(reqwest::redirect::Policy::none()).build().map_err(|_|"无法连接模型服务")?;
+    let mut request=client.get(config.endpoint(if config.kind=="ollama"{"tags"}else{"models"}));if !config.api_key.is_empty(){request=request.bearer_auth(&config.api_key);}
+    let mut r=request.send().await.map_err(|_|"模型列表连接失败，请检查接口地址和服务是否运行")?;
+    if !r.status().is_success(){return Err(match r.status().as_u16(){401|403=>"模型列表认证失败，请检查此接口的 API Key 或权限".into(),404=>"没有找到模型列表接口，请检查 /v1 地址；也可手动填写模型 ID".into(),code=>format!("模型列表请求失败（HTTP {code}）")});}
+    let mut bytes=Vec::new();while let Some(chunk)=r.chunk().await.map_err(|_|"模型列表响应中断")?{if bytes.len()+chunk.len()>4*1024*1024{return Err("模型列表超过4MiB".into());}bytes.extend(chunk);}
+    let v:Value=serde_json::from_slice(&bytes).map_err(|_|"模型列表未返回有效JSON")?;parse_models(&v,&config.kind)
+}
+#[cfg(test)]mod catalogue_tests{use super::*;
+ fn config()->ModelConfig{ModelConfig{kind:"openai".into(),base_url:"http://127.0.0.1:1/v1".into(),model:"".into(),models:vec![],api_key:"".into(),auto_organize:false}}
+ #[test]fn listing_does_not_require_a_selected_model(){let c=config();assert!(c.validate_endpoint().is_ok());assert!(c.validate().is_err());assert_eq!(parse_models(&json!({"data":[{"id":" z "},{"id":"a"},{"id":"a"},{"id":""}]}),"openai").unwrap(),vec!["a","z"]);assert_eq!(parse_models(&json!({"models":[{"name":"qwen:latest"}]}),"ollama").unwrap(),vec!["qwen:latest"]);}
+ #[test]fn stored_key_never_moves_to_a_different_endpoint(){let mut saved=config();saved.api_key="synthetic-only".into();let mut draft=saved.clone();draft.base_url="https://different.example/v1".into();draft.api_key="__KEEP__".into();assert!(draft.reuse_key(&saved).is_err());assert_eq!(draft.api_key,"__KEEP__");draft.base_url=saved.base_url.clone()+"/";draft.reuse_key(&saved).unwrap();assert_eq!(draft.api_key,"synthetic-only");}
+ #[tokio::test]async fn fetch_uses_current_unsaved_endpoint_without_inference(){use tokio::io::{AsyncReadExt,AsyncWriteExt};let server=tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();let port=server.local_addr().unwrap().port();let worker=tokio::spawn(async move{let(mut sock,_)=server.accept().await.unwrap();let mut buf=[0;4096];let n=sock.read(&mut buf).await.unwrap();let request=String::from_utf8_lossy(&buf[..n]);assert!(request.starts_with("GET /v1/models "));assert!(request.to_lowercase().contains("authorization: bearer draft-key"));let body=r#"{"data":[{"id":"chosen-model"}]}"#;sock.write_all(format!("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",body.len()).as_bytes()).await.unwrap();});let mut c=config();c.base_url=format!("http://127.0.0.1:{port}/v1");c.api_key="draft-key".into();assert_eq!(list_models(&c).await.unwrap(),vec!["chosen-model"]);worker.await.unwrap();}
 }
 #[cfg(test)] mod tests{use super::*;#[test]fn endpoint_does_not_double_v1(){let c=ModelConfig{kind:"openai".into(),base_url:"http://localhost:1234/v1".into(),model:"test".into(),models:vec![],api_key:"".into(),auto_organize:false};assert_eq!(c.endpoint("chat/completions"),"http://localhost:1234/v1/chat/completions");}#[test]fn invalid_classification_falls_back(){let s=r#"{"title":"t","body":"b","summary":"s","tags":[],"notebookId":"invented","reminderCandidates":[]}"#;assert_eq!(parse_organized(s,&json!([])).unwrap().notebook_id,"");assert!(parse_organized("not json",&json!([])).is_err());}}

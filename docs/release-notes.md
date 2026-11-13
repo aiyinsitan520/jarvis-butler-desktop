@@ -1,7 +1,8 @@
-# 贾维斯管家 0.4.0 测试版
+# 贾维斯管家 0.4.1 测试版
 
 基于 Dingmi 1.0.8 的 AGPL-3.0-only 衍生版本，融合 Jarvis Butler 的 MIT 知识管理代码。原作者未为本版本背书。源码、构建说明和第三方声明与版本标签一起提供。
 
+- 模型选择改为当前配置一键拉取、搜索、点击设为默认和勾选侧栏切换，兼容 OpenAI／反代／Ollama。无需先保存或填写默认模型；新接口不会收到旧接口的 Key。
 - Windows x64：下载 EXE 安装包。
 - Mac Apple Silicon：下载 DMG，拖入 Applications。Intel Mac 不在本次支持范围。
 - 新增本地资料页、资料目录迁移、Markdown 双向编辑和冲突处理。

@@ -67,7 +67,9 @@ jobs:
       - name: Checksums
         run: |
           mkdir -p release-assets
-          find packages -type f \( -name '*.exe' -o -name '*.dmg' \) -exec cp {} release-assets/ \;
+          version=$(jq -r '.version' package.json)
+          find packages -type f -name '*.exe' -exec cp {} "release-assets/JarvisButler-${version}-Windows-x64-setup.exe" \;
+          find packages -type f -name '*.dmg' -exec cp {} "release-assets/JarvisButler-${version}-macOS-AppleSilicon.dmg" \;
           (cd release-assets && sha256sum *) > SHA256SUMS.txt
       - name: Publish testing release
         env:

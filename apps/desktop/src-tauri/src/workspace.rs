@@ -127,14 +127,19 @@ fn backup_before_server(app:&AppHandle)->Res<()>{
     let r=runtime(&app);let m=model(&app)?;let bound=secret_read("wechat-account")?.is_some();let paired=secret_read("wechat-paired")?.is_some();
     Ok(json!({"connection":r.store.get_value("connection-public")?,"sync":{"candidate":r.store.get_value("server-candidate-public")?,"transfer":r.store.server_transfer_status()?,"lastSuccess":r.store.get_value("sync-last-success")?},"model":m.map(|m|m.public()),"memoryRoot":r.store.get_value("memory-root")?,"wechat":{"bound":bound,"paired":paired,"enabled":r.store.get_value("wechat-enabled")?.unwrap_or(json!(false)),"state":r.wechat_status.lock().unwrap().clone()}}))
 }
+fn model_draft(app:&AppHandle,config:Value)->Res<ModelConfig>{
+ let mut c:ModelConfig=serde_json::from_value(config).map_err(|_|"模型配置无效")?;c.validate_endpoint()?;
+ if c.api_key=="__KEEP__"{let old=model(app)?.ok_or("请填写此接口的API Key")?;c.reuse_key(&old)?;}
+ Ok(c)
+}
 #[tauri::command]pub fn workspace_save_model(app:AppHandle,config:Value)->Res<()>{
-    let mut c:ModelConfig=serde_json::from_value(config).map_err(|_|"模型配置无效")?;c.validate()?;
-    if c.api_key=="__KEEP__"{c.api_key=secret_read("model-key")?.unwrap_or_default();}
+    let mut c=model_draft(&app,config)?;c.model=c.model.trim().into();c.validate()?;if c.models.len()>1000||c.model.len()>512{return Err("模型清单最多1000项，模型ID最长512字节".into());}
+    c.models.retain(|id|!id.trim().is_empty()&&id.len()<=512);c.models.sort();c.models.dedup();if !c.models.contains(&c.model){c.models.insert(0,c.model.clone());}
     secret_set("model-key",&c.api_key)?;c.api_key.clear();let mut native=c.clone();native.models.clear();secret_set("model-config",&serde_json::to_string(&native).unwrap())?;runtime(&app).store.set_value("model-public",&serde_json::to_value(&c).unwrap())?;
     let st=app.state::<AppState>();let mut s=st.settings.lock().unwrap();s.ai_key="__MANAGED__".into();s.ai_base=c.base_url;s.ai_model=c.model;s.sync_ai_key=false;crate::settings::save_local(&st.db.lock().unwrap(),&s).map_err(|_|"模型外观状态保存失败")?;
     let _=app.emit("settings-changed",s.clone());let _=app.emit("workspace-changed",());Ok(())
 }
-#[tauri::command]pub async fn workspace_models(app:AppHandle)->Res<Vec<String>>{ai::list_models(&model(&app)?.ok_or("先保存模型配置")?).await}
+#[tauri::command]pub async fn workspace_models(app:AppHandle,config:Option<Value>)->Res<Vec<String>>{let c=if let Some(v)=config{model_draft(&app,v)?}else{model(&app)?.ok_or("请先填写接口地址")?};ai::list_models(&c).await}
 #[tauri::command]pub async fn workspace_ai_chat(app:AppHandle,messages:Value,selected_model:Option<String>,request_id:String)->Res<String>{
     if request_id.len()>128||request_id.len()<16{return Err("对话请求标识无效".into());}
     let (sender,mut cancel)=tokio::sync::oneshot::channel();

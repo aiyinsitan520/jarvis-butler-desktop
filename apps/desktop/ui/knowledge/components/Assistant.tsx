@@ -55,8 +55,8 @@ export function AssistantPanel() {
   const [menu, setMenu] = useState(false)
   const [scope, setScope] = useState('all')
   const [attachment, setAttachment] = useState<{name: string; text: string} | null>(null)
-  // 反代模型清单（已勾选的 models）；仅 kind==='jumbo' 且多选时显示切换控件。
-  const modelOptions = config?.kind === 'jumbo' ? [...new Set([config.model, ...(config.models ?? [])])].filter(Boolean) : []
+  // 所有接口类型均可从已勾选模型中切换。
+  const modelOptions = config ? [...new Set([config.model, ...(config.models ?? [])])].filter(Boolean) : []
   const [model, setModel] = useState(() => config?.model ?? '')
   useEffect(() => {setModel(config?.model ?? '')}, [config?.model])
   const activeModel = modelOptions.includes(model) ? model : (config?.model ?? '')
