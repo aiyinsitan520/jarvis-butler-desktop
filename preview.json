@@ -1,19 +1,19 @@
 {
-  "version": "0.4.3",
-  "notes": "# 贾维斯管家0.4.3测试版\r\n\r\n新增独立“软件更新”页面：版本检查、更新记录、下载进度、测试／稳定渠道、自动检查偏好及确认安装。采用本项目自己的签名密钥与GitHub发布地址。安装前确认保存并备份两库，签名／版本不符拒绝安装；保留白猫图标与现有知识管理功能。\r\n\r\n首次从0.4.2或更早版本升级需要手动安装本包，此后支持应用内检查更新。默认自动检查，不自动安装。Mac Apple Silicon DMG用于首次安装，app.tar.gz及sig用于自动更新；未公证，真机升级仍待验收。Windows无商业代码签名，updater签名与系统代码签名不同。\r\n\r\n[完整用法](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/usage.zh-CN.md) · [更新与发布说明](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/updating.md)\r\n\r\nAGPL-3.0-only，基于Dingmi并融合Jarvis Butler。原版权与第三方许可证随包保留；未复制Cockpit Tools代码或签名密钥。真实模型、微信与Mac真机验收边界见说明。\r\n",
-  "pub_date": "2026-11-13T22:22:01+08:00",
+  "version": "0.4.5",
+  "notes": "# 贾维喵管家0.4.5测试版\r\n\r\n产品正式改名“贾维喵管家”。保留你确认的白猫图标，统一主窗口、AI助手、托盘、安装器与关于页名称。沿用原应用标识和资料目录，既有笔记、凭据与更新通道继续兼容。\r\n\r\n修复随手记提示被截断：改为“记点什么，或设个提醒…”，输入区较窄时隐藏右侧快捷键提示，多行输入继续自动增高。\r\n\r\n独立软件更新页提供检查、更新记录、进度、测试／稳定渠道与自动检查偏好。安装前确认保存、备份两库，并验证本项目签名与版本；0.4.3起支持应用内更新，0.4.2及以前首次需手动安装。\r\n\r\nWindows x64安装包；Mac Apple Silicon DMG与签名app.tar.gz。Mac仍未公证，真机升级待验收。真实模型和微信需本人配置。AGPL-3.0-only，保留Dingmi、Jarvis MIT及第三方许可，未复制Cockpit Tools代码或密钥。\r\n\r\n[新版实机截图与功能](https://github.com/aiyinsitan520/jarvis-butler-desktop#readme) · [用法](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/usage.zh-CN.md) · [更新说明](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/updating.md)\r\n",
+  "pub_date": "2026-11-13T22:45:52+08:00",
   "platforms": {
     "windows-x86_64": {
-      "url": "https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.3-preview.1/JarvisButler-0.4.3-Windows-x64-setup.exe",
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRclp0eGRmM2lSQXVMVlh0UVdmTU5xQWc4cEJlTG5FcGxIQmNhenEzVUlzT0FZcmw1L040SVBhbDZSRnkwMGx2cDZuYWNZNUNKWkVXRHZMVHlmYkk3VE9iWXAzcVc0YVEwPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NTgwMzQ4CWZpbGU66LS+57u05pav566h5a62XzAuNC4zX3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjQuMwpqakZTV3laM1pwOGFLWW56SjF6d0R6c2NEYXYyYm9aN1lndEl0b0p2OWlEd0ZLNTdrNUZKS2JIRkZMV29RSXNQOSt6dlhyNE9YWno0V1hnSi9Xc1pEdz09Cg==",
-      "sha256": "903dffdf50711117357494050f8b390b69d3853561395ad075afabfcd8ed138d",
-      "size": 9032442
+      "url": "https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.5-preview.2/JarvisButler-0.4.5-Windows-x64-setup.exe",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRclp0eGRmM2lSQXBUUXAxQzB2UHEzc2tpWDdHcU5lT1lRYVltOW5WU0QrTUhNektJMmFzdEJMNzA2eHd6QWdOTVd2UTVISG4zTUw1clVtN0JTekgvWEZieWlRbUNBQmdnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NTgxNzY2CWZpbGU66LS+57u05Za1566h5a62XzAuNC41X3g2NC1zZXR1cC5leGUJdmVyc2lvbjowLjQuNQpobDE4S2RQNCtveWNLdTdGb3VDU2VxRnpGa0puQmhYbzc1U3pFd0pJbGZIQ3F3d0hpbUN2aUpkSlZNU2toQzhTYjVub3N1bEVvSVhKeFBhSjhTTEZEUT09Cg==",
+      "sha256": "72c0bbf37dd4c387934f1e911476bf78eb7b63654fbb4d6450751e7574636266",
+      "size": 9032134
     },
     "darwin-aarch64": {
-      "url": "https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.3-preview.1/JarvisButler-0.4.3-macOS-AppleSilicon.app.tar.gz",
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRclp0eGRmM2lSQW5MZjhLNEdQZmNuWS9LTUhRK0x4anFnbjA5dHErWElzNFFQNlZEdzkyaDBFK3RiT04rSFdXS3pUUi9vSFZnV29uK25CRnNsMk5SUUp0cHZ6UFExM3dnPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NTgwMTgyCWZpbGU66LS+57u05pav566h5a62LmFwcC50YXIuZ3oJdmVyc2lvbjowLjQuMwpCaEZoNXMrcVB6ejFGK3V6dVY5Z2hNNHFudFlIeXhubFRrd004N1FrdElWNC9kSnJOczB2NlFteUxUL2k4YXZ4bjcxZHVoc3lSWW8wZkpaQlRBcmxBdz09Cg==",
-      "sha256": "555d9641b96351701d516baf98e27a11b0c7de1c64b9ff6910c9298e72ee36c0",
-      "size": 9557320
+      "url": "https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.5-preview.2/JarvisButler-0.4.5-macOS-AppleSilicon.app.tar.gz",
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRclp0eGRmM2lSQXFkM0pSU2JhV00yN3F5am9TOGJLTWE1RFdEbGE2WHhaaVV6QXcvNUJMUHFKOUQ1d0tMRVJEcDZyWnlWMDcyYm9yNXAyZ05lbW92VFBxMmZZVFpyWVE4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzk0NTgxNjIyCWZpbGU66LS+57u05Za1566h5a62LmFwcC50YXIuZ3oJdmVyc2lvbjowLjQuNQp0L3ZqcFJpS3l4VUMzd2pReEU4RU9UQ2k3NWs1blV0Mjd3MmhuWlVKZ0ZmQkkzZ3dzN0llY0JJT3pTQUFEM3MwOTNoTWdwK3FNSWpndWZkTWFRa2RBZz09Cg==",
+      "sha256": "fcc8c03d77eedfb7b40fa7c789aa4de7acf55c60441e7567bd6791657ac0f5b2",
+      "size": 9557447
     }
   }
 }
