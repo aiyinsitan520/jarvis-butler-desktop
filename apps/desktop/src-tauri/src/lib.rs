@@ -1712,6 +1712,7 @@ pub fn run() {
     }
     win::init();
     let mut builder = tauri::Builder::default();
+    #[cfg(target_os="macos")] {builder=builder.plugin(tauri_plugin_notification::init());}
     if dev_data_dir().is_none() {
         builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
             open_home(app);
@@ -1813,6 +1814,7 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             workspace::workspace_view,
             portable::workspace_local_status,
+            portable::workspace_notification_test,
             portable::workspace_local_open,
             portable::workspace_local_scan,
             portable::workspace_local_resolve,

@@ -93,7 +93,7 @@ fn key() -> Option<DataKey> {
 fn same_dir(a: &Path, b: &Path) -> bool {
     let norm = |p: &Path| {
         let p = std::fs::canonicalize(p).unwrap_or_else(|_| p.to_path_buf());
-        p.to_string_lossy().trim_end_matches(['\\', '/']).to_lowercase()
+        let text=p.to_string_lossy();if cfg!(windows){text.trim_end_matches(['\\','/']).to_lowercase()}else{text.trim_end_matches('/').to_owned()}
     };
     norm(a) == norm(b)
 }
@@ -499,8 +499,8 @@ mod tests {
         let b = base("same");
         let dir = b.join(folder::DIR_NAME);
         std::fs::create_dir_all(&dir).unwrap();
-        let upper = PathBuf::from(dir.display().to_string().to_uppercase() + "\\");
-        assert!(same_dir(&dir, &upper));
+        let alias = if cfg!(windows){PathBuf::from(dir.display().to_string().to_uppercase() + "\\")}else{dir.join(".")};
+        assert!(same_dir(&dir, &alias));
         assert!(!same_dir(&dir, &b.join("别的").join(folder::DIR_NAME)));
         let _ = std::fs::remove_dir_all(&b);
     }

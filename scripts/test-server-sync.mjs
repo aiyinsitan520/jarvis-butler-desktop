@@ -28,7 +28,7 @@ const baseUrl=`http://127.0.0.1:${proxy.address().port}`,connection={baseUrl,tok
 const expected=s=>({revision:s.data.revision,hash:s.hash});
 const children=[];
 function driver(name){
- const c=spawn(path.resolve('target/debug/workspace-driver.exe'),[path.join(root,`${name}.db`)],{stdio:['pipe','pipe','pipe'],windowsHide:true});children.push(c);let jobs=[];let err='';c.stderr.on('data',s=>err+=s);createInterface({input:c.stdout}).on('line',line=>{const job=jobs.shift(),r=JSON.parse(line);if(r.error)job.reject(Error(r.error));else job.resolve(r.value)});c.on('exit',code=>{for(const j of jobs)j.reject(Error(`driver exited ${code}: ${err}`));jobs=[];});
+ const c=spawn(path.resolve(`target/debug/workspace-driver${process.platform==='win32'?'.exe':''}`),[path.join(root,`${name}.db`)],{stdio:['pipe','pipe','pipe'],windowsHide:true});children.push(c);let jobs=[];let err='';c.stderr.on('data',s=>err+=s);createInterface({input:c.stdout}).on('line',line=>{const job=jobs.shift(),r=JSON.parse(line);if(r.error)job.reject(Error(r.error));else job.resolve(r.value)});c.on('exit',code=>{for(const j of jobs)j.reject(Error(`driver exited ${code}: ${err}`));jobs=[];});
  return {call:v=>new Promise((resolve,reject)=>{jobs.push({resolve,reject});c.stdin.write(JSON.stringify(v)+'\n')}),close:async()=>{c.stdin.end();await once(c,'exit')}};
 }
 let passed=0;const ok=name=>{passed++;console.log('PASS '+name)};

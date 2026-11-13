@@ -18,7 +18,7 @@
 
 本版纸页轨道图标与助手为原创；保留的上游品牌说明见 TRADEMARK.md，本版不分发其受限素材。第三方许可全文见 licenses/THIRD_PARTY_NOTICES.txt。
 
-## Rust 依赖（407 个）
+## Rust 依赖（410 个）
 
 桌面端统计 Windows x64 与 macOS Apple Silicon；服务器统计 Linux 与 Windows。知识库为 jarvis-workspace。
 
@@ -195,6 +195,7 @@
 | [lock_api](https://github.com/Amanieu/parking_lot) | 0.4.14 | MIT OR Apache-2.0 | 桌面端 |
 | [log](https://github.com/rust-lang/log) | 0.4.34 | MIT OR Apache-2.0 | 桌面端、知识库 |
 | [lru-slab](https://github.com/Ralith/lru-slab) | 0.1.3 | MIT OR Apache-2.0 OR Zlib | 桌面端、知识库 |
+| [mac-notification-sys](https://github.com/h4llow3En/mac-notification-sys) | 0.6.15 | MIT/Apache-2.0 | 桌面端 |
 | [markup5ever](https://github.com/servo/html5ever) | 0.39.0 | MIT OR Apache-2.0 | 桌面端 |
 | [memchr](https://github.com/BurntSushi/memchr) | 2.8.3 | Unlicense OR MIT | 桌面端、服务器、同步库、知识库 |
 | [mime](https://github.com/hyperium/mime) | 0.3.17 | MIT OR Apache-2.0 | 桌面端 |
@@ -208,6 +209,7 @@
 | [new_debug_unreachable](https://github.com/mbrubeck/rust-debug-unreachable) | 1.0.6 | MIT | 桌面端 |
 | [nix](https://github.com/nix-rust/nix) | 0.31.3 | MIT | 桌面端 |
 | [nom](https://github.com/Geal/nom) | 7.1.3 | MIT | 服务器 |
+| [notify-rust](https://github.com/hoodie/notify-rust) | 4.19.0 | MIT OR Apache-2.0 | 桌面端 |
 | [num-bigint](https://github.com/rust-num/num-bigint) | 0.4.8 | MIT OR Apache-2.0 | 服务器 |
 | [num-conv](https://github.com/jhpratt/num-conv) | 0.2.2 | MIT OR Apache-2.0 | 桌面端、服务器 |
 | [num-integer](https://github.com/rust-num/num-integer) | 0.1.47 | MIT OR Apache-2.0 | 服务器 |
@@ -334,6 +336,7 @@
 | [tauri-plugin-dialog](https://github.com/tauri-apps/plugins-workspace) | 2.8.4 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-plugin-fs](https://github.com/tauri-apps/plugins-workspace) | 2.7.1 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-plugin-global-shortcut](https://github.com/tauri-apps/plugins-workspace) | 2.4.1 | Apache-2.0 OR MIT | 桌面端 |
+| [tauri-plugin-notification](https://github.com/tauri-apps/plugins-workspace) | 2.8.1 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-plugin-single-instance](https://github.com/tauri-apps/plugins-workspace) | 2.5.5 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-runtime](https://github.com/tauri-apps/tauri) | 2.12.2 | Apache-2.0 OR MIT | 桌面端 |
 | [tauri-runtime-wry](https://github.com/tauri-apps/tauri) | 2.12.3 | Apache-2.0 OR MIT | 桌面端 |

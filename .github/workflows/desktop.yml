@@ -37,6 +37,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: cargo test -p jarvis-workspace --locked -- --test-threads=1
+      - run: cargo build -p jarvis-workspace --bin workspace-driver --locked
+      - run: node scripts/test-workspace.mjs
+      - run: node scripts/test-server-sync.mjs
       - run: cargo test -p jarvis-desktop --lib --locked -- --test-threads=1
       - run: node scripts/licenses.mjs --check
       - run: node scripts/audit-release.mjs

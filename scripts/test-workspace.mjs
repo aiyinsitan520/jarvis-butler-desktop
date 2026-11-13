@@ -28,7 +28,7 @@ const modelServer=createServer(async(req,res)=>{let raw='';for await(const c of 
 const model={kind:'openai',baseUrl:`http://127.0.0.1:${modelServer.address().port}`,model:'fake-model',apiKey:'',models:[],autoOrganize:true};
 const children=[];
 function driver(name){
- const child=spawn(path.resolve('target/debug/workspace-driver.exe'),[path.join(root,`${name}.db`)],{stdio:['pipe','pipe','pipe'],windowsHide:true});children.push(child);let pending=[];let stderr='';child.stderr.on('data',c=>stderr+=c);const lines=createInterface({input:child.stdout});lines.on('line',s=>{const next=pending.shift();if(next)next.resolve(JSON.parse(s))});child.on('exit',code=>{for(const p of pending)p.reject(new Error(`driver exited ${code}: ${stderr.slice(0,500)}`));pending=[]});
+ const child=spawn(path.resolve(`target/debug/workspace-driver${process.platform==='win32'?'.exe':''}`),[path.join(root,`${name}.db`)],{stdio:['pipe','pipe','pipe'],windowsHide:true});children.push(child);let pending=[];let stderr='';child.stderr.on('data',c=>stderr+=c);const lines=createInterface({input:child.stdout});lines.on('line',s=>{const next=pending.shift();if(next)next.resolve(JSON.parse(s))});child.on('exit',code=>{for(const p of pending)p.reject(new Error(`driver exited ${code}: ${stderr.slice(0,500)}`));pending=[]});
  return {async call(v){const out=await new Promise((resolve,reject)=>{pending.push({resolve,reject});child.stdin.write(JSON.stringify(v)+'\n')});if(out.error)throw new Error(out.error);return out.value},async close(){child.stdin.end();await once(child,'exit')}};
 }
 let passed=0;const ok=name=>{passed++;console.log(`PASS ${name}`)};

@@ -8,7 +8,7 @@ import {tmpdir} from 'node:os';
 import {once} from 'node:events';
 import {createSyncServer} from '../tests/compatibility/server/api.ts';
 const cwd=process.cwd(),root=await mkdtemp(path.join(tmpdir(),'jarvis-fusion-browser-'));
-const driver=spawn(path.join(cwd,'target/debug/workspace-driver.exe'),[path.join(root,'workspace.db')],{stdio:['pipe','pipe','inherit']});
+const driver=spawn(path.join(cwd,`target/debug/workspace-driver${process.platform==='win32'?'.exe':''}`),[path.join(root,'workspace.db')],{stdio:['pipe','pipe','inherit']});
 const waiting=[];createInterface({input:driver.stdout}).on('line',line=>{const job=waiting.shift();const reply=JSON.parse(line);if(reply.error)job.reject(Error(reply.error));else job.resolve(reply.value)});
 const call=action=>new Promise((resolve,reject)=>{waiting.push({resolve,reject});driver.stdin.write(JSON.stringify(action)+'\n')});
 let syncServer,syncStore,syncBaseUrl='',connection=null;

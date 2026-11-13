@@ -135,6 +135,7 @@
     "allow-workspace-local-status",
     "allow-workspace-memory-pick",
     "allow-workspace-models",
+    "allow-workspace-notification-test",
     "allow-workspace-open-media",
     "allow-workspace-preview-server",
     "allow-workspace-process-capture",

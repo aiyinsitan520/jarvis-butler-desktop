@@ -6,8 +6,9 @@
 //! （打开网络路径时 Windows 会自动把登录凭据发过去）。
 
 use std::collections::{HashMap, HashSet};
-use std::path::{Component, Path, PathBuf, Prefix};
+use std::path::{Component, Path, PathBuf};
 use std::sync::{LazyLock, Mutex};
+#[cfg(windows)] use std::path::Prefix;
 
 /// 这次运行里用户选过、拖进来过的路径（规整过的写法）
 static GRANTED: LazyLock<Mutex<HashSet<String>>> = LazyLock::new(|| Mutex::new(HashSet::new()));
@@ -16,11 +17,14 @@ static GRANTED_ARGS: LazyLock<Mutex<HashMap<String, String>>> = LazyLock::new(||
 
 /// 规整成好比较的写法：/ 换成 \，去掉末尾的 \，Windows 上不分大小写
 pub fn norm(p: &str) -> String {
+    #[cfg(not(windows))] {let s=p.trim();return if s=="/"{"/".into()}else{s.trim_end_matches('/').into()};}
+    #[cfg(windows)] {
     let s = p.trim().replace('/', "\\");
     let s = s.trim_end_matches('\\');
     // 「C:\」去掉末尾的 \ 以后是「C:」，补回来
     let s = if s.len() == 2 && s.ends_with(':') { format!("{s}\\") } else { s.to_string() };
-    if cfg!(windows) { s.to_lowercase() } else { s }
+    s.to_lowercase()
+    }
 }
 
 /// 用户自己选的、拖进来的：记下来，之后这个路径（和它下面一层的文件）能打开
@@ -47,18 +51,24 @@ pub fn granted_args(target: &str, args: &str) -> bool {
 
 /// 本机盘符开头的绝对路径，没有 ..（不是网络路径、设备路径）
 pub fn local_abs(p: &str) -> bool {
+    #[cfg(not(windows))] {let p=p.trim();return p.starts_with('/')&&!p.starts_with("//")&&!p.contains(['\\','\0'])&&!Path::new(p).components().any(|c|matches!(c,Component::ParentDir));}
+    #[cfg(windows)] {
     let path = Path::new(p.trim());
     let mut comps = path.components();
     let disk = matches!(comps.next(), Some(Component::Prefix(x)) if matches!(x.kind(), Prefix::Disk(_)));
     disk && matches!(comps.next(), Some(Component::RootDir)) && !comps.any(|c| matches!(c, Component::ParentDir))
         // 备用数据流（a.txt:stream）、设备名不认；盘符后面的冒号已经在 Prefix 里了
         && !p.trim().get(2..).unwrap_or("").contains(':')
+    }
 }
 
 /// `p` 是 `dir` 本身或者在它下面（都先规整过）
 pub fn under(p: &str, dir: &Path) -> bool {
+    #[cfg(not(windows))] {return local_abs(p)&&Path::new(&norm(p)).starts_with(Path::new(&norm(&dir.to_string_lossy())));}
+    #[cfg(windows)] {
     let (p, d) = (norm(p), norm(&dir.display().to_string()));
     !d.is_empty() && (p == d || p.strip_prefix(&d).is_some_and(|rest| rest.starts_with('\\')))
+    }
 }
 
 /// `p` 正好在 `dir` 下面一层（文件夹里的文件）
@@ -76,7 +86,7 @@ pub fn granted_or_child(p: &str) -> bool {
     local_abs(p) && granted(&parent)
 }
 
-#[cfg(test)]
+#[cfg(all(test,windows))]
 mod tests {
     use super::*;
 
@@ -125,4 +135,8 @@ mod tests {
         assert!(granted_args(r"E:\grant-test\APP.exe", "--profile 2"));
         assert!(!granted_args(r"E:\grant-test\app.exe", "/c evil"));
     }
+}
+
+#[cfg(all(test,not(windows)))]mod unix_tests{use super::*;
+ #[test]fn local_paths_and_child_grants(){assert!(local_abs("/Users/example/notes/a.md"));for p in ["relative/a","//server/share","/tmp/../secret",r"C:\secret","https://example.com"]{assert!(!local_abs(p),"{p}");}let base="/tmp/jarvis-grant-case";grant(base);assert!(granted_or_child("/tmp/jarvis-grant-case/a.md"));assert!(!granted_or_child("/tmp/jarvis-grant-case/nested/a.md"));assert!(!granted("/tmp/JARVIS-GRANT-CASE"));assert!(under("/tmp/jarvis-grant-case/a.md",Path::new(base)));assert!(!under("/tmp/jarvis-grant-case-evil/a.md",Path::new(base)));assert!(child_of("/tmp/jarvis-grant-case/a.md",base));assert_eq!(norm("/"),"/");}
 }

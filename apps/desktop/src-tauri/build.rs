@@ -3,6 +3,7 @@
 /// 加了新命令要写进来，再跑一遍 scripts/caps.mjs（apps/desktop/ui/lib/caps.test.ts 会核对）
 const COMMANDS: &[&str] = &[
     "workspace_local_status",
+    "workspace_notification_test",
     "workspace_local_open",
     "workspace_local_scan",
     "workspace_local_resolve",
