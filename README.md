@@ -26,8 +26,8 @@ GitHub 仓库：[`aiyinsitan520/jiavimiao-butler`](https://github.com/aiyinsitan
 
 | 平台 | 安装包 | 状态 |
 | --- | --- | --- |
-| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jiavimiao-butler/releases/download/v0.4.7-preview.1/JarvisButler-0.4.7-Windows-x64-setup.exe) | 签名更新包；本版安装升级待真机验收，0.4.3 → 0.4.6 为历史验证 |
-| Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jiavimiao-butler/releases/download/v0.4.7-preview.1/JarvisButler-0.4.7-macOS-AppleSilicon.dmg) | 签名更新包；真机体验待验收，未公证 |
+| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jiavimiao-butler/releases/download/v0.4.7-preview.1/JarvisButler-0.4.7-Windows-x64-setup.exe) | 构建、自动化测试与下载签名核对通过；本版完整安装升级待验收 |
+| Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jiavimiao-butler/releases/download/v0.4.7-preview.1/JarvisButler-0.4.7-macOS-AppleSilicon.dmg) | 构建、自动化测试与下载签名核对通过；真机体验待验收，未公证 |
 
 Windows 安装后从开始菜单打开；Mac 把应用从 DMG 拖入 Applications。当前均为测试包，Windows 无商业代码签名，Mac 使用 ad-hoc 签名；按系统正常的安全审批流程决定是否打开，不关闭系统保护。Intel Mac 暂无本版安装包。
 

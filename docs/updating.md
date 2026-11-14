@@ -62,3 +62,14 @@ README与指南的11张新版照片全部来自Windows原生窗口，资料为�
 ## 0.4.7 自选目录与 Agent 阅读发布
 
 新增数据页的目录选择、Agent阅读目录、立即更新与两个全局快捷键。非空父目录自动独占创建“贾维喵资料”，不覆盖已有同名目录；数据库冻结、复制校验、指针失败解冻由SQLite回归测试覆盖。更新仍通过原签名公钥与preview渠道，保留旧客户端仓库重定向兼容。详见[本版更新说明](release-notes.md)。本版完整安装升级、系统选择目录至重启、Mac真机仍待验收；历史0.4.6升级结果不作为本版完整验收。
+
+
+### 0.4.7 发布核验完成（2026-11-14）
+
+[下载 v0.4.7-preview.1](https://github.com/aiyinsitan520/jiavimiao-butler/releases/tag/v0.4.7-preview.1) · [构建与发布记录](https://github.com/aiyinsitan520/jiavimiao-butler/actions/runs/43597870664)，发行源码为 c2646ce36aa8a733450cacdf2e68da252e564c39。
+
+Windows、Mac与publish三个任务全部success。两平台均通过608前端、32资料库、6更新策略、2渠道兼容、12共享记录与18服务器同步检查；Windows原生148通过12忽略，Mac原生144通过10忽略。忽略项不计为通过；其中显式指定隔离盘的跨盘迁移测试另在开发机执行，合成资料从C盘TEMP迁到E盘测试目录通过。
+
+公开发布Windows EXE、Mac Apple Silicon DMG及签名app.tar.gz、平台清单、latest.json、SHA256SUMS与许可证。下载后5项校验值均匹配；两个更新包经独立Rust验证器核对minisign签名、签名版本0.4.7、平台URL、大小与SHA通过。preview在线清单与已校验Release完全对应（仅按兼容规则映射旧仓库别名）；新旧raw清单一致，两个旧客户端下载URL重定向均返回HTTP200。
+
+用户可在软件更新页检查测试版并确认下载、安装；没有替用户安装或移动其资料。系统选目录到自动重启完整链路、本版完整安装升级和Mac真机仍待验收，Mac尚未公证。继承的未使用代码及Actions运行时提示未在此次变更处理。未调用外部代理，外部代理用量0；主模型用量未知。
