@@ -454,6 +454,9 @@ export type TrashKind = "reminder" | "note";
 
 /** 检查更新的状态（update.rs） */
 export interface UpdateStatus {
+  /** Native install permission; missing capability must never enable install. */
+  can_install?: boolean;
+  disabled?: boolean;
   current: string;
   /** idle 没有新版本 / available 有新版本 / downloading 正在下载 / ready 下载好了等着装 */
   state: "idle" | "available" | "downloading" | "ready" | "installing";

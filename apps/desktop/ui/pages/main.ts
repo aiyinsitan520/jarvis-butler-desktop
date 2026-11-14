@@ -1,3 +1,4 @@
+import {canInstallUpdate,readyUpdateText} from "../lib/update-install-policy";
 import {flushNoteSaves} from "../lib/update-save-barrier";
 import "../lib/workspace-status";
 import {navigate as navigateFusion} from "./fusion";
@@ -2224,9 +2225,9 @@ function pickBanner(): Banner | null {
   const has = !!u?.version && u.state !== "idle";
   const btn = (a: string, label: string, pri = false) => `<button class="btn sm${pri ? " pri" : ""}" data-bn="${a}">${label}</button>`;
   const prog = u?.state === "downloading" ? pct(u) : undefined;
-  if (u?.too_old) return { kind: "old", cls: "err", ic: "circle-alert", title: TOO_OLD, prog, btns: has && u.state !== "downloading" ? btn("update", u.state === "ready" ? T.bn.restart : T.bn.update, true) : "", x: false };
+  if (u?.too_old) return { kind: "old", cls: "err", ic: "circle-alert", title: TOO_OLD, prog, btns: has && u.state !== "downloading" ? btn("update", u.state === "ready" ? (canInstallUpdate(u) ? T.bn.restart : "查看更新说明") : T.bn.update, true) : "", x: false };
   if (u && has && (u.state === "downloading" || u.state === "ready") && !u.dismissed)
-    return { kind: "upd", cls: "info", ic: "download", title: u.state === "ready" ? T.bn.ready(u.version!) : T.bn.downloading(u.version!, pct(u)), prog, btns: u.state === "ready" ? btn("update", T.bn.restart, true) : "", x: true };
+    return { kind: "upd", cls: "info", ic: "download", title: u.state === "ready" ? readyUpdateText(u.version!,u) : T.bn.downloading(u.version!, pct(u)), prog, btns: u.state === "ready" ? btn("update", canInstallUpdate(u) ? T.bn.restart : "查看更新说明", true) : "", x: true };
   if (s && !bannerOff.has("sync")) {
     // 贾维喵管家同步：数据删了、到期了、快到期了（需求-1.0 第 18.4 节），带「续费」
     const a = s.official ? s.account : null;

@@ -1,3 +1,4 @@
+import {canInstallUpdate,readyUpdateText,PREVIEW_UPDATE_HELP} from "../lib/update-install-policy";
 import {flushNoteSaves} from "../lib/update-save-barrier";
 import "../lib/workspace-status";
 // 设置（UI设计.md U9、design/ui/u9-settings.html；需求-0.2 第 6 节）：主窗口内容区里，左边一栏「设置」标题、搜索（Ctrl + F）和 9 页导航，右边是这一页。
@@ -981,13 +982,13 @@ function updateRows() {
   const line =
     u.checking ? T.checking
     : u.state === "downloading" ? T.downloading(v, pct(u))
-    : u.state === "ready" ? T.ready(v)
+    : u.state === "ready" ? readyUpdateText(v,u)
     : u.error ? u.error
     : u.state === "available" ? T.available(v, u.size ? mb(u.size) : "")
     : u.checked_at ? T.latest(u.checked_at.slice(5, 16))
     : T.neverChecked;
   const btn =
-    u.state === "ready" ? `<button class="btn sm pri" data-upd="install">${T.restartBtn}</button>`
+    u.state === "ready" ? `<button class="btn sm pri" data-upd="install">${canInstallUpdate(u)?T.restartBtn:"查看更新说明"}</button>`
     : u.state === "available" ? `<button class="btn sm pri" data-upd="download">${T.updateBtn}</button>`
     : `<button class="btn sm" data-upd="check" ${u.checking || u.state === "downloading" ? "disabled" : ""}>${T.checkBtn}</button>`;
   return (
@@ -1047,7 +1048,13 @@ async function aboutHtml() {
     )}`;
 }
 
+function showPreviewUpdateHelp() {
+  dialog(`<h4>预览版更新说明</h4><p>${esc(PREVIEW_UPDATE_HELP)}</p><div class="acts"><button class="btn" data-close>关闭</button><button class="btn pri" id="preview-release">查看新版安装包</button></div>`);
+  $("#preview-release").onclick=()=>void api.openUrl("https://github.com/aiyinsitan520/jiavimiao-butler/releases").catch(e=>toast(errText(e)));
+}
+
 async function installUpdate() {
+  if(!canInstallUpdate(S.update)) return showPreviewUpdateHelp();
   if (!confirm("安装更新将重启贾维喵。请先保存未发送内容；确认后将备份本机资料。是否继续？")) return;
   try {
     await api.updateInstall();
@@ -1067,10 +1074,11 @@ export function showUpdateNotes() {
   const u = S.update;
   if (!u?.version) return;
   const can = u.state === "available" || u.state === "ready";
+  const install = canInstallUpdate(u);
   dialog(
     `<h4>${esc(T.notesTitle(u.version))}${u.date ? ` <small class="fhelp">${esc(u.date)}</small>` : ""}</h4>
     <p class="notes">${esc(u.notes || T.noNotes)}</p>
-    <div class="acts">${u.size ? `<span class="fhelp sp">${T.pkgSize(mb(u.size))}</span>` : ""}<button type="button" class="btn" data-close>${T.later}</button>${can ? `<button type="button" class="btn pri" id="un-go">${u.state === "ready" ? T.restartBtn : T.updateBtn}</button>` : ""}</div>`,
+    <div class="acts">${u.size ? `<span class="fhelp sp">${T.pkgSize(mb(u.size))}</span>` : ""}<button type="button" class="btn" data-close>${T.later}</button>${can ? `<button type="button" class="btn pri" id="un-go">${u.state === "ready" ? (install ? T.restartBtn : "查看更新说明") : T.updateBtn}</button>` : ""}</div>`,
     { wide: true },
   );
   const go = document.querySelector<HTMLElement>("#un-go");
