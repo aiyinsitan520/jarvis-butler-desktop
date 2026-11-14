@@ -24,7 +24,7 @@
 
 | 平台 | 安装包 | 状态 |
 | --- | --- | --- |
-| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-Windows-x64-setup.exe) | 构建与自动化测试通过；旧名0.4.3升级保留资料正在验收，见更新说明 |
+| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-Windows-x64-setup.exe) | 构建与自动化测试通过；0.4.3 → 0.4.6 应用内升级、原安装目录与资料保留已验证 |
 | Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-macOS-AppleSilicon.dmg) | 构建与自动化测试通过；真机体验待验收，未公证 |
 
 Windows 安装后从开始菜单打开；Mac 把应用从 DMG 拖入 Applications。当前均为测试包，Windows 无商业代码签名，Mac 使用 ad-hoc 签名；按系统正常的安全审批流程决定是否打开，不关闭系统保护。Intel Mac 暂无本版安装包。
