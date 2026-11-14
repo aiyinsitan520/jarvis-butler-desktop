@@ -191,7 +191,7 @@ fn dirty(app:&AppHandle)->Res<Vec<Value>>{
         for id in ids{let row=if kind=="notes"{let n=db::get_note(&c,id).map_err(|_|"笔记读取失败")?.ok_or("笔记缺失")?;json!({"kind":kind,"id":id,"uid":n.uid,"title":n.title,"body":n.body,"deleted":n.deleted_at.is_some()})}else{let r=db::get_reminder(&c,id).map_err(|_|"提醒读取失败")?.ok_or("提醒缺失")?;if r.uid.starts_with("jarvis-learning-review-"){continue;}json!({"kind":kind,"id":id,"uid":r.uid,"title":r.title,"done":r.done,"urgent":r.urgent,"due":r.due_at,"lastDone":r.last_done_at,"recurring":r.repeat.is_recurring(),"deleted":r.deleted_at.is_some()})};out.push(row);}
     }Ok(out)
 }
-async fn native_outbox(app:&AppHandle)->Res<()>{
+pub(crate) async fn native_outbox(app:&AppHandle)->Res<()>{
     let rt=runtime(app);let rows=dirty(app)?;
     for row in rows{
         let kind=row["kind"].as_str().unwrap();let id=row["id"].as_i64().unwrap();let uid=row["uid"].as_str().unwrap();let key=format!("native-outbox:{kind}:{uid}");

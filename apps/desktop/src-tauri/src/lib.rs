@@ -271,6 +271,8 @@ fn hotkey_label(name: &str) -> &'static str {
         "flash" => "快捷框",
         "qnote" => "快速记笔记",
         "main" => "打开主窗口",
+        "todos" => "打开待办",
+        "inspirations" => "打开灵感",
         _ => "开关专注模式",
     }
 }
@@ -285,6 +287,8 @@ fn apply_hotkeys(app: &AppHandle, s: &Settings) -> Res<()> {
         ("qnote", &s.hk_qnote),
         ("main", &s.hk_main),
         ("focus", &s.hk_focus),
+        ("todos", &s.hk_todos),
+        ("inspirations", &s.hk_inspirations),
     ] {
         let acc = acc.trim();
         if acc.is_empty() {
@@ -322,6 +326,8 @@ fn hotkey_mut<'a>(s: &'a mut Settings, name: &str) -> &'a mut String {
         "flash" => &mut s.hk_flash,
         "qnote" => &mut s.hk_qnote,
         "main" => &mut s.hk_main,
+        "todos" => &mut s.hk_todos,
+        "inspirations" => &mut s.hk_inspirations,
         _ => &mut s.hk_focus,
     }
 }
@@ -393,12 +399,22 @@ fn on_hotkey(app: &AppHandle, sc: &Shortcut) {
             }
             _ => win::open_main(app),
         },
+        Some("todos") => show_main_page(app, "todos"),
+        Some("inspirations") => show_main_page(app, "inspirations"),
         Some("focus") => {
             let on = !app.state::<AppState>().focus_manual.load(Ordering::Relaxed);
             set_focus_manual(app, on);
         }
         _ => {}
     }
+}
+
+/// Keep the request until the main frontend has loaded, including cold window opens.
+fn show_main_page(app: &AppHandle, view: &str) {
+    let nav = json!({"view": view});
+    *app.state::<AppState>().nav.lock().unwrap() = Some(nav.clone());
+    win::open_main(app);
+    let _ = app.emit_to("main", "nav", nav);
 }
 
 /// 快捷框的快捷键：先把别的程序里选中的文字复制过来（不会改动剪贴板原来的内容），再打开快捷框。

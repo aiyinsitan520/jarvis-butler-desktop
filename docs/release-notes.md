@@ -1,13 +1,15 @@
-# 贾维喵管家0.4.6测试版
+# 贾维喵管家 0.4.7 测试版
 
-产品正式改名“贾维喵管家”。保留你确认的白猫图标，统一主窗口、AI助手、托盘、安装器与关于页名称。沿用原应用标识和资料目录，既有笔记、凭据与更新通道继续兼容。
+新增自选数据保存位置：在“设置 → 数据”直接选择磁盘或文件夹。空文件夹直接使用；如果目录已有文件（例如直接选择 E 盘），会新建“贾维喵资料”子文件夹。同名目录已存在时拒绝覆盖，原资料保留。修复原先将非空目录、路径重叠合成一句“网盘”提示的问题，错误会说明具体原因。
 
-修复旧名称升级时另建安装目录：继承旧安装位置，保留应用标识与资料，并更新属于该安装的旧快捷方式及卸载登记。后续更新显式使用当前安装路径。
+新增方便其他 AI Agent 读取的 data.json 六表业务快照，带更新时间和扫描问题；沿用 Markdown 正文、index.json 及已授权会话阅读文件。支持打开阅读目录与立即更新，后台每30秒刷新。内部设置、连接配置及系统凭据不写入业务快照。迁移和备份包含新的 JSON 文件。
 
-修复随手记提示被截断：改为“记点什么，或设个提醒…”，输入区较窄时隐藏右侧快捷键提示，多行输入继续自动增高。
+新增“打开待办”“打开灵感”全局快捷键。Windows 默认 Ctrl+Alt+T / Ctrl+Alt+I，Mac 默认 ⌘+⌥+T / ⌘+⌥+I；可在“设置 → 通用 → 快捷键”修改或清空，占用时明确提示。
 
-独立软件更新页提供检查、更新记录、进度、测试／稳定渠道与自动检查偏好。安装前确认保存、备份两库，并验证本项目签名与版本；0.4.3起支持应用内更新，0.4.2及以前首次需手动安装。
+迁移前处理已保存的原生修改；两份数据库及附件、阅读文件复制校验后才切换启动位置。指针写入失败会恢复原库可写。迁移前请保存其他窗口中的编辑内容；同名已有资料不自动合并。合成资料的双库迁移、失败恢复及 C 盘至 E 盘复制已验证；系统目录选择到自动重启完整链路和 Mac 真机仍待验收。
 
-Windows x64安装包；Mac Apple Silicon DMG与签名app.tar.gz。Mac仍未公证，真机升级待验收。真实模型和微信需本人配置。AGPL-3.0-only，保留Dingmi、Jarvis MIT及第三方许可，未复制Cockpit Tools代码或密钥。
+Windows x64 安装包；Mac Apple Silicon DMG 与签名 app.tar.gz 更新包。0.4.3及以后可在“软件更新”检查测试版更新，下载校验后由本人确认安装；更早版本首次需手动安装。保留旧仓库重定向更新兼容。Mac 尚未公证，本版完整安装升级、真实模型与微信需本人验收。
 
-[新版实机截图与功能](https://github.com/aiyinsitan520/jiavimiao-butler#readme) · [用法](https://github.com/aiyinsitan520/jiavimiao-butler/blob/main/docs/usage.zh-CN.md) · [更新说明](https://github.com/aiyinsitan520/jiavimiao-butler/blob/main/docs/updating.md)
+AGPL-3.0-only，保留 Dingmi、Jarvis MIT 及第三方许可。
+
+[用法](https://github.com/aiyinsitan520/jiavimiao-butler/blob/main/docs/usage.zh-CN.md) · [更新说明](https://github.com/aiyinsitan520/jiavimiao-butler/blob/main/docs/updating.md)

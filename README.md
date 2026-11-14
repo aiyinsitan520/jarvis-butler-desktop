@@ -8,7 +8,7 @@ GitHub 仓库：[`aiyinsitan520/jiavimiao-butler`](https://github.com/aiyinsitan
 
 保留 [Dingmi](https://github.com/qingzo/dingmi) 的主面板、快捷记录与主题，融合 Jarvis Butler 的知识管理能力。一个窗口写笔记、看待办，在右侧与 AI 对话；把重要会话归档，第二天继续复习。
 
-[下载 Windows／Mac 测试版](https://github.com/aiyinsitan520/jiavimiao-butler/releases/tag/v0.4.6-preview.1) · [完整中文使用指南](docs/usage.zh-CN.md) · [功能与用法](#功能与用法) · [实际界面图库](#实际界面图库) · [来源与许可](#来源与许可)
+[下载 Windows／Mac 测试版](https://github.com/aiyinsitan520/jiavimiao-butler/releases/tag/v0.4.7-preview.1) · [完整中文使用指南](docs/usage.zh-CN.md) · [功能与用法](#功能与用法) · [实际界面图库](#实际界面图库) · [来源与许可](#来源与许可)
 
 ![贾维喵管家新版 Windows 实机：随手记、白猫与 AI 侧栏](docs/screenshots/windows-main.png)
 
@@ -26,8 +26,8 @@ GitHub 仓库：[`aiyinsitan520/jiavimiao-butler`](https://github.com/aiyinsitan
 
 | 平台 | 安装包 | 状态 |
 | --- | --- | --- |
-| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jiavimiao-butler/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-Windows-x64-setup.exe) | 构建与自动化测试通过；0.4.3 → 0.4.6 应用内升级、原安装目录与资料保留已验证 |
-| Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jiavimiao-butler/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-macOS-AppleSilicon.dmg) | 构建与自动化测试通过；真机体验待验收，未公证 |
+| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jiavimiao-butler/releases/download/v0.4.7-preview.1/JarvisButler-0.4.7-Windows-x64-setup.exe) | 签名更新包；本版安装升级待真机验收，0.4.3 → 0.4.6 为历史验证 |
+| Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jiavimiao-butler/releases/download/v0.4.7-preview.1/JarvisButler-0.4.7-macOS-AppleSilicon.dmg) | 签名更新包；真机体验待验收，未公证 |
 
 Windows 安装后从开始菜单打开；Mac 把应用从 DMG 拖入 Applications。当前均为测试包，Windows 无商业代码签名，Mac 使用 ad-hoc 签名；按系统正常的安全审批流程决定是否打开，不关闭系统保护。Intel Mac 暂无本版安装包。
 
@@ -37,7 +37,7 @@ Windows 安装后从开始菜单打开；Mac 把应用从 DMG 拖入 Application
 2. **配置模型**：AI 与接入设置 → 填接口地址和 Key → 一键拉取 → 搜索并点击模型 → 保存。
 3. **导入学习会话**：AI 会话 → 导入会话，选择 ChatGPT／Claude 官方导出的支持文件或 Markdown／TXT。
 4. **启用每日回顾**：学习回顾中开启提醒；如需自动模型整理，再到本地资料中开启对应开关。
-5. **选择长期资料位置**：本地资料 → 先备份 → 迁移到其他文件夹，选择空目录。
+5. **选择长期资料位置**：设置 → 数据 → 数据保存位置，选择磁盘或文件夹；非空目录下自动新建“贾维喵资料”，原资料保留。
 
 更详细的按钮顺序、输入示例、备份恢复和故障处理见[完整中文指南](docs/usage.zh-CN.md)。
 
@@ -52,7 +52,9 @@ Windows 安装后从开始菜单打开；Mac 把应用从 DMG 拖入 Application
 | 多 AI 会话归档 | 手动导入、搜索原文、标记重要、回到原会话、继续讨论 | 左侧“AI 会话” |
 | 本地会话自动采集 | 授权读取 Codex／Claude Code／Gemini CLI 的日志目录，增量归档 | 本地资料 → 自动采集 AI 会话 |
 | 每日成果与间隔复习 | 查看摘要、来源和复习问题，按 1／3／7／14／30 天回顾 | 学习回顾；模型整理在本地资料单独开启 |
-| 可迁移本地资料库 | 选择位置、备份恢复、Markdown 双向修改和冲突处理 | 左侧“本地资料” |
+| 可迁移本地资料库 | 选择磁盘或文件夹、备份恢复、Markdown 双向修改和冲突处理 | 设置 → 数据；左侧“本地资料” |
+| AI Agent 阅读 | UTF-8 data.json 六表业务快照、Markdown 正文与 index.json 定位，支持立即刷新 | 设置 → 数据 → 供 AI Agent 读取的资料 |
+| 打开待办／灵感快捷键 | Windows 默认 Ctrl+Alt+T/I，Mac 默认 ⌘+⌥+T/I，可录制或清空 | 设置 → 通用 → 快捷键 |
 | 自建服务器同步 | 预览、确认合并、版本冲突与回执恢复 | 独立的“数据同步”页；需兼容服务 |
 | 微信 IM | 本人私聊入口，原文先保存，再按配置整理；可请求已有回顾 | AI 与接入设置 → 本人扫码与配对；真实链路待验收 |
 

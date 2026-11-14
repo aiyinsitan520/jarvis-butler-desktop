@@ -1,8 +1,8 @@
 # 贾维喵管家使用指南
 
-适用版本：0.4.6 测试版。目标是把快捷记录、AI 对话、原文归档与每日复习放在一个桌面工作台里。第一次使用不需要配置服务器或微信。
+适用版本：0.4.7 测试版。目标是把快捷记录、AI 对话、原文归档与每日复习放在一个桌面工作台里。第一次使用不需要配置服务器或微信。
 
-[下载 Windows／Mac 安装包](https://github.com/aiyinsitan520/jiavimiao-butler/releases/tag/v0.4.6-preview.1) · [返回项目首页](../README.md) · [截图来源](screenshots/README.md)
+[下载 Windows／Mac 安装包](https://github.com/aiyinsitan520/jiavimiao-butler/releases/tag/v0.4.7-preview.1) · [返回项目首页](../README.md) · [截图来源](screenshots/README.md)
 
 本文产品插图均来自0.4.5版真实Windows原生窗口，使用合成演示资料；AI文字、模型目录和回顾内容是示例，微信未绑定。没有Mac真机图片，详见截图来源。
 
@@ -18,8 +18,8 @@
 
 | 你的电脑 | 下载文件 | 打开方式 |
 | --- | --- | --- |
-| Windows x64 | `JarvisButler-0.4.6-Windows-x64-setup.exe` | 安装后从开始菜单打开“贾维喵管家” |
-| Mac M1／M2／M3 等 Apple Silicon | `JarvisButler-0.4.6-macOS-AppleSilicon.dmg` | 双击 DMG，把应用拖入 Applications 后打开 |
+| Windows x64 | `JarvisButler-0.4.7-Windows-x64-setup.exe` | 安装后从开始菜单打开“贾维喵管家” |
+| Mac M1／M2／M3 等 Apple Silicon | `JarvisButler-0.4.7-macOS-AppleSilicon.dmg` | 双击 DMG，把应用拖入 Applications 后打开 |
 
 `Source code` 是源码压缩包，普通使用者选择 EXE 或 DMG。Intel Mac 不在本次安装包支持范围。
 
@@ -184,6 +184,16 @@ ChatGPT 等网页账号没有被本程序自动登录或实时抓取，仍通过
 每日微信摘要在“本地资料”单独启用，并只指定一台电脑推送。主动发送受 iLink 当前协议、认证和会话上下文限制；缺少上下文或发送结果未知会显示状态，不假报成功或自动反复重发。可以在已配对私聊发送“今日回顾”或 `/review` 获取已有报告，`/help` 查看帮助。
 
 真实扫码、PIN、模型推理及主动推送仍需本人验证；本指南截图只展示配置入口。
+
+## 自选数据目录与 Agent 阅读
+
+在「设置 → 数据 → 数据保存位置」点击「选择文件夹…」，选择本机磁盘或文件夹，例如直接选择 `E:\`。空文件夹直接使用；非空目录下自动新建“贾维喵资料”子文件夹（例如 `E:\贾维喵资料`），同名目录已存在时拒绝覆盖，请另选位置或自己新建空文件夹。应用复制两份 SQLite 数据库、附件及阅读文件，检查数据库完整性后切换并重启。原资料保留；取消选择不会切换。磁盘不可用时会报错，不会偷偷另建空库。此入口与「本地资料 → 迁移到其他文件夹」使用同一迁移流程。
+
+同一页的「供 AI Agent 读取的资料」可以打开阅读目录或立即更新。授权其他 Agent 读取这个目录即可：`data.json` 是 UTF-8 JSON 六表业务快照，带 `generatedAt` 和扫描问题；`index.json` 定位各记录的 Markdown。`notes/`、`todos/`、`inspirations/` 保存可读正文，`conversations/` 保存已授权归档的会话，附件在 `attachments/`。后台每 30 秒刷新，退出应用后文件保留，但不再更新。
+
+例如告诉 Agent：「读取我授权的资料目录中的 data.json，检查 generatedAt 和 issues，再整理未完成的 todos；需要正文时按 index.json 读取 Markdown。」只读无需数据库驱动。不要直接修改 JSON 或 `.jarvis/`；外部编辑 Markdown 时保留 id、table、base，冲突到「本地资料」处理。内部应用设置与系统凭据不在 data.json 中；笔记和会话本身为明文。
+
+在「设置 → 通用 → 快捷键」可设置或清空「打开待办」「打开灵感」。Windows 默认 `Ctrl+Alt+T` / `Ctrl+Alt+I`，Mac 默认 `⌘+⌥+T` / `⌘+⌥+I`。直接显示主窗口并切换页面；连续按不会收起窗口。若被其他软件占用，设置中显示错误，可改为其他组合。迁移前先保存其他窗口中的编辑内容。
 
 ## 11. 常见问题
 

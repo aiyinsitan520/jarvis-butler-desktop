@@ -1,3 +1,4 @@
+import {flushNoteSaves} from "../lib/update-save-barrier";
 import "../lib/workspace-status";
 // 设置（UI设计.md U9、design/ui/u9-settings.html；需求-0.2 第 6 节）：主窗口内容区里，左边一栏「设置」标题、搜索（Ctrl + F）和 9 页导航，右边是这一页。
 // 同步那页在 settings-sync.ts，几块共用的小工具在 settings-ui.ts，字在 text/settings.ts，样子在 styles/settings.css
@@ -208,6 +209,8 @@ const HK: [keyof Settings, keyof typeof ROWS.general][] = [
   ["hk_qnote", "hk_qnote"],
   ["hk_focus", "hk_focus"],
   ["hk_main", "hk_main"],
+  ["hk_todos", "hk_todos"],
+  ["hk_inspirations", "hk_inspirations"],
 ];
 const hkName = (k: keyof Settings) => ROWS.general[k as keyof typeof ROWS.general]?.name ?? "";
 
@@ -822,7 +825,7 @@ async function testAi(b: HTMLButtonElement) {
 
 async function dataHtml() {
   const D = ROWS.data;
-  const [path, local] = await Promise.all([api.dataPath().catch(() => ""), api.localBackups().catch(() => null)]);
+  const [path, local, storage] = await Promise.all([api.dataPath().catch(() => ""), api.localBackups().catch(() => null), api.localDataStatus().catch(() => null)]);
   const trashN = S.trash.reminders.length + S.trash.notes.length;
   return `${head(pageName("data"), T.hint.data as string)}
     ${rows(
@@ -832,8 +835,23 @@ async function dataHtml() {
       row("autobackup", D.autobackup, local ? `<button class="btn sm ghost" id="s-bkdir" data-dir="${esc(local.dir)}">${icon("folder-open")}${T.openDir}</button>` : "", {
         sub: esc(local?.last ? T.autoSub(backupTime(local.last)) : T.autoNone),
       }),
+      row("storage", D.storage, `<button class="btn sm" id="s-storage" ${storage ? "" : "disabled"}>选择文件夹…</button>`, { sub: `<span class="path">${esc(storage?.root ?? "资料目录暂不可用，请重启后再试")}</span><br>${esc(D.storage.sub)}` }),
+      row("agent", D.agent, `<div class="fusion-actions"><button class="btn sm ghost" id="s-agent-open" ${storage ? "" : "disabled"}>打开资料目录</button><button class="btn sm" id="s-agent-refresh" ${storage ? "" : "disabled"}>立即更新</button></div>`, { sub: esc(D.agent.sub) + (storage?.backgroundError ? `<br><span role="alert">${esc(storage.backgroundError)}</span>` : "") }),
       row("path", D.path, `<button class="btn sm ghost" id="s-path" data-path="${esc(path)}">${T.open}</button>`, { sub: `<span class="path">${esc(path)}</span>` }),
     )}`;
+}
+
+function chooseStorage() {
+  dialog(`<h4>选择数据保存位置</h4><p>选择本机保存位置，可以直接选择 E 盘。若目录已有文件，会新建“贾维喵资料”子文件夹；同名目录已存在时不会覆盖。两份数据库、附件及 Agent 阅读文件校验成功后自动重启，原目录保留。</p><p>请先保存其他窗口中未完成的编辑。移动硬盘需保持连接；网盘文件夹用于备份。</p><p class="fhelp err" id="storage-error" role="alert"></p><div class="acts"><button class="btn" id="storage-cancel" data-close>取消</button><button class="btn pri" id="storage-pick">选择文件夹…</button></div>`);
+  $("#storage-pick").onclick = async () => {
+    lockDialog(true);
+    const button = $<HTMLButtonElement>("#storage-pick");
+    const cancel = $<HTMLButtonElement>("#storage-cancel");
+    button.disabled = cancel.disabled = true;
+    try { await flushNoteSaves(); await api.localDataMigrate(); hideModal(); }
+    catch (e) { $("#storage-error").textContent = errText(e); }
+    finally { lockDialog(false); button.disabled = cancel.disabled = false; }
+  };
 }
 
 /** 导出全部：先说清楚里面是明文、存到哪；导出时显示进度，导完可以打开所在文件夹 */
@@ -1205,6 +1223,12 @@ body.addEventListener("click", async (e) => {
       return void pickRestore();
     case "s-bkdir":
       return void api.openPath(b.dataset.dir ?? "").catch((err) => toast(errText(err)));
+    case "s-storage":
+      return chooseStorage();
+    case "s-agent-open":
+      return void api.localDataOpen().catch((e) => toast(errText(e)));
+    case "s-agent-refresh":
+      return void busy(b, "正在更新…", async () => { await api.localDataScan(); toast("Agent 阅读资料已更新"); }).then((error) => { if (error) toast(error); });
     case "s-path":
       return void api.revealPath(b.dataset.path ?? "").catch((err) => toast(errText(err)));
     case "s-onboard":

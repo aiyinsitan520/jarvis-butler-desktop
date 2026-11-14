@@ -1,6 +1,6 @@
 import {flushNoteSaves} from "../lib/update-save-barrier";
 import "../lib/workspace-status";
-import "./fusion";
+import {navigate as navigateFusion} from "./fusion";
 // 主窗口（UI设计.md U6、design/ui/u6-main.html）：标题栏、侧栏（今天、提醒、笔记本、提醒分类、专注、设置）和右边的内容面板。
 // 这里有今天、提醒、笔记本的列表、回收站、改提醒的抽屉、Ctrl K 搜索；设置在 settings.ts（U9）。
 // 笔记的正文和编辑器照旧用 @shared/md、lib/editor.ts（另有人按 U7 在改），这里只换外面的框
@@ -2365,6 +2365,7 @@ function applyNav(nav: Nav) {
     if (nav.view === "notes" && nav.sub) S.nCat = nav.sub;
     if (nav.view === "settings") return openSettings(nav.sub, nav.row);
     if (nav.view === "todos") return showTodos(true);
+    if (nav.view === "inspirations") return navigateFusion("inspirations");
     if (nav.view === "notes") S.todoView = false;
     go((["today", "reminders", "notes", "settings", "trash"].includes(nav.view) ? nav.view : "today") as View);
   }
@@ -2428,6 +2429,7 @@ $("#modal").addEventListener("mousedown", (e) => {
   void checkNotice();
   renderTitleSync();
   await load();
+  await listen<Nav>("nav", async (e) => { const pending = await api.takeNav(); applyNav(pending ?? e.payload); });
   const nav = await api.takeNav();
   if (nav) applyNav(nav);
   // 窗口是藏着建的：第一屏画好了再显示，免得先闪一下白底（见 win.rs）
@@ -2467,7 +2469,7 @@ $("#modal").addEventListener("mousedown", (e) => {
     renderAll();
     settingsOnChange(widgetFlip);
   });
-  listen<Nav>("nav", (e) => applyNav(e.payload));
+  // Navigation listener is installed immediately after initial data loading.
   // 单独的笔记窗口开了、关了：正在这里改同一条的先收起来
   const noteWins = (ids: number[]) => {
     S.noteWins = new Set(ids);

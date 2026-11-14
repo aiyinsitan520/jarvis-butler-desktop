@@ -11,6 +11,8 @@ pub struct Settings {
     pub hk_qnote: String,
     pub hk_main: String,
     pub hk_focus: String,
+    pub hk_todos: String,
+    pub hk_inspirations: String,
     pub ai_base: String,
     pub ai_model: String,
     pub ai_key: String,
@@ -122,6 +124,8 @@ impl Default for Settings {
             hk_qnote: if cfg!(target_os="macos"){"Super+Alt+N"}else{"Ctrl+Alt+N"}.into(),
             hk_main: "Ctrl+Alt+H".into(),
             hk_focus: "Ctrl+Alt+F".into(),
+            hk_todos: if cfg!(target_os="macos"){"Super+Alt+T"}else{"Ctrl+Alt+T"}.into(),
+            hk_inspirations: if cfg!(target_os="macos"){"Super+Alt+I"}else{"Ctrl+Alt+I"}.into(),
             ai_base: "https://api.deepseek.com".into(),
             ai_model: "deepseek-chat".into(),
             ai_key: String::new(),
@@ -358,6 +362,17 @@ mod tests {
         let old: Shared = serde_json::from_str(r#"{"ai_base":"","ai_model":"","ai_key":null,"morning":true,"snooze_min":10,"ring_every_min":5,"sound":true,"wrap":true,"wrap_time":"18:00","inbox_auto":false,"sync_ai_key":true}"#).unwrap();
         c.merge_shared(&old);
         assert_eq!((c.web_keys.len(), c.calc), (2, false));
+    }
+
+    #[test]
+    fn navigation_hotkeys_upgrade_clear_and_stay_local() {
+        let mut s:Settings=serde_json::from_str(r#"{"hk_main":"Alt+H"}"#).unwrap();
+        assert!(!s.hk_todos.is_empty());assert!(!s.hk_inspirations.is_empty());
+        s.hk_todos="".into();s.hk_inspirations="Alt+I".into();
+        let restored:Settings=serde_json::from_str(&serde_json::to_string(&s).unwrap()).unwrap();
+        assert_eq!(restored.hk_todos,"");assert_eq!(restored.hk_inspirations,"Alt+I");
+        let shared=serde_json::to_value(s.shared()).unwrap();assert!(shared.get("hk_todos").is_none());assert!(shared.get("hk_inspirations").is_none());
+        assert_eq!(s.hk_main,"Alt+H");
     }
 
     #[test]

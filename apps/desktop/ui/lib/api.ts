@@ -27,6 +27,8 @@ export interface Settings {
   hk_qnote: string;
   hk_main: string;
   hk_focus: string;
+  hk_todos: string;
+  hk_inspirations: string;
   ai_base: string;
   ai_model: string;
   ai_key: string;
@@ -650,6 +652,10 @@ export const api = {
   getSettings: () => invoke<Settings>("get_settings"),
   saveSettings: (settings: Settings) => invoke<void>("save_settings", { settings }),
   dataPath: () => invoke<string>("data_path"),
+  localDataStatus: () => invoke<{root: string; backgroundError?: string}>("workspace_local_status"),
+  localDataOpen: () => invoke<void>("workspace_local_open"),
+  localDataMigrate: () => invoke<boolean>("workspace_local_migrate"),
+  localDataScan: () => invoke<unknown>("workspace_local_scan"),
   /** 本机每天的自动备份放在哪、最近一次的时间 */
   localBackups: () => invoke<{ dir: string; last: string | null }>("local_backups"),
   /** 桌面组件能不能开毛玻璃（Windows 11 才有） */

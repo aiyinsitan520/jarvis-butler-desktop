@@ -33,6 +33,20 @@ pub fn atomic(path: &Path, bytes: &[u8]) -> Result<()> {
  #[tokio::test]async fn malformed_and_duplicate_ids_never_overwrite(){let(d,s,id)=fixture().await;let root=d.path().join("library");let state=s.vault_status().unwrap();let p=root.join(state["entries"][&id]["path"].as_str().unwrap());std::fs::copy(&p,p.with_file_name("duplicate.md")).unwrap();assert!(s.vault_scan(&root).await.unwrap()["issues"].as_array().unwrap().iter().any(|i|i["error"].as_str().unwrap().contains("重复ID")));assert_eq!(s.cached().unwrap().unwrap().data["notes"][0]["content"],"原始");}
  #[test]fn attachment_escape_is_rejected(){assert!(mutable("notes",&json!({"content":"[x](../secret)"})).is_err());let d=tempfile::tempdir().unwrap();assert!(safe(d.path(),&d.path().join("../outside")).is_err());}
  #[tokio::test]async fn lost_projection_write_uses_existing_receipt(){let(d,s,id)=fixture().await;let root=d.path().join("library");let state=s.vault_status().unwrap();let path=root.join(state["entries"][&id]["path"].as_str().unwrap());let raw=std::fs::read_to_string(&path).unwrap().replace("原始","已提交但未更新文件头");std::fs::write(&path,&raw).unwrap();let doc=parse(&raw).unwrap();let request=format!("vault-{}",hash(&format!("{id}:{}:{}",doc["base"],hash(&raw))));let snap=s.cached().unwrap().unwrap();let op=s.submit_once(&request,json!({"type":"update","table":"notes","id":id,"data":mutable("notes",&doc).unwrap()}),Some(snap.expected())).await.unwrap();assert_eq!(op.status,"committed");let before=s.operations().unwrap().len();assert!(s.vault_scan(&root).await.unwrap()["issues"].as_array().unwrap().is_empty());assert_eq!(s.operations().unwrap().len(),before);assert_eq!(parse(&std::fs::read_to_string(path).unwrap()).unwrap()["base"],hash(&stable(&s.cached().unwrap().unwrap().data["notes"][0])));}
+ #[tokio::test]async fn agent_snapshot_exports_current_records_without_internal_secrets(){
+  let(d,s,id)=fixture().await;let root=d.path().join("library");
+  s.set_value("model-key",&json!("private-canary-not-for-export")).unwrap();
+  s.submit(json!({"type":"createTodo","data":{"title":"待办测试"}}),None).await.unwrap();
+  s.submit(json!({"type":"createInspiration","data":{"title":"灵感测试","content":"中文正文"}}),None).await.unwrap();
+  s.vault_scan(&root).await.unwrap();
+  let bytes=std::fs::read_to_string(root.join("data.json")).unwrap();let v:Value=serde_json::from_str(&bytes).unwrap();
+  assert_eq!(v["format"],"jiavimiao-agent-data");assert!(v["generatedAt"].as_str().unwrap().contains('T'));
+  assert_eq!(v["data"]["notes"][0]["id"],id);assert_eq!(v["data"]["todos"][0]["title"],"待办测试");
+  assert_eq!(v["data"]["inspirations"][0]["content"],"中文正文");assert!(!bytes.contains("private-canary"));
+  for table in crate::TABLES{assert!(v["data"][table].is_array());}
+  s.submit(json!({"type":"delete","table":"notes","id":id}),None).await.unwrap();s.vault_scan(&root).await.unwrap();
+  let v:Value=serde_json::from_slice(&std::fs::read(root.join("data.json")).unwrap()).unwrap();assert!(v["data"]["notes"].as_array().unwrap().is_empty());
+ }
  #[test]fn failed_atomic_replace_retains_existing_target(){let d=tempfile::tempdir().unwrap();let target=d.path().join("target");std::fs::create_dir(&target).unwrap();std::fs::write(target.join("existing"),b"kept").unwrap();assert!(atomic(&target,b"new").is_err());assert_eq!(std::fs::read(target.join("existing")).unwrap(),b"kept");assert_eq!(std::fs::read_dir(d.path()).unwrap().count(),1);}
  #[tokio::test]async fn frozen_backup_preserves_data_and_rejects_writes(){let(d,s,_)=fixture().await;let p=d.path().join("backup.db");s.backup_and_freeze(&p).unwrap();assert!(s.set_value("x",&json!(1)).is_err());s.freeze(false).unwrap();s.set_value("x",&json!(1)).unwrap();let copy=WorkspaceStore::open(&p).unwrap();assert_eq!(copy.cached().unwrap().unwrap().data["notes"].as_array().unwrap().len(),1);assert!(copy.get_value("x").unwrap().is_none());}
 }
@@ -127,7 +141,10 @@ impl WorkspaceStore {
         }}
         state=json!({"entries":entries,"issues":issues,"lastScan":chrono::Utc::now().to_rfc3339()});self.set_value("vault-state",&state)?;
         safe(root,&root.join("index.json"))?;atomic(&root.join("index.json"),serde_json::to_string_pretty(&json!({"version":1,"records":state["entries"],"notebooks":snap.data["notebooks"],"sources":snap.data["sources"],"relations":snap.data["relations"]})).unwrap().as_bytes())?;
-        if !root.join("README.md").exists(){atomic(&root.join("README.md"),"# 贾维斯资料库\n\nnotes、todos、inspirations 支持外部编辑；会话原文仅供读取。元数据采用 YAML 的 JSON 值语法，保留 id、table、base。同步冲突在贾维斯的本地资料页处理。不要修改 .jarvis，不要用网盘同步运行中的数据库。附件使用相对路径。index.json 可供其他 AI 定位文件。\n".as_bytes())?;}
+        // Business records only: never export internal kv, credentials or connection settings.
+        safe(root,&root.join("data.json"))?;
+        atomic(&root.join("data.json"),serde_json::to_string_pretty(&json!({"format":"jiavimiao-agent-data","version":1,"generatedAt":state["lastScan"],"data":snap.data,"issues":state["issues"]})).unwrap().as_bytes())?;
+        if !root.join("README.md").exists(){atomic(&root.join("README.md"),"# 贾维斯资料库\n\nnotes、todos、inspirations 支持外部编辑；会话原文仅供读取。元数据采用 YAML 的 JSON 值语法，保留 id、table、base。同步冲突在贾维斯的本地资料页处理。不要修改 .jarvis，不要用网盘同步运行中的数据库。附件使用相对路径。index.json 可供其他 AI 定位文件。data.json 是 UTF-8 JSON 六表业务快照，含生成时间与扫描问题；不含应用设置和凭据。阅读请以 data.json 中当前记录为准，index.json 中问题记录的 Markdown 可能保留外部冲突稿。每30秒或立即扫描更新；离线后以 generatedAt 判断时效。将资料目录授权给 Agent 即可读取；不要直接编辑 data.json/index.json，也不要读取 .jarvis 或系统凭据。\n".as_bytes())?;}
         Ok(state)
     }
     pub async fn vault_resolve(&self,root:&Path,id:&str,choice:&str)->Result<()> {
