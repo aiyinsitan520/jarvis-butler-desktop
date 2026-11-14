@@ -2,7 +2,7 @@
 
 适用版本：0.4.6 测试版。目标是把快捷记录、AI 对话、原文归档与每日复习放在一个桌面工作台里。第一次使用不需要配置服务器或微信。
 
-[下载 Windows／Mac 安装包](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.6-preview.1) · [返回项目首页](../README.md) · [截图来源](screenshots/README.md)
+[下载 Windows／Mac 安装包](https://github.com/aiyinsitan520/jiavimiao-butler/releases/tag/v0.4.6-preview.1) · [返回项目首页](../README.md) · [截图来源](screenshots/README.md)
 
 本文产品插图均来自0.4.5版真实Windows原生窗口，使用合成演示资料；AI文字、模型目录和回顾内容是示例，微信未绑定。没有Mac真机图片，详见截图来源。
 

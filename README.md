@@ -1,12 +1,14 @@
 # 贾维喵管家
 
+GitHub 仓库：[`aiyinsitan520/jiavimiao-butler`](https://github.com/aiyinsitan520/jiavimiao-butler)。原仓库网址保留 GitHub 自动跳转。
+
 <img src="shared/assets/jarvis-kitten-source.png" alt="原创白色小猫图标" width="112" />
 
 **把随手记录、AI 会话和每天的学习回顾，放进一个本地桌面工作台。**
 
 保留 [Dingmi](https://github.com/qingzo/dingmi) 的主面板、快捷记录与主题，融合 Jarvis Butler 的知识管理能力。一个窗口写笔记、看待办，在右侧与 AI 对话；把重要会话归档，第二天继续复习。
 
-[下载 Windows／Mac 测试版](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.6-preview.1) · [完整中文使用指南](docs/usage.zh-CN.md) · [功能与用法](#功能与用法) · [实际界面图库](#实际界面图库) · [来源与许可](#来源与许可)
+[下载 Windows／Mac 测试版](https://github.com/aiyinsitan520/jiavimiao-butler/releases/tag/v0.4.6-preview.1) · [完整中文使用指南](docs/usage.zh-CN.md) · [功能与用法](#功能与用法) · [实际界面图库](#实际界面图库) · [来源与许可](#来源与许可)
 
 ![贾维喵管家新版 Windows 实机：随手记、白猫与 AI 侧栏](docs/screenshots/windows-main.png)
 
@@ -24,8 +26,8 @@
 
 | 平台 | 安装包 | 状态 |
 | --- | --- | --- |
-| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-Windows-x64-setup.exe) | 构建与自动化测试通过；0.4.3 → 0.4.6 应用内升级、原安装目录与资料保留已验证 |
-| Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-macOS-AppleSilicon.dmg) | 构建与自动化测试通过；真机体验待验收，未公证 |
+| Windows x64 | [下载 EXE](https://github.com/aiyinsitan520/jiavimiao-butler/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-Windows-x64-setup.exe) | 构建与自动化测试通过；0.4.3 → 0.4.6 应用内升级、原安装目录与资料保留已验证 |
+| Mac Apple Silicon（M1／M2／M3 等） | [下载 DMG](https://github.com/aiyinsitan520/jiavimiao-butler/releases/download/v0.4.6-preview.1/JarvisButler-0.4.6-macOS-AppleSilicon.dmg) | 构建与自动化测试通过；真机体验待验收，未公证 |
 
 Windows 安装后从开始菜单打开；Mac 把应用从 DMG 拖入 Applications。当前均为测试包，Windows 无商业代码签名，Mac 使用 ad-hoc 签名；按系统正常的安全审批流程决定是否打开，不关闭系统保护。Intel Mac 暂无本版安装包。
 

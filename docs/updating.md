@@ -40,7 +40,7 @@ Mac公证和updater签名不同，本版本仍为未公证测试版，Mac真机�
 
 ## 0.4.6 发布与真实升级验收（2026-11-14）
 
-[对应源码与安装包](https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.6-preview.1) · [双平台构建记录](https://github.com/aiyinsitan520/jarvis-butler-desktop/actions/runs/43450848342)
+[对应源码与安装包](https://github.com/aiyinsitan520/jiavimiao-butler/releases/tag/v0.4.6-preview.1) · [双平台构建记录](https://github.com/aiyinsitan520/jiavimiao-butler/actions/runs/43450848342)
 
 产品现名“贾维喵管家”，使用确认的原创白猫图标。Windows 与 Apple Silicon Mac 包已发布，公开 preview 清单与 Release 内容一致；下载后两平台更新包的 minisign 签名、签名版本、大小和 SHA-256 均通过独立 Rust 验证。全部发行校验值匹配。
 
@@ -49,3 +49,11 @@ Windows 使用真实安装的0.4.3和隔离演示资料，完成“检查 → �
 CI两平台各通过608项前端、31项核心、5项更新策略、12项共享记录及18项服务器同步检查；Windows原生144通过11忽略，Mac原生140通过9忽略。原生构建有继承的未使用代码警告；CI有Action运行时迁移警告。Mac仍未公证，没有真机窗口／快捷键／安装及更新验证，真实模型与微信链路仍需本人配置验收。
 
 README与指南的11张新版照片全部来自Windows原生窗口，资料为隔离合成示例。测试没有写入正式VPS，也没有调用真实模型或发送微信。AGPL-3.0-only与上游版权声明保留。未调用外部代理，外部代理用量0；主模型用量未知。
+
+## 仓库改名后的更新兼容（2026-11-14）
+
+正式仓库为 [aiyinsitan520/jiavimiao-butler](https://github.com/aiyinsitan520/jiavimiao-butler)，仓库ID未变。Git remote、README、指南、应用内项目／发布入口、原生更新端点与后续Release发布脚本已切换新地址。历史标签、签名包和现有安装版本保持原样，没有同版本重新打包。
+
+0.4.6及以前的已发布客户端只接受原仓库路径。后续发布保留两份各有用途的元数据：Release的latest.json使用新仓库地址；update-channel渠道清单只把下载URL映射为原仓库重定向别名，保留签名、版本、大小和SHA不变。新源码只额外接受这个同一仓库的旧别名，不放宽到其他仓库。不要重新创建旧名称仓库，以免破坏GitHub重定向。发布脚本仍先逐字核对已验证Release，再生成兼容清单；同版本不同签名／哈希拒绝发布。
+
+已实测：新旧仓库API返回同一ID；新旧raw渠道端点返回相同0.4.6清单；两个旧签名包下载地址均经重定向返回HTTP 200。更新策略6项和渠道兼容2项检查通过。新地址代码将随下一个递增版本安装包分发；本次改名不重新发布0.4.6二进制。未来版本的完整双平台安装升级仍以对应发版验收为准。

@@ -36,6 +36,7 @@ jobs:
           cache-on-failure: true
       - run: npm ci
       - run: npm test
+      - run: node --test scripts/update-channel-compat.test.mjs
       - run: cargo test -p jarvis-workspace --locked -- --test-threads=1
       - run: cargo test -p jarvis-updater --locked
       - run: cargo build -p jarvis-workspace --bin workspace-driver --locked

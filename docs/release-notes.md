@@ -10,4 +10,4 @@
 
 Windows x64安装包；Mac Apple Silicon DMG与签名app.tar.gz。Mac仍未公证，真机升级待验收。真实模型和微信需本人配置。AGPL-3.0-only，保留Dingmi、Jarvis MIT及第三方许可，未复制Cockpit Tools代码或密钥。
 
-[新版实机截图与功能](https://github.com/aiyinsitan520/jarvis-butler-desktop#readme) · [用法](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/usage.zh-CN.md) · [更新说明](https://github.com/aiyinsitan520/jarvis-butler-desktop/blob/main/docs/updating.md)
+[新版实机截图与功能](https://github.com/aiyinsitan520/jiavimiao-butler#readme) · [用法](https://github.com/aiyinsitan520/jiavimiao-butler/blob/main/docs/usage.zh-CN.md) · [更新说明](https://github.com/aiyinsitan520/jiavimiao-butler/blob/main/docs/updating.md)

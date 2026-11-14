@@ -27,8 +27,8 @@ v0.4.1-preview.1，源码fd5a9d3，GitHub Actions 43421072269成功。Windows与
 
 下载后的Windows EXE与Mac DMG的SHA-256均匹配Release校验清单。Windows最终包实际installerExit=0、launchResponding=true、uninstallerExit=0，重装前／后和卸载后均保留合成资料数据库；测试安装已卸载。本机用户预览62176保持响应，原两库在重启前已快照备份。Mac系统交互仍需本人真机，未公证；真实模型调用及微信主动推送仍未代用户验证。
 
-发布：https://github.com/aiyinsitan520/jarvis-butler-desktop/releases/tag/v0.4.1-preview.1
-构建：https://github.com/aiyinsitan520/jarvis-butler-desktop/actions/runs/43421072269
+发布：https://github.com/aiyinsitan520/jiavimiao-butler/releases/tag/v0.4.1-preview.1
+构建：https://github.com/aiyinsitan520/jiavimiao-butler/actions/runs/43421072269
 
 
 ## 白猫测试版发布验证（2026-11-13）
